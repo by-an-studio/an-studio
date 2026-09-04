@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Header } from "../_components/Header";
 import { NavLeft } from "../_components/NavLeft";
+import { AvailableWorldwide } from "../_components/AvailableWorldwide";
 import { ConditionalFooter } from "../_components/ConditionalFooter";
 
 const williamSubhead = localFont({
@@ -16,10 +17,7 @@ const williamSubhead = localFont({
   variable: "--font-william",
 });
 
-export const metadata: Metadata = {
-  title: "An Studio",
-  description: "Independent Design Studio",
-};
+export const metadata: Metadata = { title: "An Studio", description: "Independent Design Studio" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -32,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="relative flex-1 flex flex-col">
           <NavLeft />
           {children}
+          <AvailableWorldwide />
         </div>
         <ConditionalFooter />
       </body>
