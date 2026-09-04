@@ -56,7 +56,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-3 mt-8 min-[1200px]:mt-0">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-3 mt-2 min-[1200px]:mt-0">
             <p className="text-[12px] leading-snug">
               Where Fashion, Graphic Design &amp; Visual Culture Shape A
               Distinct Point Of View
@@ -73,15 +73,15 @@ export default function About() {
         <div className="mt-16 min-[1200px]:mt-0 min-[1200px]:mt-auto flex flex-col min-[1200px]:gap-[50px]">
           <Grid className="items-baseline">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
-              <p className="text-[32px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Awards</p>
+              <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Awards</p>
             </div>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-4 min-[1200px]:mt-0">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
               <ul className="space-y-1">
-                <li className="flex gap-3 text-[18px] w-full">
+                <li className="flex gap-3 text-[16px] min-[1200px]:text-[18px] w-full">
                   <span className="text-[10px] mt-1 shrink-0">1</span>
                   <span className="flex-1">LAUS ORO, Graphic Design, 2023</span>
                 </li>
-                <li className="flex gap-3 text-[18px] w-full">
+                <li className="flex gap-3 text-[16px] min-[1200px]:text-[18px] w-full">
                   <span className="text-[10px] mt-1 shrink-0">2</span>
                   <span className="flex-1">Two Laus Bronze Awards, Graphic Design Collaboration, 2024</span>
                 </li>
@@ -91,15 +91,15 @@ export default function About() {
 
           <Grid className="mt-16 min-[1200px]:mt-0 items-baseline">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
-              <p className="text-[32px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Exhibitions</p>
+              <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Exhibitions</p>
             </div>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-4 min-[1200px]:mt-0">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
               <ul className="space-y-1">
-                <li className="flex gap-3 text-[18px] w-full">
+                <li className="flex gap-3 text-[16px] min-[1200px]:text-[18px] w-full">
                   <span className="text-[10px] mt-1 shrink-0">1</span>
                   <span className="flex-1">Latent Fest, LAUS Estudiante, 2023</span>
                 </li>
-                <li className="flex gap-3 text-[18px] w-full">
+                <li className="flex gap-3 text-[16px] min-[1200px]:text-[18px] w-full">
                   <span className="text-[10px] mt-1 shrink-0">2</span>
                   <span className="flex-1">Museu Del Disseny De Barcelona, El Mejor Diseño Del Año, 2023</span>
                 </li>
@@ -109,25 +109,27 @@ export default function About() {
 
           <Grid className="mt-16 min-[1200px]:mt-0 items-start">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
-              <p className="text-[32px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] leading-tight">
+              <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] leading-tight">
                 Clients We&rsquo;ve Worked With
               </p>
             </div>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-8 min-[1200px]:mt-0">
-              <div className="grid grid-cols-3 gap-x-0 text-[14px]">
-                <p className="text-[18px]">Beauty</p>
-                <p className="text-[18px]">Fashion</p>
-                <p className="text-[18px]">Lifestyle &amp; Design</p>
-                <div className="col-span-3 border-t border-black mt-4" />
-                {clientRows.map((row, i) => (
-                  <Fragment key={i}>
-                    {row.map((cell, j) => (
-                      <p key={`${i}-${j}`} className="border-b border-black py-1">
-                        {cell}
-                      </p>
-                    ))}
-                  </Fragment>
-                ))}
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
+              <div className="overflow-x-auto min-[1200px]:overflow-visible">
+                <div className="grid grid-cols-3 gap-x-0 text-[14px] min-w-[500px] min-[1200px]:min-w-0">
+                  <p className="text-[16px] min-[1200px]:text-[18px] whitespace-nowrap">Beauty</p>
+                  <p className="text-[16px] min-[1200px]:text-[18px] whitespace-nowrap">Fashion</p>
+                  <p className="text-[16px] min-[1200px]:text-[18px] whitespace-nowrap">Lifestyle &amp; Design</p>
+                  <div className="col-span-3 border-t border-black mt-4" />
+                  {clientRows.map((row, i) => (
+                    <Fragment key={i}>
+                      {row.map((cell, j) => (
+                        <p key={`${i}-${j}`} className="border-b border-black py-1 whitespace-nowrap">
+                          {cell}
+                        </p>
+                      ))}
+                    </Fragment>
+                  ))}
+                </div>
               </div>
             </div>
           </Grid>
