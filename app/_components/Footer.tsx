@@ -36,7 +36,7 @@ export function Footer() {
   const secondaryColumns = columns.slice(6);
 
   return (
-    <footer className="w-full pt-20 pb-10">
+    <footer className="w-full pt-20 pb-[30px]">
       <div className="h-[600px] flex flex-col gap-[60px] px-5 md:flex-row md:flex-wrap md:justify-between md:gap-y-10">
         <div className="grid grid-cols-2 gap-x-5 gap-y-[20px] md:contents">
           {mainColumns.map((col) => (
@@ -69,8 +69,14 @@ export function Footer() {
         </div>
         <div className="col-span-8 md:col-start-9 md:col-span-4 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left mt-16 md:mt-0">An Studio 2026®</div>
         <div className="col-span-8 md:col-start-13 md:col-span-6 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left -mt-3 md:mt-0">Independent Design Studio</div>
-        <div className="col-span-8 md:col-start-21 md:col-span-4 flex justify-center md:justify-end mt-10 md:mt-0">
-          <Image src="/logo/an-studio.svg" alt="An Studio" width={140} height={24} style={{ width: "140px", height: "24px" }} />
+        <div className="col-span-8 md:col-start-21 md:col-span-4 flex justify-center md:justify-end mt-10 md:mt-0 w-full">
+          <Image
+            src="/logo/an-studio.svg"
+            alt="An Studio"
+            width={140}
+            height={24}
+            className="w-full h-auto md:w-[140px]"
+          />
         </div>
       </Grid>
     </footer>
