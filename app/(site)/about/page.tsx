@@ -10,8 +10,8 @@ const clientRows = [
 
 export default function About() {
   return (
-    <>
-      <main className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col justify-between min-h-[100svh]">
+    <main className="w-full">
+      <div className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col justify-between min-h-[100svh]">
         <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[calc(100svh-2*clamp(18px,1.5625vw,30px))]">
           <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 mb-8 min-[1200px]:mb-0">
@@ -44,12 +44,12 @@ export default function About() {
             </div>
           </Grid>
         </div>
-      </main>
+      </div>
 
-      <section className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col min-[1200px]:gap-[30px] min-h-[100svh]">
+      <section className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col min-[1200px]:gap-[30px] min-[1200px]:min-h-0">
         <Grid className="items-start">
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-14">
-            <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] leading-snug">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-13">
+            <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] leading-snug min-[1200px]:leading-tight">
               An Studio is an independent creative practice founded by{" "}
               <em className="italic">An Zamora</em>, focused on thoughtful
               branding, packaging and design.
@@ -65,14 +65,14 @@ export default function About() {
         </Grid>
 
         <Grid className="mt-16 min-[1200px]:mt-0">
-          <div className="col-span-8 md:max-[1199px]:col-span-8 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
             <div className="relative aspect-[3/4] bg-muted/20" />
           </div>
         </Grid>
 
-        <div className="mt-16 min-[1200px]:mt-0 min-[1200px]:mt-auto flex flex-col min-[1200px]:gap-[50px]">
+        <div className="mt-16 min-[1200px]:mt-[clamp(40px,8vh,120px)] flex flex-col min-[1200px]:gap-[50px]">
           <Grid className="items-baseline">
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3">
               <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Awards</p>
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
@@ -90,7 +90,7 @@ export default function About() {
           </Grid>
 
           <Grid className="mt-16 min-[1200px]:mt-0 items-baseline">
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3">
               <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]">Exhibitions</p>
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
@@ -108,13 +108,13 @@ export default function About() {
           </Grid>
 
           <Grid className="mt-16 min-[1200px]:mt-0 items-start">
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3">
               <p className="text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] leading-tight">
                 Clients We&rsquo;ve Worked With
               </p>
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0">
-              <div className="overflow-x-auto min-[1200px]:overflow-visible">
+              <div className="overflow-x-auto min-[1200px]:overflow-visible [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 <div className="grid grid-cols-3 gap-x-0 text-[14px] min-w-[500px] min-[1200px]:min-w-0">
                   <p className="text-[16px] min-[1200px]:text-[18px] whitespace-nowrap">Beauty</p>
                   <p className="text-[16px] min-[1200px]:text-[18px] whitespace-nowrap">Fashion</p>
@@ -135,6 +135,6 @@ export default function About() {
           </Grid>
         </div>
       </section>
-    </>
+    </main>
   );
 }

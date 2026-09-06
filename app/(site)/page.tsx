@@ -32,10 +32,10 @@ export default function Home() {
       </section>
 
       {/* Bloque 2 home */}
-      <section className="w-full min-h-[50svh] md:min-h-0 md:fixed md:bottom-0 md:inset-x-0 z-20 py-8 px-5 flex flex-col justify-center">
-        <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-5 text-center text-[clamp(12px,0.9375vw,18px)]">
+      <section className="w-full min-h-[50svh] md:min-h-0 md:fixed md:bottom-0 md:inset-x-0 z-20 py-[30px] px-5 flex flex-col justify-center">
+        <div className="flex flex-col md:flex-row md:items-end gap-3 md:gap-5 text-center text-[16px]">
           <div className="md:flex-1 md:text-left">Available Worldwide</div>
-          <div className="md:flex-[2]">
+          <div className="md:flex-[2] text-[18px]">
             A creative studio specialising in branding, packaging and product
             design.
           </div>

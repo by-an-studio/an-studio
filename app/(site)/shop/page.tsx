@@ -6,7 +6,7 @@ export default function Shop() {
   return (
     <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
       <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[100svh]">
-        <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
+        <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center pb-[30px]">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-6 mb-16 min-[1200px]:mb-0 grid grid-cols-1 min-[1200px]:grid-cols-6">
             <p className="text-[32px] min-[1200px]:text-[36px] min-[1200px]:col-span-6">Shop</p>
             <p className="italic text-[24px] leading-tight min-[1200px]:col-span-4">
@@ -16,7 +16,7 @@ export default function Shop() {
             </p>
           </div>
 
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-13 min-[1200px]:self-end pb-[30px] grid grid-cols-2 gap-5 min-[1200px]:grid-cols-13">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-13 min-[1200px]:self-end grid grid-cols-2 gap-5 min-[1200px]:grid-cols-13">
             <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-span-4 mb-16 min-[1200px]:mb-0 flex flex-col gap-16 min-[1200px]:gap-0 min-[1200px]:justify-between">
               <div>
                 <p className="italic text-[16px] min-[1200px]:text-[18px] mb-2">

@@ -4,7 +4,6 @@ import Script from "next/script";
 import "./globals.css";
 import { Header } from "../_components/Header";
 import { NavLeft } from "../_components/NavLeft";
-import { AvailableWorldwide } from "../_components/AvailableWorldwide";
 import { ConditionalFooter } from "../_components/ConditionalFooter";
 
 const williamSubhead = localFont({
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="relative flex-1 flex flex-col">
           <NavLeft />
           {children}
-          <AvailableWorldwide />
         </div>
         <ConditionalFooter />
       </body>

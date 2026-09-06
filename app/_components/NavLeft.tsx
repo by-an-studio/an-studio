@@ -53,23 +53,30 @@ export function NavLeft() {
       {/* Desktop: columna absoluta de ancho 0 que ocupa todo el contenedor relative del layout,
           con el nav sticky-centrado dentro. */}
       <div className="hidden min-[1200px]:block absolute left-5 top-0 bottom-0 w-0 z-20">
-        <nav className="sticky top-1/2 -translate-y-1/2 flex flex-col gap-6">
-          {links.map(({ roman, label, href }) => {
-            const isActive = pathname === href;
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`whitespace-nowrap ${isActive ? "text-foreground" : "text-muted"}`}
-              >
-                <span className="block text-[clamp(7px,0.5208vw,10px)]">{roman}</span>
-                <span className={`block text-[clamp(13px,0.9375vw,18px)] ${isActive ? "italic" : ""}`}>
-                  {label}
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="sticky top-0 h-[100dvh]">
+          <nav className="absolute top-1/2 -translate-y-1/2 flex flex-col gap-6">
+            {links.map(({ roman, label, href }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`whitespace-nowrap ${isActive ? "text-foreground" : "text-muted"}`}
+                >
+                  <span className="block text-[clamp(7px,0.5208vw,10px)]">{roman}</span>
+                  <span className={`block text-[clamp(13px,0.9375vw,18px)] ${isActive ? "italic" : ""}`}>
+                    {label}
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
+          {pathname !== "/" && (
+            <p className="absolute bottom-[30px] text-[16px] whitespace-nowrap">
+              Available Worldwide
+            </p>
+          )}
+        </div>
       </div>
     </>
   );
