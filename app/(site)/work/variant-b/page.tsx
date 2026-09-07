@@ -114,7 +114,7 @@ export default function ProjectDetailVariantB() {
 
           {rightVariant === "single" && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col justify-end">
-              <div className="grid grid-cols-2 min-[1200px]:grid-cols-9 gap-5 items-end">
+              <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9 min-[1200px]:items-end">
                 <div className="relative min-[1200px]:col-span-4">
                   <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
                     <span>Video. 01</span>
@@ -140,7 +140,7 @@ export default function ProjectDetailVariantB() {
                   bring a more human feeling to the screen.
                 </p>
               </div>
-              <div className="grid grid-cols-1 min-[1200px]:grid-cols-11 gap-5 items-end">
+              <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-11 min-[1200px]:items-end">
                 <div className="relative min-[1200px]:col-span-1">
                   <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
                     <span>Video. 01</span>
@@ -168,7 +168,7 @@ export default function ProjectDetailVariantB() {
                   relations.
                 </p>
               </div>
-              <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
+              <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9">
                 <div className="relative min-[1200px]:col-span-1">
                   <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
                     <span>Img. 01</span>
@@ -190,7 +190,9 @@ export default function ProjectDetailVariantB() {
                 </div>
 
                 <div className="min-[1200px]:col-span-7">
-                  <div className="relative aspect-[4/5] w-full bg-muted/20 rounded-full" />
+                  <div className="flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:overflow-visible">
+                    <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] bg-muted/20 rounded-full" />
+                  </div>
                 </div>
 
                 <div className="relative min-[1200px]:col-span-1">
@@ -215,7 +217,7 @@ export default function ProjectDetailVariantB() {
                   relations.
                 </p>
               </div>
-              <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
+              <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9">
                 <div className="relative min-[1200px]:col-span-2">
                   <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
                     <span>Img. 01</span>
