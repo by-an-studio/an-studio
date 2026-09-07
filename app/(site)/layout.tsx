@@ -5,6 +5,7 @@ import "./globals.css";
 import { Header } from "../_components/Header";
 import { NavLeft } from "../_components/NavLeft";
 import { ConditionalFooter } from "../_components/ConditionalFooter";
+import { SanityLive } from "../../sanity/lib/live";
 
 const williamSubhead = localFont({
   src: [
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </div>
         <ConditionalFooter />
+        <SanityLive />
       </body>
     </html>
   );
