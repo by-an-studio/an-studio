@@ -1,5 +1,5 @@
 import { Grid } from "../../_components/Grid";
-import { WorkGrid } from "../../_components/WorkGrid";
+import { WorkGrid, type WorkProject } from "../../_components/WorkGrid";
 import { sanityFetch } from "../../../sanity/lib/live";
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc){
@@ -12,6 +12,7 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc)
 
 export default async function Work() {
   const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
+  const projectList = (projects ?? []) as WorkProject[];
 
   return (
     <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
@@ -27,7 +28,7 @@ export default async function Work() {
       </Grid>
       <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[78svh]">
         <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
-          <WorkGrid projects={projects ?? []} />
+          <WorkGrid projects={projectList} />
         </Grid>
       </div>
     </main>

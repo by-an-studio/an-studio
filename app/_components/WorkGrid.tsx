@@ -4,7 +4,7 @@ import Image from "next/image";
 import { WorkFilters } from "./WorkFilters";
 import { urlFor } from "../../sanity/lib/image";
 
-type WorkProject = {
+export type WorkProject = {
   title: string;
   slug: string;
   category: string;
