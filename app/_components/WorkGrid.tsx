@@ -1,0 +1,51 @@
+"use client";
+import { useMemo, useState } from "react";
+import Image from "next/image";
+import { WorkFilters } from "./WorkFilters";
+import { urlFor } from "../../sanity/lib/image";
+
+type WorkProject = {
+  title: string;
+  slug: string;
+  category: string;
+  projectNumber: string;
+  mainImage?: any;
+};
+
+export function WorkGrid({ projects }: { projects: WorkProject[] }) {
+  const [selected, setSelected] = useState<string | null>(null);
+
+  const filtered = useMemo(
+    () => (selected ? projects.filter((p) => p.category === selected) : projects),
+    [projects, selected]
+  );
+
+  return (
+    <>
+      <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-5 mb-16 min-[1200px]:mb-0 min-[1200px]:-translate-y-22">
+        <WorkFilters selected={selected} onSelect={setSelected} />
+      </div>
+      <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-16 min-[1200px]:h-full">
+        <div className="grid grid-cols-2 md:max-[1199px]:grid-cols-4 min-[1200px]:grid-cols-5 min-[1200px]:grid-rows-3 gap-x-5 gap-y-16 min-[1200px]:h-full">
+          {filtered.map((p) => (
+            <a key={p.slug} href={`/work/${p.slug}`} className="flex flex-col min-[1200px]:h-full min-[1200px]:min-h-0">
+              <p className="text-xs mb-2 shrink-0">{p.projectNumber}</p>
+              <div className="relative aspect-[3/4] min-[1200px]:h-full min-[1200px]:w-auto min-[1200px]:max-w-full min-[1200px]:min-h-0">
+                {p.mainImage && (() => {
+                  const rawUrl = urlFor(p.mainImage).url();
+                  const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
+                  const src = isGif ? rawUrl : urlFor(p.mainImage).width(800).url();
+                  return (
+                    <div className="absolute inset-x-0 top-5 bottom-5">
+                      <Image src={src} alt={p.title} fill unoptimized={isGif} quality={80} className="object-contain" />
+                    </div>
+                  );
+                })()}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}

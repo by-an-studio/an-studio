@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Script from "next/script";
 import "./globals.css";
 import { Header } from "../_components/Header";
 import { NavLeft } from "../_components/NavLeft";
 import { ConditionalFooter } from "../_components/ConditionalFooter";
+import { DisableScrollRestoration } from "../_components/DisableScrollRestoration";
 import { SanityLive } from "../../sanity/lib/live";
 
 const williamSubhead = localFont({
@@ -23,9 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${williamSubhead.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Script id="disable-scroll-restoration" strategy="beforeInteractive">
-          {`if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }`}
-        </Script>
+        <DisableScrollRestoration />
         <Header />
         <div className="relative flex-1 flex flex-col">
           <NavLeft />
