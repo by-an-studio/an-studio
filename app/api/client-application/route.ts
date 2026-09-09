@@ -1,11 +1,24 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "../_utils/rateLimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
+
+    // Honeypot: si un bot rellena este campo oculto, respondemos "ok" sin enviar nada.
+    if (data.company) {
+      return NextResponse.json({ ok: true });
+    }
+
+    const ip = getClientIp(request);
+    const { allowed } = checkRateLimit(`client-application:${ip}`, 3, 30 * 60 * 1000);
+    if (!allowed) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const {
       firstName,
       lastName,

@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import { Grid } from "./Grid";
 
@@ -9,7 +11,7 @@ const columns = [
   { roman: "V", label: "Journal", href: "/journal", subItems: [] },
   { roman: "VI", label: "Shop", href: "/shop", subItems: [] },
   { roman: "VII", label: "Contact", href: "#", subItems: ["Mail, an@byanstudio.com", "Phone number, +34 607 164 897"] },
-  { roman: "VIII", label: "Social", href: "#", subItems: ["Instagram, @anstudio", "Pinterest"] },
+  { roman: "VIII", label: "Social", href: "#", subItems: ["Instagram, @anstudio", "Pinterest"]},
   { roman: "IX", label: "Privacy Policy", href: "/privacy-policy", subItems: [] },
 ];
 
@@ -34,6 +36,27 @@ function FooterColumn({ col }: { col: (typeof columns)[number] }) {
 export function Footer() {
   const mainColumns = columns.slice(0, 6);
   const secondaryColumns = columns.slice(6);
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, company }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setStatus("sent");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
     <footer className="w-full pt-20 pb-[30px]">
@@ -49,23 +72,43 @@ export function Footer() {
           ))}
         </div>
       </div>
-
       <Grid className="mt-24 md:mt-0 items-end">
         <div className="col-span-8 md:col-span-6">
           <p className="mb-4 text-[16px]">Subscribe to our Newsletter</p>
-          <form className="flex gap-2" suppressHydrationWarning>
+          <form onSubmit={handleSubmit} className="flex gap-2" suppressHydrationWarning>
+            <input
+              type="text"
+              name="company"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              autoComplete="off"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="absolute w-0 h-0 opacity-0 -z-10"
+            />
             <div className="flex-1 h-[27px] overflow-hidden flex items-center">
               <div className="shrink-0 w-[133.3333%] h-[36px] md:w-full md:h-[27px] origin-left scale-75 md:scale-100">
                 <input
                   type="email"
-                  placeholder="Email Address"
+                  placeholder={status === "sent" ? "Coming soon!" : "Email Address"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   suppressHydrationWarning
-                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] w-full h-full box-border"
+                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] w-full h-full box-border focus:outline-none"
                 />
               </div>
             </div>
-            <button type="submit" className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] md:text-[16px]">Subscribe</button>
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] md:text-[16px] focus:outline-none disabled:opacity-50"
+            >
+              {status === "submitting" ? "..." : "Subscribe"}
+            </button>
           </form>
+          {status === "error" && (
+            <p className="text-[10px] mt-1 text-red-600">Something went wrong, please try again.</p>
+          )}
         </div>
         <div className="col-span-8 md:col-start-9 md:col-span-4 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left mt-16 md:mt-0">An Studio 2026®</div>
         <div className="col-span-8 md:col-start-13 md:col-span-6 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left -mt-3 md:mt-0">Independent Design Studio</div>

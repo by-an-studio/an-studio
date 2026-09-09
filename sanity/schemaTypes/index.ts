@@ -10,6 +10,7 @@ import { services } from './documents/services'
 import { about } from './documents/about'
 import { shop } from './documents/shop'
 import { clientApplication } from './documents/clientApplication'
+import { newsletterSubscriber } from './documents/newsletterSubscriber'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -24,5 +25,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     about,
     shop,
     clientApplication,
+    newsletterSubscriber,
   ],
 }

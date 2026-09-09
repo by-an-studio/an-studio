@@ -129,6 +129,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
   const [commit, setCommit] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [company, setCompany] = useState("");
 
   const heroImages = data?.heroImages ?? [];
   const featuredImages = data?.featuredImages ?? [];
@@ -169,7 +170,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       const res = await fetch("/api/client-application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, projectType, budgetReady, commit }),
+        body: JSON.stringify({ ...formData, projectType, budgetReady, commit, company }),
       });
       if (!res.ok) throw new Error("failed");
       setStatus("sent");
@@ -236,6 +237,16 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           onSubmit={handleSubmit}
           className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-17 min-[1200px]:col-span-8 min-[1200px]:row-start-1 min-[1200px]:row-span-2 min-[1200px]:self-stretch min-[1200px]:h-full mt-16 min-[1200px]:mt-0 min-[1200px]:pt-[120px] flex flex-col gap-16"
         >
+          <input
+            type="text"
+            name="company_website"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            autoComplete="off"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="absolute w-0 h-0 opacity-0 -z-10"
+          />
           <div>
             <p className="text-[18px] mb-8">Name</p>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
