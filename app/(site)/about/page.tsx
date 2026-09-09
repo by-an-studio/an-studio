@@ -53,7 +53,8 @@ const ownerBioComponents: PortableTextComponents = {
 };
 
 export default async function About() {
-  const { data } = await sanityFetch({ query: ABOUT_QUERY });
+  const { data: rawData } = await sanityFetch({ query: ABOUT_QUERY });
+  const data = rawData as any;
 
   const columns = data?.clientColumns ?? [];
   const maxRows = Math.max(0, ...columns.map((c: any) => c.clients?.length ?? 0));
@@ -152,7 +153,7 @@ export default async function About() {
                   <div className="col-span-3 border-t border-black mt-4" />
                   {clientRows.map((row, i) => (
                     <Fragment key={i}>
-                      {row.map((cell, j) => (
+                      {row.map((cell: string, j: number) => (
                         <p key={`${i}-${j}`} className="border-b border-black py-1 whitespace-nowrap">
                           {cell}
                         </p>

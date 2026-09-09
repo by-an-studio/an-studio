@@ -12,6 +12,7 @@ const CLIENT_APPLICATION_QUERY = `*[_type == "clientApplication"][0]{
 }`;
 
 export default async function ClientApplication() {
-  const { data } = await sanityFetch({ query: CLIENT_APPLICATION_QUERY });
+  const { data: rawData } = await sanityFetch({ query: CLIENT_APPLICATION_QUERY });
+  const data = rawData as any;
   return <ClientApplicationClient data={data} />;
 }

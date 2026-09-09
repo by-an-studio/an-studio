@@ -32,7 +32,8 @@ function ProductImage({ image }: { image?: any }) {
 }
 
 export default async function Shop() {
-  const { data } = await sanityFetch({ query: SHOP_QUERY });
+  const { data: rawData } = await sanityFetch({ query: SHOP_QUERY });
+  const data = rawData as any;
   const product = data?.products?.[0];
 
   return (

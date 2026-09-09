@@ -22,6 +22,7 @@ const SERVICES_QUERY = `*[_type == "services"][0]{
 }`;
 
 export default async function Services() {
-  const { data } = await sanityFetch({ query: SERVICES_QUERY });
+  const { data: rawData } = await sanityFetch({ query: SERVICES_QUERY });
+  const data = rawData as any;
   return <ServicesClient data={data} />;
 }
