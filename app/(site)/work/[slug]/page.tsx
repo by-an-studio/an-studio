@@ -50,8 +50,8 @@ function GalleryArrow({ flipped }: { flipped?: boolean }) {
   );
 }
 
-type ImageWithTags = { image: any; tags?: string[] };
-type SimpleImage = { image: any; mediaType?: "Img" | "Video"; tags?: string[] };
+type ImageWithTags = { image: any; videoUrl?: string; tags?: string[] };
+type SimpleImage = { image: any; videoUrl?: string; mediaType?: "Img" | "Video"; tags?: string[] };
 
 type ProjectData = {
   title: string;
@@ -83,7 +83,24 @@ type ProjectData = {
 };
 
 function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; className?: string }) {
-  if (!item?.image) return null;
+  if (!item?.image && !item?.videoUrl) return null;
+
+  if (item.videoUrl) {
+    return (
+      <div className={`relative bg-muted/20 overflow-hidden ${className ?? ""}`}>
+        <video
+          src={item.videoUrl}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    );
+  }
+
+  if (!item.image) return null;
   const rawUrl = urlFor(item.image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
   const src = isGif ? rawUrl : urlFor(item.image).width(1200).url();
@@ -368,7 +385,21 @@ function SimpleRight({ p }: { p: ProjectData }) {
           </div>
           <div className="min-[1200px]:col-span-7">
             <div className="flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:overflow-visible">
-              {first?.image && (() => {
+              {(first?.image || first?.videoUrl) && (() => {
+                if (first.videoUrl) {
+                  return (
+                    <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] bg-muted/20 rounded-full overflow-hidden">
+                      <video
+                        src={first.videoUrl}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+                  );
+                }
                 const rawUrl = urlFor(first.image).url();
                 const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
                 const src = isGif ? rawUrl : urlFor(first.image).width(1200).url();

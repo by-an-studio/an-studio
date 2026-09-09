@@ -1,0 +1,69 @@
+import { Resend } from "resend";
+import { NextResponse } from "next/server";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function POST(request: Request) {
+  try {
+    const data = await request.json();
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      country,
+      companyName,
+      projectBrief,
+      projectType,
+      jobPosition,
+      website,
+      website2,
+      budget,
+      budgetReady,
+      commit,
+    } = data;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !country ||
+      !companyName ||
+      !projectBrief ||
+      !projectType ||
+      !jobPosition ||
+      !budget ||
+      !budgetReady ||
+      commit !== "Yes"
+    ) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    await resend.emails.send({
+      from: "An Studio Applications <onboarding@resend.dev>",
+      to: "donthillhere@gmail.com",
+      replyTo: email,
+      subject: `New Client Application — ${companyName}`,
+      text: `First name: ${firstName}
+Last name: ${lastName}
+Email: ${email}
+Phone: ${phone}
+Country: ${country}
+Company name: ${companyName}
+Project brief: ${projectBrief}
+Project type: ${projectType}
+Job position: ${jobPosition}
+Website: ${website || "-"}
+Website (2): ${website2 || "-"}
+Budget: ${budget}
+Investment range confirmation: ${budgetReady}
+Commit: ${commit}`,
+    });
+
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+  }
+}

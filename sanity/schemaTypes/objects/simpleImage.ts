@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity'
 
 export const simpleImage = defineType({
   name: 'simpleImage',
-  title: 'Imagen (variante simple)',
+  title: 'Imagen simple',
   type: 'object',
   fields: [
     defineField({
@@ -10,16 +10,21 @@ export const simpleImage = defineType({
       title: 'Imagen',
       type: 'image',
       options: { hotspot: true },
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'URL de vídeo (opcional)',
+      description: 'Si se rellena, se mostrará este vídeo en bucle en vez de la imagen (ej: enlace de Cloudflare R2).',
+      type: 'url',
     }),
     defineField({
       name: 'mediaType',
-      title: 'Tipo',
+      title: 'Tipo de media',
       type: 'string',
       options: {
         list: [
-          { title: 'Imagen', value: 'Img' },
-          { title: 'Vídeo', value: 'Video' },
+          { title: 'Img', value: 'Img' },
+          { title: 'Video', value: 'Video' },
         ],
         layout: 'radio',
       },
@@ -28,18 +33,15 @@ export const simpleImage = defineType({
     }),
     defineField({
       name: 'tags',
-      title: 'Tags (líneas debajo del nombre del proyecto)',
+      title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
     }),
   ],
   preview: {
-    select: { media: 'image', mediaType: 'mediaType', tags: 'tags' },
-    prepare({ media, mediaType, tags }) {
-      return {
-        title: `${mediaType || 'Img'} — ${tags && tags.length ? tags.join(', ') : ''}`,
-        media,
-      }
+    select: { tags: 'tags', media: 'image' },
+    prepare({ tags, media }) {
+      return { title: tags?.join(', ') || 'Sin tags', media }
     },
   },
 })

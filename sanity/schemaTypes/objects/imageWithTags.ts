@@ -10,23 +10,24 @@ export const imageWithTags = defineType({
       title: 'Imagen',
       type: 'image',
       options: { hotspot: true },
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'URL de vídeo (opcional)',
+      description: 'Si se rellena, se mostrará este vídeo en bucle en vez de la imagen (ej: enlace de Cloudflare R2).',
+      type: 'url',
     }),
     defineField({
       name: 'tags',
-      title: 'Tags (líneas debajo del nombre del proyecto)',
-      description: 'Ej: "Brand World", "Web Design"',
+      title: 'Tags',
       type: 'array',
       of: [{ type: 'string' }],
     }),
   ],
   preview: {
-    select: { media: 'image', tags: 'tags' },
-    prepare({ media, tags }) {
-      return {
-        title: tags && tags.length ? tags.join(', ') : 'Imagen',
-        media,
-      }
+    select: { tags: 'tags', media: 'image' },
+    prepare({ tags, media }) {
+      return { title: tags?.join(', ') || 'Sin tags', media }
     },
   },
 })

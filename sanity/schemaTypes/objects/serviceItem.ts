@@ -1,0 +1,54 @@
+import { defineType, defineField } from 'sanity'
+
+export const serviceItem = defineType({
+  name: 'serviceItem',
+  title: 'Servicio',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'number',
+      title: 'Numeral (ej: 01)',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'label',
+      title: 'Nombre del servicio',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'paragraphs',
+      title: 'Párrafos',
+      type: 'array',
+      of: [{ type: 'text' }],
+    }),
+    defineField({
+      name: 'timeline',
+      title: 'Timeline estimado',
+      type: 'string',
+    }),
+    defineField({
+      name: 'featuredProject',
+      title: 'Proyecto destacado',
+      type: 'reference',
+      to: [{ type: 'project' }],
+    }),
+    defineField({
+      name: 'featuredImageIndex',
+      title: 'Numeral de la imagen (ej: 09)',
+      description: 'El "Img. XX" que se muestra junto al proyecto destacado.',
+      type: 'string',
+    }),
+    defineField({
+      name: 'featuredTags',
+      title: 'Tags mostrados junto al proyecto destacado',
+      description: 'Ej: "Brand Identity", "Product Design" — no tienen que coincidir con los tags reales del proyecto.',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+  ],
+  preview: {
+    select: { title: 'label', subtitle: 'number' },
+  },
+})
