@@ -1,4 +1,6 @@
 import { type SchemaTypeDefinition } from 'sanity'
+import { localeString } from './objects/localeString'
+import { localeText } from './objects/localeText'
 import { imageWithTags } from './objects/imageWithTags'
 import { simpleImage } from './objects/simpleImage'
 import { serviceItem } from './objects/serviceItem'
@@ -11,9 +13,14 @@ import { about } from './documents/about'
 import { shop } from './documents/shop'
 import { clientApplication } from './documents/clientApplication'
 import { newsletterSubscriber } from './documents/newsletterSubscriber'
+import { footerLinkItem } from './objects/footerLinkItem'
+import { footer } from './documents/footer'
+import { privacyPolicy } from './documents/privacyPolicy'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    localeString,
+    localeText,
     imageWithTags,
     simpleImage,
     serviceItem,
@@ -26,5 +33,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     shop,
     clientApplication,
     newsletterSubscriber,
+    footerLinkItem,
+    footer,
+    privacyPolicy,
   ],
 }

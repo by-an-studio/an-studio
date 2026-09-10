@@ -1,13 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Grid } from "./Grid";
 import { urlFor } from "../../sanity/lib/image";
+import { Link, useRouter, usePathname } from "../../i18n/navigation";
 
 type ServiceItem = {
   number: string;
   label: string;
-  paragraphs?: string[];
+  paragraphs?: any[];
   timeline?: string;
   featuredImageIndex?: string;
   featuredTags?: string[];
@@ -16,7 +18,6 @@ type ServiceItem = {
     mainImage?: any;
   };
 };
-
 type ServicesData = {
   headerLabel?: string;
   headerTagline?: string;
@@ -28,7 +29,14 @@ type ServicesData = {
   contactTitle?: string;
   contactLines?: string[];
 };
-
+const paragraphComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="text-[16px] leading-tight mb-4 last:mb-0">{children}</p>,
+  },
+  marks: {
+    underline: ({ children }) => <span className="underline decoration-1">{children}</span>,
+  },
+};
 function FeaturedImage({ item }: { item?: any }) {
   if (!item) return null;
   const rawUrl = urlFor(item).url();
@@ -40,11 +48,25 @@ function FeaturedImage({ item }: { item?: any }) {
     </div>
   );
 }
-
-export function ServicesClient({ data }: { data: ServicesData | null }) {
+export function ServicesClient({
+  data,
+  initialService,
+}: {
+  data: ServicesData | null;
+  initialService?: string;
+}) {
   const services = data?.servicesList ?? [];
-  const [selected, setSelected] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const initialIndex = initialService ? services.findIndex((s) => s.number === initialService) : -1;
+  const [selected, setSelected] = useState(initialIndex !== -1 ? initialIndex : 0);
   const active = services[selected];
+
+  function handleSelect(number: string, index: number) {
+    setSelected(index);
+    router.replace(`${pathname}?service=${number}`, { scroll: false });
+  }
 
   return (
     <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
@@ -63,7 +85,7 @@ export function ServicesClient({ data }: { data: ServicesData | null }) {
                 <li key={s.number ?? i}>
                   <button
                     type="button"
-                    onClick={() => setSelected(i)}
+                    onClick={() => handleSelect(s.number, i)}
                     className={`flex items-baseline gap-4 text-left cursor-pointer ${!isSelected ? "text-muted" : "text-foreground"}`}
                   >
                     <span className="underline decoration-1 text-[16px] min-[1200px]:text-[clamp(12px,0.8333vw,16px)]">
@@ -81,17 +103,17 @@ export function ServicesClient({ data }: { data: ServicesData | null }) {
             <span className="invisible underline decoration-1 text-[16px] min-[1200px]:text-[clamp(12px,0.8333vw,16px)]">
               (00.)
             </span>
-            <a href="/client-application" className="underline decoration-1 text-[18px]">
+            <Link href="/client-application" className="underline decoration-1 text-[18px]">
               Start Your Project Now &rarr;
-            </a>
+            </Link>
           </div>
         </div>
         {active && (
           <>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-6">
-              {active.paragraphs?.map((p, i) => (
-                <p key={i} className="text-[16px] leading-tight mb-4">{p}</p>
-              ))}
+              {active.paragraphs && (
+                <PortableText value={active.paragraphs} components={paragraphComponents} />
+              )}
               {active.timeline && <p className="text-muted text-[12px] mt-8">{active.timeline}</p>}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-20 min-[1200px]:col-span-5">

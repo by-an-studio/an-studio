@@ -1,6 +1,6 @@
-import { Grid } from "../../_components/Grid";
-import { WorkGrid, type WorkProject } from "../../_components/WorkGrid";
-import { sanityFetch } from "../../../sanity/lib/live";
+import { Grid } from "../../../_components/Grid";
+import { WorkGrid, type WorkProject } from "../../../_components/WorkGrid";
+import { sanityFetch } from "../../../../sanity/lib/live";
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc){
   title,
@@ -10,9 +10,14 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc)
   mainImage
 }`;
 
-export default async function Work() {
+export default async function Work({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
   const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
   const projectList = (projects ?? []) as WorkProject[];
+  const { category: initialCategory } = await searchParams;
 
   return (
     <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
@@ -28,7 +33,7 @@ export default async function Work() {
       </Grid>
       <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[78svh]">
         <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
-          <WorkGrid projects={projectList} />
+          <WorkGrid key={initialCategory ?? "all"} projects={projectList} initialCategory={initialCategory ?? null} />
         </Grid>
       </div>
     </main>

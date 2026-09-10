@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "work": "Work",
+    "services": "Services",
+    "about": "About",
+    "clientApplication": "Client Application",
+    "journal": "Journal",
+    "shop": "Shop"
+  },
+  "footer": {
+    "subscribe": "Suscr\u00edbete a nuestra Newsletter",
+    "emailPlaceholder": "Correo electr\u00f3nico",
+    "subscribeButton": "Suscribirse",
+    "comingSoon": "\u00a1Pr\u00f3ximamente!"
+  },
+  "clientApplication": {
+    "sections": {
+      "name": "Nombre",
+      "contact": "Contacto",
+      "aboutProject": "Sobre el Proyecto",
+      "workingWithUs": "Trabajar Con Nosotros"
+    },
+    "fields": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electr\u00f3nico",
+      "phone": "N\u00famero de tel\u00e9fono",
+      "country": "\u00bfEn qu\u00e9 pa\u00eds te encuentras?",
+      "companyName": "Nombre de la empresa",
+      "projectBrief": "Breve descripci\u00f3n del proyecto",
+      "projectTypeLabel": "\u00bfQu\u00e9 tipo de proyecto quieres desarrollar?",
+      "jobPosition": "Tu puesto de trabajo",
+      "website": "Sitio web",
+      "budgetLabel": "\u00bfCu\u00e1l es tu presupuesto para este proyecto?",
+      "budgetHint": "Nuestra inversi\u00f3n m\u00ednima de proyecto empieza en 3.000\u20ac",
+      "answerPlaceholder": "Respuesta",
+      "required": "(obligatorio)"
+    },
+    "projectTypes": {
+      "branding": "Dise\u00f1o de Marca",
+      "packaging": "Packaging",
+      "web": "Dise\u00f1o Web",
+      "social": "Redes Sociales",
+      "other": "Otro"
+    },
+    "budgetOptions": {
+      "yes": "S\u00ed",
+      "questions": "Tengo preguntas",
+      "no": "No"
+    },
+    "budgetReadyText": "Los proyectos completos de branding y sitio web de An Studio suelen oscilar entre 4.000\u20ac y 14.000\u20ac+. \u00bfEst\u00e1s actualmente preparado/a para hacer esta inversi\u00f3n?",
+    "commitText": "Me comprometo a responder a los correos de An Studio, ya que cada uno est\u00e1 personalizado con dedicaci\u00f3n. Si decido no seguir adelante, avisar\u00e9 al estudio con antelaci\u00f3n.",
+    "commitYes": "S\u00ed",
+    "disclaimer": "* Al hacer clic en \u201cCreemos Juntos\u201d acepto recibir correos de An Studio relacionados con la informaci\u00f3n que he solicitado.",
+    "submitButton": "Creemos Juntos",
+    "sending": "Enviando...",
+    "successMessage": "\u00a1Gracias! Tu solicitud ha sido enviada \u2014 nos pondremos en contacto contigo pronto.",
+    "errorCommit": "Por favor confirma \"S\u00ed\" en la pregunta de compromiso arriba antes de enviar.",
+    "errorRequired": "Por favor completa todos los campos obligatorios antes de enviar.",
+    "errorGeneric": "Algo sali\u00f3 mal, por favor int\u00e9ntalo de nuevo."
+  }
+}

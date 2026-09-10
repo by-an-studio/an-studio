@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Grid } from "../../../_components/Grid";
+import { Grid } from "../../../../_components/Grid";
 
 const categories = ["Logotype", "Monogram", "Web Design", "Packaging"];
 

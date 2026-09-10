@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { Grid } from "../../_components/Grid";
-import { urlFor } from "../../../sanity/lib/image";
-import { sanityFetch } from "../../../sanity/lib/live";
+import { Grid } from "../../../_components/Grid";
+import { urlFor } from "../../../../sanity/lib/image";
+import { sanityFetch } from "../../../../sanity/lib/live";
+import { pick, toLocale } from "../../../../i18n/locale";
 
 const SHOP_QUERY = `*[_type == "shop"][0]{
   title,
@@ -30,12 +31,31 @@ function ProductImage({ image }: { image?: any }) {
     </div>
   );
 }
-
-export default async function Shop() {
+export default async function Shop({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
   const { data: rawData } = await sanityFetch({ query: SHOP_QUERY });
-  const data = rawData as any;
-  const product = data?.products?.[0];
+  const raw = rawData as any;
 
+  const data = raw
+    ? {
+        title: pick(locale, raw.title),
+        tagline: pick(locale, raw.tagline),
+        products: (raw.products ?? []).map((prod: any) => ({
+          categoryLabel: pick(locale, prod.categoryLabel),
+          name: pick(locale, prod.name),
+          subtitle: pick(locale, prod.subtitle),
+          comingSoon: prod.comingSoon,
+          price: prod.price,
+          format: pick(locale, prod.format),
+          description: pick(locale, prod.description),
+          image: prod.image,
+          gumroadUrl: prod.gumroadUrl,
+        })),
+      }
+    : null;
+
+  const product = data?.products?.[0];
   return (
     <main className="w-full pt-24 min-[1200px]:pt-0 flex flex-col justify-between min-h-[100svh]">
       <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[100svh]">

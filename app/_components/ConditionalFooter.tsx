@@ -1,12 +1,9 @@
 "use client";
+import { usePathname } from "../../i18n/navigation";
+import { Footer, type FooterData } from "./Footer";
 
-import { usePathname } from "next/navigation";
-import { Footer } from "./Footer";
-
-export function ConditionalFooter() {
+export function ConditionalFooter({ data }: { data: FooterData | null }) {
   const pathname = usePathname();
-
   if (pathname === "/") return null;
-
-  return <Footer />;
+  return <Footer data={data} />;
 }

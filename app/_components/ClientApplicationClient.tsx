@@ -1,19 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
 import { urlFor } from "../../sanity/lib/image";
-
-const projectTypes = ["Branding Design", "Packaging", "Web Design", "Social Media", "Other"];
-const budgetOptions = ["Yes", "I have questions", "No"];
-
 type CaptionedImage = {
   image?: any;
   imageIndex?: string;
   caption?: string;
   tags?: string[];
 };
-
 type ClientApplicationData = {
   heroTitle?: string;
   heroTagline?: string;
@@ -23,7 +19,6 @@ type ClientApplicationData = {
   servicesTitle?: string;
   servicesList?: string[];
 };
-
 function SanityImg({ image, className }: { image?: any; className?: string }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
@@ -35,36 +30,39 @@ function SanityImg({ image, className }: { image?: any; className?: string }) {
     </div>
   );
 }
-
 function Field({
   label,
   required,
+  requiredLabel,
   name,
   value,
+  placeholder,
   onChange,
 }: {
   label: string;
   required?: boolean;
+  requiredLabel: string;
   name: string;
   value: string;
+  placeholder: string;
   onChange: (name: string, value: string) => void;
 }) {
   return (
     <div>
       <label className="block text-[15px] mb-4">
-        {label} {required && "(required)"}
+        {label} {required && requiredLabel}
       </label>
       <input
         type="text"
-        placeholder="Answer"
+        placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
-        className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[14px] placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground"
+        className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[14px] placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
       />
     </div>
   );
 }
-
+type Option = { value: string; label: string };
 function PillGroup({
   options,
   selected,
@@ -72,7 +70,7 @@ function PillGroup({
   fullWidth,
   mobileGrid,
 }: {
-  options: string[];
+  options: Option[];
   selected: string | null;
   onSelect: (value: string) => void;
   fullWidth?: boolean;
@@ -85,7 +83,7 @@ function PillGroup({
       }`}
     >
       {options.map((option) => {
-        const isSelected = selected === option;
+        const isSelected = selected === option.value;
         const widthClass = fullWidth
           ? mobileGrid
             ? "min-[1800px]:flex-1 min-[1800px]:min-w-0 whitespace-nowrap"
@@ -93,21 +91,20 @@ function PillGroup({
           : "whitespace-nowrap";
         return (
           <button
-            key={option}
+            key={option.value}
             type="button"
-            onClick={() => onSelect(option)}
+            onClick={() => onSelect(option.value)}
             className={`px-4 py-1 text-[12px] italic bg-[#EFECE6] text-center ${widthClass} ${
               isSelected ? "" : "opacity-40"
             }`}
           >
-            {option}
+            {option.label}
           </button>
         );
       })}
     </div>
   );
 }
-
 const initialFormData = {
   firstName: "",
   lastName: "",
@@ -121,8 +118,21 @@ const initialFormData = {
   website2: "",
   budget: "",
 };
-
 export function ClientApplicationClient({ data }: { data: ClientApplicationData | null }) {
+  const t = useTranslations("clientApplication");
+  const projectTypes: Option[] = [
+    { value: "branding", label: t("projectTypes.branding") },
+    { value: "packaging", label: t("projectTypes.packaging") },
+    { value: "web", label: t("projectTypes.web") },
+    { value: "social", label: t("projectTypes.social") },
+    { value: "other", label: t("projectTypes.other") },
+  ];
+  const budgetOptions: Option[] = [
+    { value: "yes", label: t("budgetOptions.yes") },
+    { value: "questions", label: t("budgetOptions.questions") },
+    { value: "no", label: t("budgetOptions.no") },
+  ];
+  const commitOptions: Option[] = [{ value: "yes", label: t("commitYes") }];
   const [formData, setFormData] = useState(initialFormData);
   const [projectType, setProjectType] = useState<string | null>(null);
   const [budgetReady, setBudgetReady] = useState<string | null>(null);
@@ -130,23 +140,18 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [company, setCompany] = useState("");
-
   const heroImages = data?.heroImages ?? [];
   const featuredImages = data?.featuredImages ?? [];
-
   function handleChange(name: string, value: string) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    if (commit !== "Yes") {
-      setErrorMessage('Please confirm "Yes" on the commitment question above before submitting.');
+    if (commit !== "yes") {
+      setErrorMessage(t("errorCommit"));
       setStatus("error");
       return;
     }
-
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -160,11 +165,10 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       !formData.budget ||
       !budgetReady
     ) {
-      setErrorMessage("Please fill in all required fields before submitting.");
+      setErrorMessage(t("errorRequired"));
       setStatus("error");
       return;
     }
-
     setStatus("submitting");
     try {
       const res = await fetch("/api/client-application", {
@@ -175,11 +179,10 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       if (!res.ok) throw new Error("failed");
       setStatus("sent");
     } catch {
-      setErrorMessage("Something went wrong, please try again.");
+      setErrorMessage(t("errorGeneric"));
       setStatus("error");
     }
   }
-
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px]">
       <Grid className="items-start min-[1200px]:grid-rows-[100svh_auto]">
@@ -189,12 +192,12 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <p className="italic text-[24px] min-[1200px]:text-[clamp(18px,1.25vw,24px)]">{data.heroTagline}</p>
           )}
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-16 min-[1200px]:mb-0 grid grid-cols-3 min-[1200px]:flex min-[1200px]:flex-col gap-4 min-[1200px]:h-[100svh] min-[1200px]:py-5">
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-16 min-[1200px]:mb-0 grid grid-cols-3 min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:items-center min-[1200px]:justify-center gap-4 min-[1200px]:h-[100svh] min-[1200px]:py-5">
           {heroImages.map((img, i) => (
             <SanityImg
               key={i}
               image={img}
-              className="aspect-[4/5] min-[1200px]:aspect-auto min-[1200px]:flex-1 min-[1200px]:min-h-0"
+              className="aspect-[3/4] shrink-0 min-[1200px]:flex-1 min-[1200px]:min-h-0 min-[1200px]:w-auto"
             />
           ))}
         </div>
@@ -248,67 +251,63 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             className="absolute w-0 h-0 opacity-0 -z-10"
           />
           <div>
-            <p className="text-[18px] mb-8">Name</p>
+            <p className="text-[18px] mb-8">{t("sections.name")}</p>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
-              <Field label="First name" required name="firstName" value={formData.firstName} onChange={handleChange} />
-              <Field label="Last name" required name="lastName" value={formData.lastName} onChange={handleChange} />
+              <Field label={t("fields.firstName")} required requiredLabel={t("fields.required")} name="firstName" value={formData.firstName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
+              <Field label={t("fields.lastName")} required requiredLabel={t("fields.required")} name="lastName" value={formData.lastName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             </div>
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] -mb-4">Contact</p>
+            <p className="text-[18px] -mb-4">{t("sections.contact")}</p>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
-              <Field label="Email" required name="email" value={formData.email} onChange={handleChange} />
-              <Field label="Phone number" required name="phone" value={formData.phone} onChange={handleChange} />
+              <Field label={t("fields.email")} required requiredLabel={t("fields.required")} name="email" value={formData.email} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
+              <Field label={t("fields.phone")} required requiredLabel={t("fields.required")} name="phone" value={formData.phone} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             </div>
-            <Field label="What country are you based in?" required name="country" value={formData.country} onChange={handleChange} />
+            <Field label={t("fields.country")} required requiredLabel={t("fields.required")} name="country" value={formData.country} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] -mb-4">About The Project</p>
-            <Field label="Company name" required name="companyName" value={formData.companyName} onChange={handleChange} />
-            <Field label="Project brief" required name="projectBrief" value={formData.projectBrief} onChange={handleChange} />
+            <p className="text-[18px] -mb-4">{t("sections.aboutProject")}</p>
+            <Field label={t("fields.companyName")} required requiredLabel={t("fields.required")} name="companyName" value={formData.companyName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
+            <Field label={t("fields.projectBrief")} required requiredLabel={t("fields.required")} name="projectBrief" value={formData.projectBrief} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             <div>
               <label className="block text-[15px] mb-4">
-                What type of project are you looking to develop? (required)
+                {t("fields.projectTypeLabel")} {t("fields.required")}
               </label>
               <PillGroup options={projectTypes} selected={projectType} onSelect={setProjectType} fullWidth mobileGrid />
             </div>
-            <Field label="Your job position" required name="jobPosition" value={formData.jobPosition} onChange={handleChange} />
-            <Field label="Website" name="website" value={formData.website} onChange={handleChange} />
+            <Field label={t("fields.jobPosition")} required requiredLabel={t("fields.required")} name="jobPosition" value={formData.jobPosition} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
+            <Field label={t("fields.website")} name="website" value={formData.website} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           </div>
           <div>
             <label className="block text-[15px] mb-1">
-              What is your budget for this project? (required)
+              {t("fields.budgetLabel")} {t("fields.required")}
             </label>
             <p className="text-foreground text-[12px] mb-4">
-              Our minimum project investment starts at 3.000€
+              {t("fields.budgetHint")}
             </p>
             <input
               type="text"
-              placeholder="Answer"
+              placeholder={t("fields.answerPlaceholder")}
               value={formData.budget}
               onChange={(e) => handleChange("budget", e.target.value)}
-              className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[14px] placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground"
+              className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[14px] placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
             />
           </div>
-          <Field label="Website" name="website2" value={formData.website2} onChange={handleChange} />
+          <Field label={t("fields.website")} name="website2" value={formData.website2} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           <div className="flex flex-col gap-8">
-            <p className="text-[18px]">Working With Us</p>
+            <p className="text-[18px]">{t("sections.workingWithUs")}</p>
             <div>
               <p className="text-[15px] leading-snug mb-4">
-                An Studio&rsquo;s full branding and website projects
-                typically range from 4,000€ to 14,000€+. Are you currently
-                prepared to make this investment?
+                {t("budgetReadyText")}
               </p>
               <PillGroup options={budgetOptions} selected={budgetReady} onSelect={setBudgetReady} fullWidth mobileGrid />
             </div>
             <div>
               <p className="text-[15px] leading-snug mb-4">
-                I commit to responding to An Studio&rsquo;s emails, as each
-                one is thoughtfully personalized. If I decide not to move
-                forward, I will let the studio know in advance.
+                {t("commitText")}
               </p>
               <PillGroup
-                options={["Yes"]}
+                options={commitOptions}
                 selected={commit}
                 onSelect={(value) => setCommit(commit === value ? null : value)}
                 fullWidth
@@ -317,20 +316,18 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           </div>
           <div className="min-[1200px]:mt-auto">
             {status === "sent" ? (
-              <p className="text-[14px] italic">Thank you! Your application has been sent — we&rsquo;ll be in touch soon.</p>
+              <p className="text-[14px] italic">{t("successMessage")}</p>
             ) : (
               <>
                 <p className="text-muted text-[12px] italic mb-4">
-                  * By clicking &ldquo;Let&rsquo;s Create Together&rdquo; I agree
-                  to receive emails from An Studio regarding the information I
-                  have requested.
+                  {t("disclaimer")}
                 </p>
                 <button
                   type="submit"
                   disabled={status === "submitting"}
                   className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[12px] disabled:opacity-50"
                 >
-                  {status === "submitting" ? "Sending..." : "Let\u2019s Create Together"}
+                  {status === "submitting" ? t("sending") : t("submitButton")}
                 </button>
                 {status === "error" && (
                   <p className="text-[12px] mt-2 text-red-600">{errorMessage}</p>

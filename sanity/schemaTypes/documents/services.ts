@@ -1,21 +1,20 @@
 import { defineType, defineField } from 'sanity'
-
+import { WrenchIcon } from '@sanity/icons'
 export const services = defineType({
   name: 'services',
   title: 'Services',
   type: 'document',
+  icon: WrenchIcon,
   fields: [
     defineField({
       name: 'headerLabel',
       title: 'Texto superior (ej: "Our Services:")',
-      type: 'string',
-      initialValue: 'Our Services:',
+      type: 'localeString',
     }),
     defineField({
       name: 'headerTagline',
       title: 'Subtítulo (ej: "Let\'s Create Together")',
-      type: 'string',
-      initialValue: "Let's Create Together",
+      type: 'localeString',
     }),
     defineField({
       name: 'servicesList',
@@ -26,38 +25,35 @@ export const services = defineType({
     defineField({
       name: 'otherServicesTitle',
       title: 'Título "Other Services"',
-      type: 'string',
-      initialValue: 'Other Services:',
+      type: 'localeString',
     }),
     defineField({
       name: 'otherServices',
       title: 'Other Services (lista)',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
     }),
     defineField({
       name: 'industryTitle',
       title: 'Título "Industry"',
-      type: 'string',
-      initialValue: 'Industry',
+      type: 'localeString',
     }),
     defineField({
       name: 'industry',
       title: 'Industry (lista)',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
     }),
     defineField({
       name: 'contactTitle',
       title: 'Título "Contact"',
-      type: 'string',
-      initialValue: 'Contact',
+      type: 'localeString',
     }),
     defineField({
       name: 'contactLines',
       title: 'Contact (líneas)',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
     }),
   ],
   preview: {

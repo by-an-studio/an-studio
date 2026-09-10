@@ -1,5 +1,5 @@
-import { HeroVisual } from "../_components/HeroVisual";
-import { ZoomWrapper } from "../_components/ZoomWrapper";
+import { HeroVisual } from "../../_components/HeroVisual";
+import { ZoomWrapper } from "../../_components/ZoomWrapper";
 
 export default function Home() {
   return (

@@ -1,9 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Grid } from "../../../_components/Grid";
-import { sanityFetch } from "../../../../sanity/lib/live";
-import { urlFor } from "../../../../sanity/lib/image";
+import { Link } from "../../../../../i18n/navigation";
+import { Grid } from "../../../../_components/Grid";
+import { sanityFetch } from "../../../../../sanity/lib/live";
+import { urlFor } from "../../../../../sanity/lib/image";
+import { pick, toLocale, type Loc } from "../../../../../i18n/locale";
 
 const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   title,
@@ -41,7 +42,6 @@ function BackNextArrow({ flipped }: { flipped?: boolean }) {
     </svg>
   );
 }
-
 function GalleryArrow({ flipped }: { flipped?: boolean }) {
   return (
     <svg width="25" height="7" viewBox="0 0 25 7" fill="none" className={flipped ? "rotate-180" : ""}>
@@ -49,10 +49,8 @@ function GalleryArrow({ flipped }: { flipped?: boolean }) {
     </svg>
   );
 }
-
 type ImageWithTags = { image: any; videoUrl?: string; tags?: string[] };
 type SimpleImage = { image: any; videoUrl?: string; mediaType?: "Img" | "Video"; tags?: string[] };
-
 type ProjectData = {
   title: string;
   projectNumber: string;
@@ -81,10 +79,8 @@ type ProjectData = {
   simpleCaptionText?: string;
   simpleImages?: SimpleImage[];
 };
-
 function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; className?: string }) {
   if (!item?.image && !item?.videoUrl) return null;
-
   if (item.videoUrl) {
     return (
       <div className={`relative bg-muted/20 overflow-hidden ${className ?? ""}`}>
@@ -99,7 +95,6 @@ function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; c
       </div>
     );
   }
-
   if (!item.image) return null;
   const rawUrl = urlFor(item.image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
@@ -110,18 +105,34 @@ function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; c
     </div>
   );
 }
-
-export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const { data: project } = await sanityFetch({
+export default async function ProjectDetail({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+  const { slug, locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const { data: raw } = await sanityFetch({
     query: PROJECT_BY_SLUG_QUERY,
     params: { slug },
   });
-
-  if (!project) return notFound();
-
-  const p = project as ProjectData;
-
+  if (!raw) return notFound();
+  const r = raw as any;
+  const p: ProjectData = {
+    ...r,
+    subtitleLine: pick(locale, r.subtitleLine),
+    collaboration: pick(locale, r.collaboration),
+    aboutParagraph1: pick(locale, r.aboutParagraph1),
+    aboutParagraph2: pick(locale, r.aboutParagraph2),
+    bottomParagraph: pick(locale, r.bottomParagraph),
+    rightIntroText: pick(locale, r.rightIntroText),
+    visualIdentityText: pick(locale, r.visualIdentityText),
+    timelineDuration: pick(locale, r.timelineDuration),
+    timelineService: pick(locale, r.timelineService),
+    timelineText: pick(locale, r.timelineText),
+    mutedCaption: pick(locale, r.mutedCaption),
+    finalText: pick(locale, r.finalText),
+    simpleCaptionText: pick(locale, r.simpleCaptionText),
+    projectTags: ((r.projectTags ?? []) as Loc[])
+      .map((t) => pick(locale, t))
+      .filter((t): t is string => Boolean(t)),
+  };
   return (
     <main className="w-full pb-[30px]">
       <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-16 min-[1200px]:gap-[50px]">
@@ -159,8 +170,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 <>
                   <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
                   <div className="flex flex-wrap gap-4 min-[1200px]:gap-8 text-[12px] uppercase">
-                    {p.projectTags.map((t) => (
-                      <span key={t}>{t}</span>
+                    {p.projectTags.map((t, i) => (
+                      <span key={i}>{t}</span>
                     ))}
                   </div>
                 </>
@@ -172,7 +183,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               </p>
             )}
           </div>
-
           {p.variant === "gallery" ? (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
               {p.rightIntroText && (
@@ -189,7 +199,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <div>
                         <p>{p.title}</p>
                         <div className="text-muted">
-                          {p.image1.tags?.map((t) => <p key={t}>{t}</p>)}
+                          {p.image1.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
                     </div>
@@ -203,7 +213,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <div>
                         <p>{p.title}</p>
                         <div className="text-muted">
-                          {p.image2.tags?.map((t) => <p key={t}>{t}</p>)}
+                          {p.image2.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
                     </div>
@@ -216,7 +226,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           )}
         </Grid>
       </div>
-
       {p.variant === "gallery" && p.galleryImages && p.galleryImages.length > 0 && (
         <Grid className="mt-24">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21">
@@ -229,7 +238,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     <div>
                       <p>{p.title}</p>
                       <div className="text-muted">
-                        {img.tags?.map((t) => <p key={t}>{t}</p>)}
+                        {img.tags?.map((t, j) => <p key={j}>{t}</p>)}
                       </div>
                     </div>
                   </div>
@@ -239,7 +248,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           </div>
         </Grid>
       )}
-
       {p.variant === "gallery" && (
         <Grid className="mt-24 items-start">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8 mb-16 min-[1200px]:mb-0 min-[1200px]:self-stretch flex flex-col">
@@ -280,7 +288,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <div>
                         <p>{p.title}</p>
                         <div className="text-muted">
-                          {p.image7.tags?.map((t) => <p key={t}>{t}</p>)}
+                          {p.image7.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
                     </div>
@@ -294,7 +302,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <div>
                         <p>{p.title}</p>
                         <div className="text-muted">
-                          {p.image8.tags?.map((t) => <p key={t}>{t}</p>)}
+                          {p.image8.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
                     </div>
@@ -316,7 +324,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 <div>
                   <p>{p.title}</p>
                   <div className="text-muted">
-                    {p.image9.tags?.map((t) => <p key={t}>{t}</p>)}
+                    {p.image9.tags?.map((t, i) => <p key={i}>{t}</p>)}
                   </div>
                 </div>
               </div>
@@ -327,22 +335,19 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
     </main>
   );
 }
-
 function SimpleRight({ p }: { p: ProjectData }) {
   const images = p.simpleImages ?? [];
-
   const captionBlock = (idx: number, item: SimpleImage) => (
     <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
       <span>{item.mediaType ?? "Img"}. {String(idx + 1).padStart(2, "0")}</span>
       <div>
         <p>{p.title}</p>
         <div className="text-muted">
-          {item.tags?.map((t) => <p key={t}>{t}</p>)}
+          {item.tags?.map((t, i) => <p key={i}>{t}</p>)}
         </div>
       </div>
     </div>
   );
-
   if (p.simpleLayout === "double") {
     const [img1, img2] = images;
     return (
@@ -364,7 +369,6 @@ function SimpleRight({ p }: { p: ProjectData }) {
       </div>
     );
   }
-
   if (p.simpleLayout === "gallery") {
     const first = images[0];
     return (
@@ -420,7 +424,6 @@ function SimpleRight({ p }: { p: ProjectData }) {
       </div>
     );
   }
-
   if (p.simpleLayout === "singleWide") {
     const first = images[0];
     return (
@@ -441,7 +444,6 @@ function SimpleRight({ p }: { p: ProjectData }) {
       </div>
     );
   }
-
   const first = images[0];
   return (
     <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col justify-end">

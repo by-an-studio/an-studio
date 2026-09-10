@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity'
-
 export const shopProduct = defineType({
   name: 'shopProduct',
   title: 'Producto',
@@ -9,18 +8,18 @@ export const shopProduct = defineType({
       name: 'categoryLabel',
       title: 'Categoría (ej: "Social Media")',
       description: 'Se muestra como "For [Categoría]"',
-      type: 'string',
+      type: 'localeString',
     }),
     defineField({
       name: 'name',
       title: 'Nombre del producto (ej: "The Dossier")',
-      type: 'string',
+      type: 'localeString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'subtitle',
       title: 'Subtítulo (ej: "Social Media Templates")',
-      type: 'string',
+      type: 'localeString',
     }),
     defineField({
       name: 'comingSoon',
@@ -36,12 +35,12 @@ export const shopProduct = defineType({
     defineField({
       name: 'format',
       title: 'Formato (ej: "Canva")',
-      type: 'string',
+      type: 'localeString',
     }),
     defineField({
       name: 'description',
       title: 'Descripción',
-      type: 'text',
+      type: 'localeText',
     }),
     defineField({
       name: 'image',
@@ -56,6 +55,6 @@ export const shopProduct = defineType({
     }),
   ],
   preview: {
-    select: { title: 'name', media: 'image' },
+    select: { title: 'name.en', media: 'image' },
   },
 })

@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity'
-
 export const captionedImage = defineType({
   name: 'captionedImage',
   title: 'Imagen con caption',
@@ -19,7 +18,7 @@ export const captionedImage = defineType({
     defineField({
       name: 'caption',
       title: 'Nombre (ej: "An Studio")',
-      type: 'string',
+      type: 'localeString',
     }),
     defineField({
       name: 'tags',
@@ -29,6 +28,6 @@ export const captionedImage = defineType({
     }),
   ],
   preview: {
-    select: { title: 'caption', media: 'image' },
+    select: { title: 'caption.en', media: 'image' },
   },
 })

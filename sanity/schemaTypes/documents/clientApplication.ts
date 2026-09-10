@@ -1,9 +1,10 @@
 import { defineType, defineField } from 'sanity'
-
+import { ClipboardIcon } from '@sanity/icons'
 export const clientApplication = defineType({
   name: 'clientApplication',
   title: 'Client Application',
   type: 'document',
+  icon: ClipboardIcon,
   groups: [
     { name: 'hero', title: 'Hero' },
     { name: 'content', title: 'Contenido' },
@@ -12,14 +13,13 @@ export const clientApplication = defineType({
     defineField({
       name: 'heroTitle',
       title: 'Título (ej: "Work With Us")',
-      type: 'string',
-      initialValue: 'Work With Us',
+      type: 'localeString',
       group: 'hero',
     }),
     defineField({
       name: 'heroTagline',
       title: 'Tagline (ej: "Let\'s build something lasting")',
-      type: 'string',
+      type: 'localeString',
       group: 'hero',
     }),
     defineField({
@@ -32,7 +32,7 @@ export const clientApplication = defineType({
     defineField({
       name: 'headline',
       title: 'Frase destacada',
-      type: 'text',
+      type: 'localeText',
       group: 'content',
     }),
     defineField({
@@ -45,15 +45,14 @@ export const clientApplication = defineType({
     defineField({
       name: 'servicesTitle',
       title: 'Título "List of Services"',
-      type: 'string',
-      initialValue: 'List of Services',
+      type: 'localeString',
       group: 'content',
     }),
     defineField({
       name: 'servicesList',
       title: 'Lista de servicios',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
       group: 'content',
     }),
   ],

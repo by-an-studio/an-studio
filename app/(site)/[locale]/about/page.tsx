@@ -1,9 +1,10 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import { Grid } from "../../_components/Grid";
-import { urlFor } from "../../../sanity/lib/image";
-import { sanityFetch } from "../../../sanity/lib/live";
+import { Grid } from "../../../_components/Grid";
+import { urlFor } from "../../../../sanity/lib/image";
+import { sanityFetch } from "../../../../sanity/lib/live";
+import { pick, pickList, toLocale, pickPortableText } from "../../../../i18n/locale";
 
 const ABOUT_QUERY = `*[_type == "about"][0]{
   ownerSectionLabel,
@@ -24,6 +25,7 @@ const ABOUT_QUERY = `*[_type == "about"][0]{
   clientColumns[]{title, clients}
 }`;
 
+
 function SanityImg({ image, className }: { image?: any; className?: string }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
@@ -35,7 +37,6 @@ function SanityImg({ image, className }: { image?: any; className?: string }) {
     </div>
   );
 }
-
 const introComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
@@ -45,23 +46,46 @@ const introComponents: PortableTextComponents = {
     ),
   },
 };
-
 const ownerBioComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="text-[16px] leading-tight mb-4">{children}</p>,
   },
 };
-
-export default async function About() {
+export default async function About({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
   const { data: rawData } = await sanityFetch({ query: ABOUT_QUERY });
-  const data = rawData as any;
+  const raw = rawData as any;
+
+  const data = raw
+    ? {
+        ownerSectionLabel: pick(locale, raw.ownerSectionLabel),
+        ownerImage: raw.ownerImage,
+        ownerNameLabel: pick(locale, raw.ownerNameLabel),
+        ownerBio: pickPortableText(locale, raw.ownerBio),
+        ownerImageIndex: raw.ownerImageIndex,
+        ownerName: raw.ownerName,
+        ownerRole: pick(locale, raw.ownerRole),
+        introText: pickPortableText(locale, raw.introText),
+        introSubtext: pick(locale, raw.introSubtext),
+        introImage: raw.introImage,
+        awardsTitle: pick(locale, raw.awardsTitle),
+        awards: pickList(locale, raw.awards),
+        exhibitionsTitle: pick(locale, raw.exhibitionsTitle),
+        exhibitions: pickList(locale, raw.exhibitions),
+        clientsTitle: pick(locale, raw.clientsTitle),
+        clientColumns: (raw.clientColumns ?? []).map((c: any) => ({
+          title: pick(locale, c.title),
+          clients: pickList(locale, c.clients),
+        })),
+      }
+    : null;
 
   const columns = data?.clientColumns ?? [];
   const maxRows = Math.max(0, ...columns.map((c: any) => c.clients?.length ?? 0));
   const clientRows = Array.from({ length: maxRows }, (_, i) =>
     columns.map((c: any) => c.clients?.[i] ?? "")
   );
-
   return (
     <main className="w-full">
       <div className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col justify-between min-h-[100svh]">

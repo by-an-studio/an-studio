@@ -1,31 +1,61 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
+import { Link } from "../../i18n/navigation";
 
-const columns = [
-  { roman: "I", label: "Work", href: "/work", subItems: ["Brand Identity", "Packaging"] },
-  { roman: "II", label: "Services", href: "/services", subItems: ["Brand Identity","Packaging","Web Design","Social Media Retainer","Creative Direction"] },
-  { roman: "III", label: "About", href: "/about", subItems: ["An Studio"] },
-  { roman: "IV", label: "Client Application", href: "/client-application", subItems: ["Apply now"] },
-  { roman: "V", label: "Journal", href: "/journal", subItems: [] },
-  { roman: "VI", label: "Shop", href: "/shop", subItems: [] },
-  { roman: "VII", label: "Contact", href: "#", subItems: ["Mail, an@byanstudio.com", "Phone number, +34 607 164 897"] },
-  { roman: "VIII", label: "Social", href: "#", subItems: ["Instagram, @anstudio", "Pinterest"]},
-  { roman: "IX", label: "Privacy Policy", href: "/privacy-policy", subItems: [] },
-];
+type FooterLinkItem = { label: string; href?: string };
 
-function FooterColumn({ col }: { col: (typeof columns)[number] }) {
+export type FooterData = {
+  subscribeLabel?: string;
+  emailPlaceholder?: string;
+  subscribeButtonLabel?: string;
+  comingSoonLabel?: string;
+  workSubItems?: FooterLinkItem[];
+  servicesSubItems?: FooterLinkItem[];
+  aboutSubItems?: FooterLinkItem[];
+  clientApplicationSubItems?: FooterLinkItem[];
+  contactLabel?: string;
+  contactMail?: FooterLinkItem;
+  contactPhone?: FooterLinkItem;
+  socialLabel?: string;
+  socialInstagram?: FooterLinkItem;
+  socialPinterest?: FooterLinkItem;
+  privacyPolicyLabel?: string;
+};
+
+type PlainSubItem = { label: string; href?: string };
+type FooterColumnData = { roman: string; label: string; href: string; subItems: PlainSubItem[] };
+
+function SubItemLink({ item }: { item: PlainSubItem }) {
+  if (!item.href) {
+    return <span>{item.label}</span>;
+  }
+  const isExternal = /^https?:\/\//.test(item.href) || item.href.startsWith("mailto:") || item.href.startsWith("tel:");
+  if (isExternal) {
+    return (
+      <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+        {item.label}
+      </a>
+    );
+  }
+  return <Link href={item.href}>{item.label}</Link>;
+}
+
+function FooterColumn({ col }: { col: FooterColumnData }) {
   return (
     <div className="md:shrink-0">
-      <a href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[18px]">
+      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[18px]">
         <span className="text-[10px]">{col.roman}</span>
         <span>{col.label}</span>
-      </a>
+      </Link>
       {col.subItems.length > 0 && (
         <ul className="mt-[2px] md:mt-2 space-y-1">
-          {col.subItems.map((item) => (
-            <li key={item} className="text-[12px] md:text-sm whitespace-nowrap">{item}</li>
+          {col.subItems.map((item, i) => (
+            <li key={i} className="text-[12px] md:text-sm whitespace-nowrap">
+              <SubItemLink item={item} />
+            </li>
           ))}
         </ul>
       )}
@@ -33,13 +63,36 @@ function FooterColumn({ col }: { col: (typeof columns)[number] }) {
   );
 }
 
-export function Footer() {
-  const mainColumns = columns.slice(0, 6);
-  const secondaryColumns = columns.slice(6);
+export function Footer({ data }: { data: FooterData | null }) {
+  const tNav = useTranslations("nav");
+
+  const mainColumns: FooterColumnData[] = [
+    { roman: "I", label: tNav("work"), href: "/work", subItems: data?.workSubItems ?? [] },
+    { roman: "II", label: tNav("services"), href: "/services", subItems: data?.servicesSubItems ?? [] },
+    { roman: "III", label: tNav("about"), href: "/about", subItems: data?.aboutSubItems ?? [] },
+    { roman: "IV", label: tNav("clientApplication"), href: "/client-application", subItems: data?.clientApplicationSubItems ?? [] },
+    { roman: "V", label: tNav("journal"), href: "/journal", subItems: [] },
+    { roman: "VI", label: tNav("shop"), href: "/shop", subItems: [] },
+  ];
+  const secondaryColumns: FooterColumnData[] = [
+    {
+      roman: "VII",
+      label: data?.contactLabel ?? "Contact",
+      href: "#",
+      subItems: [data?.contactMail, data?.contactPhone].filter((v): v is PlainSubItem => Boolean(v)),
+    },
+    {
+      roman: "VIII",
+      label: data?.socialLabel ?? "Social",
+      href: "#",
+      subItems: [data?.socialInstagram, data?.socialPinterest].filter((v): v is PlainSubItem => Boolean(v)),
+    },
+    { roman: "IX", label: data?.privacyPolicyLabel ?? "Privacy Policy", href: "/privacy-policy", subItems: [] },
+  ];
+
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
@@ -57,7 +110,6 @@ export function Footer() {
       setStatus("error");
     }
   }
-
   return (
     <footer className="w-full pt-20 pb-[30px]">
       <div className="h-[600px] flex flex-col gap-[60px] px-5 md:flex-row md:flex-wrap md:justify-between md:gap-y-10">
@@ -74,7 +126,7 @@ export function Footer() {
       </div>
       <Grid className="mt-24 md:mt-0 items-end">
         <div className="col-span-8 md:col-span-6">
-          <p className="mb-4 text-[16px]">Subscribe to our Newsletter</p>
+          <p className="mb-4 text-[16px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
           <form onSubmit={handleSubmit} className="flex gap-2" suppressHydrationWarning>
             <input
               type="text"
@@ -90,7 +142,7 @@ export function Footer() {
               <div className="shrink-0 w-[133.3333%] h-[36px] md:w-full md:h-[27px] origin-left scale-75 md:scale-100">
                 <input
                   type="email"
-                  placeholder={status === "sent" ? "Coming soon!" : "Email Address"}
+                  placeholder={status === "sent" ? (data?.comingSoonLabel ?? "Coming soon!") : (data?.emailPlaceholder ?? "Email Address")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   suppressHydrationWarning
@@ -103,7 +155,7 @@ export function Footer() {
               disabled={status === "submitting"}
               className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] md:text-[16px] focus:outline-none disabled:opacity-50"
             >
-              {status === "submitting" ? "..." : "Subscribe"}
+              {status === "submitting" ? "..." : (data?.subscribeButtonLabel ?? "Subscribe")}
             </button>
           </form>
           {status === "error" && (

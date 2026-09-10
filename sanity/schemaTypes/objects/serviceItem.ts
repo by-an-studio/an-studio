@@ -1,5 +1,17 @@
 import { defineType, defineField } from 'sanity'
-
+const richTextBlock = {
+  type: 'block',
+  styles: [{ title: 'Normal', value: 'normal' }],
+  lists: [],
+  marks: {
+    decorators: [
+      { title: 'Bold', value: 'strong' },
+      { title: 'Italic', value: 'em' },
+      { title: 'Underline', value: 'underline' },
+    ],
+    annotations: [],
+  },
+}
 export const serviceItem = defineType({
   name: 'serviceItem',
   title: 'Servicio',
@@ -14,19 +26,22 @@ export const serviceItem = defineType({
     defineField({
       name: 'label',
       title: 'Nombre del servicio',
-      type: 'string',
+      type: 'localeString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'paragraphs',
-      title: 'Párrafos',
-      type: 'array',
-      of: [{ type: 'text' }],
+      title: 'Párrafos (texto enriquecido, ES/EN)',
+      type: 'object',
+      fields: [
+        defineField({ name: 'en', title: 'English', type: 'array', of: [richTextBlock] }),
+        defineField({ name: 'es', title: 'Español', type: 'array', of: [richTextBlock] }),
+      ],
     }),
     defineField({
       name: 'timeline',
       title: 'Timeline estimado',
-      type: 'string',
+      type: 'localeString',
     }),
     defineField({
       name: 'featuredProject',
@@ -45,10 +60,10 @@ export const serviceItem = defineType({
       title: 'Tags mostrados junto al proyecto destacado',
       description: 'Ej: "Brand Identity", "Product Design" — no tienen que coincidir con los tags reales del proyecto.',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
     }),
   ],
   preview: {
-    select: { title: 'label', subtitle: 'number' },
+    select: { title: 'label.en', subtitle: 'number' },
   },
 })

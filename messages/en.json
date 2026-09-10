@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "work": "Work",
+    "services": "Services",
+    "about": "About",
+    "clientApplication": "Client Application",
+    "journal": "Journal",
+    "shop": "Shop"
+  },
+  "footer": {
+    "subscribe": "Subscribe to our Newsletter",
+    "emailPlaceholder": "Email Address",
+    "subscribeButton": "Subscribe",
+    "comingSoon": "Coming soon!"
+  },
+  "clientApplication": {
+    "sections": {
+      "name": "Name",
+      "contact": "Contact",
+      "aboutProject": "About The Project",
+      "workingWithUs": "Working With Us"
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone number",
+      "country": "What country are you based in?",
+      "companyName": "Company name",
+      "projectBrief": "Project brief",
+      "projectTypeLabel": "What type of project are you looking to develop?",
+      "jobPosition": "Your job position",
+      "website": "Website",
+      "budgetLabel": "What is your budget for this project?",
+      "budgetHint": "Our minimum project investment starts at 3.000\u20ac",
+      "answerPlaceholder": "Answer",
+      "required": "(required)"
+    },
+    "projectTypes": {
+      "branding": "Branding Design",
+      "packaging": "Packaging",
+      "web": "Web Design",
+      "social": "Social Media",
+      "other": "Other"
+    },
+    "budgetOptions": {
+      "yes": "Yes",
+      "questions": "I have questions",
+      "no": "No"
+    },
+    "budgetReadyText": "An Studio\u2019s full branding and website projects typically range from 4,000\u20ac to 14,000\u20ac+. Are you currently prepared to make this investment?",
+    "commitText": "I commit to responding to An Studio\u2019s emails, as each one is thoughtfully personalized. If I decide not to move forward, I will let the studio know in advance.",
+    "commitYes": "Yes",
+    "disclaimer": "* By clicking \u201cLet\u2019s Create Together\u201d I agree to receive emails from An Studio regarding the information I have requested.",
+    "submitButton": "Let\u2019s Create Together",
+    "sending": "Sending...",
+    "successMessage": "Thank you! Your application has been sent \u2014 we\u2019ll be in touch soon.",
+    "errorCommit": "Please confirm \"Yes\" on the commitment question above before submitting.",
+    "errorRequired": "Please fill in all required fields before submitting.",
+    "errorGeneric": "Something went wrong, please try again."
+  }
+}

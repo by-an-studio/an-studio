@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity'
-
 export const clientColumn = defineType({
   name: 'clientColumn',
   title: 'Columna de clientes',
@@ -8,17 +7,17 @@ export const clientColumn = defineType({
     defineField({
       name: 'title',
       title: 'Título de columna (ej: Beauty)',
-      type: 'string',
+      type: 'localeString',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'clients',
       title: 'Clientes',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{ type: 'localeString' }],
     }),
   ],
   preview: {
-    select: { title: 'title' },
+    select: { title: 'title.en' },
   },
 })
