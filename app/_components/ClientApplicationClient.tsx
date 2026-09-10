@@ -214,7 +214,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
                     {item.imageIndex && <span>Img. {item.imageIndex}</span>}
                     <div>
                       {item.caption && <p>{item.caption}</p>}
-                      <div className="text-muted">
+                      <div className="text-muted mt-[15px]">
                         {item.tags?.map((tag, j) => <p key={j}>{tag}</p>)}
                       </div>
                     </div>

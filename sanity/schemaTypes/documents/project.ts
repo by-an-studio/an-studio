@@ -115,15 +115,9 @@ export const project = defineType({
       group: 'left',
     }),
     defineField({
-      name: 'aboutParagraph1',
-      title: 'About — párrafo 1',
-      type: 'localeText',
-      group: 'left',
-    }),
-    defineField({
-      name: 'aboutParagraph2',
-      title: 'About — párrafo 2',
-      type: 'localeText',
+      name: 'aboutParagraph',
+      title: 'About — párrafo principal',
+      type: 'richText',
       group: 'left',
     }),
     defineField({
@@ -137,13 +131,13 @@ export const project = defineType({
     defineField({
       name: 'bottomParagraph',
       title: 'Párrafo inferior (alineado abajo)',
-      type: 'localeText',
+      type: 'richText',
       group: 'left',
     }),
     defineField({
       name: 'rightIntroText',
       title: 'Texto introductorio (columna derecha)',
-      type: 'localeText',
+      type: 'richText',
       group: 'gallery',
       hidden: ({ parent }) => parent?.variant !== 'gallery',
     }),
@@ -172,7 +166,7 @@ export const project = defineType({
     defineField({
       name: 'visualIdentityText',
       title: 'Texto "identidad visual"',
-      type: 'localeText',
+      type: 'richText',
       group: 'gallery',
       hidden: ({ parent }) => parent?.variant !== 'gallery',
     }),
@@ -193,14 +187,14 @@ export const project = defineType({
     defineField({
       name: 'timelineText',
       title: 'Texto junto al timeline',
-      type: 'localeText',
+      type: 'richText',
       group: 'gallery',
       hidden: ({ parent }) => parent?.variant !== 'gallery',
     }),
     defineField({
       name: 'mutedCaption',
       title: 'Caption gris (texto pequeño)',
-      type: 'localeText',
+      type: 'richText',
       group: 'gallery',
       hidden: ({ parent }) => parent?.variant !== 'gallery',
     }),
@@ -221,7 +215,7 @@ export const project = defineType({
     defineField({
       name: 'finalText',
       title: 'Texto final',
-      type: 'localeText',
+      type: 'richText',
       group: 'gallery',
       hidden: ({ parent }) => parent?.variant !== 'gallery',
     }),
@@ -236,7 +230,7 @@ export const project = defineType({
       name: 'simpleCaptionText',
       title: 'Texto encima de las imágenes',
       description: 'Si se deja vacío, no se renderiza en la página.',
-      type: 'localeText',
+      type: 'richText',
       group: 'simple',
       hidden: ({ parent }) => parent?.variant !== 'simple',
     }),

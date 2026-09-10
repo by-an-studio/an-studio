@@ -122,7 +122,7 @@ export function ServicesClient({
                 {active.featuredImageIndex && <span>Img. {active.featuredImageIndex}</span>}
                 <div>
                   {active.featuredProject?.title && <p>{active.featuredProject.title}</p>}
-                  <div className="text-muted">
+                  <div className="text-muted mt-[15px]">
                     {active.featuredTags?.map((tag, i) => (
                       <p key={i}>{tag}</p>
                     ))}

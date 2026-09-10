@@ -1,6 +1,7 @@
 import { type SchemaTypeDefinition } from 'sanity'
 import { localeString } from './objects/localeString'
 import { localeText } from './objects/localeText'
+import { richText } from './objects/richText'
 import { imageWithTags } from './objects/imageWithTags'
 import { simpleImage } from './objects/simpleImage'
 import { serviceItem } from './objects/serviceItem'
@@ -21,6 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     localeString,
     localeText,
+    richText,
     imageWithTags,
     simpleImage,
     serviceItem,

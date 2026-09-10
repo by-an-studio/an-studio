@@ -1,19 +1,18 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Link } from "../../../../../i18n/navigation";
 import { Grid } from "../../../../_components/Grid";
 import { sanityFetch } from "../../../../../sanity/lib/live";
 import { urlFor } from "../../../../../sanity/lib/image";
-import { pick, toLocale, type Loc } from "../../../../../i18n/locale";
-
+import { pick, toLocale, pickPortableText, type Loc } from "../../../../../i18n/locale";
 const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   title,
   projectNumber,
   category,
   subtitleLine,
   collaboration,
-  aboutParagraph1,
-  aboutParagraph2,
+  aboutParagraph,
   projectTags,
   bottomParagraph,
   variant,
@@ -34,7 +33,6 @@ const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]
   simpleCaptionText,
   simpleImages
 }`;
-
 function BackNextArrow({ flipped }: { flipped?: boolean }) {
   return (
     <svg width="10" height="8" viewBox="0 0 16 10" fill="none" className={flipped ? "rotate-180" : ""}>
@@ -49,6 +47,25 @@ function GalleryArrow({ flipped }: { flipped?: boolean }) {
     </svg>
   );
 }
+const richTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+  },
+  marks: {
+    underline: ({ children }) => <span className="underline decoration-1">{children}</span>,
+  },
+};
+function RichText({ value, className }: { value?: any[]; className?: string }) {
+  if (!value || value.length === 0) return null;
+  return (
+    <div className={className}>
+      <PortableText value={value} components={richTextComponents} />
+    </div>
+  );
+}
+function hasRichText(value?: any[]) {
+  return Boolean(value && value.length > 0);
+}
 type ImageWithTags = { image: any; videoUrl?: string; tags?: string[] };
 type SimpleImage = { image: any; videoUrl?: string; mediaType?: "Img" | "Video"; tags?: string[] };
 type ProjectData = {
@@ -57,26 +74,25 @@ type ProjectData = {
   category: string;
   subtitleLine?: string;
   collaboration?: string;
-  aboutParagraph1?: string;
-  aboutParagraph2?: string;
+  aboutParagraph?: any[];
   projectTags?: string[];
-  bottomParagraph?: string;
+  bottomParagraph?: any[];
   variant: "gallery" | "simple";
   simpleLayout?: "single" | "double" | "gallery" | "singleWide";
-  rightIntroText?: string;
+  rightIntroText?: any[];
   image1?: ImageWithTags;
   image2?: ImageWithTags;
   galleryImages?: ImageWithTags[];
-  visualIdentityText?: string;
+  visualIdentityText?: any[];
   timelineDuration?: string;
   timelineService?: string;
-  timelineText?: string;
-  mutedCaption?: string;
+  timelineText?: any[];
+  mutedCaption?: any[];
   image7?: ImageWithTags;
   image8?: ImageWithTags;
-  finalText?: string;
+  finalText?: any[];
   image9?: ImageWithTags;
-  simpleCaptionText?: string;
+  simpleCaptionText?: any[];
   simpleImages?: SimpleImage[];
 };
 function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; className?: string }) {
@@ -118,23 +134,22 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
     ...r,
     subtitleLine: pick(locale, r.subtitleLine),
     collaboration: pick(locale, r.collaboration),
-    aboutParagraph1: pick(locale, r.aboutParagraph1),
-    aboutParagraph2: pick(locale, r.aboutParagraph2),
-    bottomParagraph: pick(locale, r.bottomParagraph),
-    rightIntroText: pick(locale, r.rightIntroText),
-    visualIdentityText: pick(locale, r.visualIdentityText),
+    aboutParagraph: pickPortableText(locale, r.aboutParagraph),
+    bottomParagraph: pickPortableText(locale, r.bottomParagraph),
+    rightIntroText: pickPortableText(locale, r.rightIntroText),
+    visualIdentityText: pickPortableText(locale, r.visualIdentityText),
     timelineDuration: pick(locale, r.timelineDuration),
     timelineService: pick(locale, r.timelineService),
-    timelineText: pick(locale, r.timelineText),
-    mutedCaption: pick(locale, r.mutedCaption),
-    finalText: pick(locale, r.finalText),
-    simpleCaptionText: pick(locale, r.simpleCaptionText),
+    timelineText: pickPortableText(locale, r.timelineText),
+    mutedCaption: pickPortableText(locale, r.mutedCaption),
+    finalText: pickPortableText(locale, r.finalText),
+    simpleCaptionText: pickPortableText(locale, r.simpleCaptionText),
     projectTags: ((r.projectTags ?? []) as Loc[])
       .map((t) => pick(locale, t))
       .filter((t): t is string => Boolean(t)),
   };
   return (
-    <main className="w-full pb-[30px]">
+    <main className={`w-full ${p.variant === "gallery" ? "pb-[30px]" : ""}`}>
       <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-16 min-[1200px]:gap-[50px]">
         <Grid>
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] flex justify-between">
@@ -161,11 +176,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   In Collaboration with <span className="underline decoration-1">{p.collaboration}</span>
                 </p>
               )}
-              {(p.aboutParagraph1 || p.aboutParagraph2) && (
+              {hasRichText(p.aboutParagraph) && (
                 <p className="underline decoration-1 mb-4 text-[18px]">(About)</p>
               )}
-              {p.aboutParagraph1 && <p className="text-[18px] leading-tight mb-4">{p.aboutParagraph1}</p>}
-              {p.aboutParagraph2 && <p className="text-[18px] leading-tight mb-8">{p.aboutParagraph2}</p>}
+              <RichText value={p.aboutParagraph} className="text-[18px] leading-tight mb-8" />
               {p.projectTags && p.projectTags.length > 0 && (
                 <>
                   <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
@@ -177,17 +191,16 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 </>
               )}
             </div>
-            {p.bottomParagraph && (
-              <p className="text-[16px] min-[1200px]:text-[18px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8">
-                {p.bottomParagraph}
-              </p>
-            )}
+            <RichText
+              value={p.bottomParagraph}
+              className="text-[16px] min-[1200px]:text-[18px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8"
+            />
           </div>
           {p.variant === "gallery" ? (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
-              {p.rightIntroText && (
+              {hasRichText(p.rightIntroText) && (
                 <div className="grid grid-cols-9 gap-5 mb-8">
-                  <p className="col-span-8 text-[16px] min-[1200px]:text-[18px] leading-tight">{p.rightIntroText}</p>
+                  <RichText value={p.rightIntroText} className="col-span-8 text-[16px] min-[1200px]:text-[18px] leading-tight" />
                 </div>
               )}
               <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
@@ -198,7 +211,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <span>Img. 01</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted">
+                        <div className="text-muted mt-[15px]">
                           {p.image1.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -212,7 +225,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <span>Img. 02</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted">
+                        <div className="text-muted mt-[15px]">
                           {p.image2.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -237,7 +250,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     <span>Img. {String(i + 3).padStart(2, "0")}</span>
                     <div>
                       <p>{p.title}</p>
-                      <div className="text-muted">
+                      <div className="text-muted mt-[15px]">
                         {img.tags?.map((t, j) => <p key={j}>{t}</p>)}
                       </div>
                     </div>
@@ -251,10 +264,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
       {p.variant === "gallery" && (
         <Grid className="mt-24 items-start">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8 mb-16 min-[1200px]:mb-0 min-[1200px]:self-stretch flex flex-col">
-            {p.visualIdentityText && (
-              <p className="text-[16px] min-[1200px]:text-[18px] leading-tight mb-8">{p.visualIdentityText}</p>
-            )}
-            {(p.timelineDuration || p.timelineService || p.timelineText) && (
+            <RichText value={p.visualIdentityText} className="text-[16px] min-[1200px]:text-[18px] leading-tight mb-8" />
+            {(p.timelineDuration || p.timelineService || hasRichText(p.timelineText)) && (
               <div className="grid grid-cols-8 gap-5 mb-8">
                 <div className="col-span-3 min-[1200px]:col-span-2 text-[12px] uppercase">
                   {p.timelineDuration && (
@@ -270,14 +281,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     </>
                   )}
                 </div>
-                {p.timelineText && (
-                  <p className="col-span-5 min-[1200px]:col-span-6 text-[16px] min-[1200px]:text-[18px] leading-tight">
-                    {p.timelineText}
-                  </p>
-                )}
+                <RichText value={p.timelineText} className="col-span-5 min-[1200px]:col-span-6 text-[16px] min-[1200px]:text-[18px] leading-tight" />
               </div>
             )}
-            {p.mutedCaption && <p className="text-muted text-[12px]">{p.mutedCaption}</p>}
+            <RichText value={p.mutedCaption} className="text-muted text-[12px]" />
             {(p.image7 || p.image8) && (
               <div className="grid grid-cols-2 min-[1200px]:grid-cols-8 gap-5 mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8">
                 {p.image7 && (
@@ -287,7 +294,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <span>Img. 07</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted">
+                        <div className="text-muted mt-[15px]">
                           {p.image7.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -301,7 +308,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       <span>Img. 08</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted">
+                        <div className="text-muted mt-[15px]">
                           {p.image8.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -311,9 +318,9 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               </div>
             )}
           </div>
-          {p.finalText && (
+          {hasRichText(p.finalText) && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:13/17] min-[1600px]:[grid-column:13/16] mb-8 min-[1200px]:mb-0">
-              <p className="text-[16px] min-[1200px]:text-[14px] leading-tight">{p.finalText}</p>
+              <RichText value={p.finalText} className="text-[16px] min-[1200px]:text-[14px] leading-tight" />
             </div>
           )}
           {p.image9 && (
@@ -323,7 +330,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 <span>Img. 09</span>
                 <div>
                   <p>{p.title}</p>
-                  <div className="text-muted">
+                  <div className="text-muted mt-[15px]">
                     {p.image9.tags?.map((t, i) => <p key={i}>{t}</p>)}
                   </div>
                 </div>
@@ -342,7 +349,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
       <span>{item.mediaType ?? "Img"}. {String(idx + 1).padStart(2, "0")}</span>
       <div>
         <p>{p.title}</p>
-        <div className="text-muted">
+        <div className="text-muted mt-[15px]">
           {item.tags?.map((t, i) => <p key={i}>{t}</p>)}
         </div>
       </div>
@@ -352,11 +359,12 @@ function SimpleRight({ p }: { p: ProjectData }) {
     const [img1, img2] = images;
     return (
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-14 min-[1200px]:col-span-11 min-[1200px]:self-stretch flex flex-col justify-end">
-        {p.simpleCaptionText && (
+        {hasRichText(p.simpleCaptionText) && (
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-11 gap-5 mb-8">
-            <p className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7">
-              {p.simpleCaptionText}
-            </p>
+            <RichText
+              value={p.simpleCaptionText}
+              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+            />
           </div>
         )}
         <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-11 min-[1200px]:items-end">
@@ -373,11 +381,12 @@ function SimpleRight({ p }: { p: ProjectData }) {
     const first = images[0];
     return (
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
-        {p.simpleCaptionText && (
+        {hasRichText(p.simpleCaptionText) && (
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
-            <p className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7">
-              {p.simpleCaptionText}
-            </p>
+            <RichText
+              value={p.simpleCaptionText}
+              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+            />
           </div>
         )}
         <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9">
@@ -428,11 +437,12 @@ function SimpleRight({ p }: { p: ProjectData }) {
     const first = images[0];
     return (
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
-        {p.simpleCaptionText && (
+        {hasRichText(p.simpleCaptionText) && (
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
-            <p className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7">
-              {p.simpleCaptionText}
-            </p>
+            <RichText
+              value={p.simpleCaptionText}
+              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7"
+            />
           </div>
         )}
         <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9">
