@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
@@ -5,11 +6,13 @@ import { Link } from "../../../../../i18n/navigation";
 import { Grid } from "../../../../_components/Grid";
 import { sanityFetch } from "../../../../../sanity/lib/live";
 import { urlFor } from "../../../../../sanity/lib/image";
-import { pick, toLocale, pickPortableText, type Loc } from "../../../../../i18n/locale";
+import { pick, toLocale, pickPortableText, buildAlternates, type Loc } from "../../../../../i18n/locale";
 const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]{
   title,
   projectNumber,
   category,
+  mainImage,
+  seo,
   subtitleLine,
   collaboration,
   aboutParagraph,
@@ -33,6 +36,30 @@ const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]
   simpleCaptionText,
   simpleImages
 }`;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
+  const { slug, locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const { data } = await sanityFetch({ query: PROJECT_BY_SLUG_QUERY, params: { slug } });
+  const r = data as any;
+  if (!r) return {};
+  const seoData = r.seo;
+  const fallbackTitle = `${r.title} — An Studio`;
+  const fallbackDescription =
+    locale === "es"
+      ? `Proyecto de ${r.category} por An Studio.`
+      : `A ${r.category} project by An Studio.`;
+  const title = pick(locale, seoData?.metaTitle) || fallbackTitle;
+  const description = pick(locale, seoData?.metaDescription) || fallbackDescription;
+  const ogImage = seoData?.ogImage ?? r.mainImage;
+  const ogImageUrl = ogImage ? urlFor(ogImage).width(1200).height(630).url() : undefined;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, `/work/${slug}`),
+    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+  };
+}
+
 function BackNextArrow({ flipped }: { flipped?: boolean }) {
   return (
     <svg width="10" height="8" viewBox="0 0 16 10" fill="none" className={flipped ? "rotate-180" : ""}>

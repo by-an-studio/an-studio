@@ -55,6 +55,12 @@ export const clientApplication = defineType({
       of: [{ type: 'localeString' }],
       group: 'content',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'content',
+    }),
   ],
   preview: {
     prepare() {

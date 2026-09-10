@@ -1,6 +1,27 @@
+import { pick as pickSeo } from "../../../../i18n/locale";
+import { urlFor } from "../../../../sanity/lib/image";
 import { ServicesClient } from "../../../_components/ServicesClient";
 import { sanityFetch } from "../../../../sanity/lib/live";
-import { pick, pickList, pickPortableText, toLocale } from "../../../../i18n/locale";
+import { pick, pickList, pickPortableText, toLocale, buildAlternates } from "../../../../i18n/locale";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+const SEO_QUERY = `*[_type == "services"][0]{ seo }`;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const t = await getTranslations({ locale, namespace: "seo.services" });
+  const { data } = await sanityFetch({ query: SEO_QUERY });
+  const seoData = (data as any)?.seo;
+  const title = pickSeo(locale, seoData?.metaTitle) || t("title");
+  const description = pickSeo(locale, seoData?.metaDescription) || t("description");
+  const ogImageUrl = seoData?.ogImage ? urlFor(seoData.ogImage).width(1200).height(630).url() : undefined;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/services"),
+    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+  };
+}
 
 const SERVICES_QUERY = `*[_type == "services"][0]{
   headerLabel,

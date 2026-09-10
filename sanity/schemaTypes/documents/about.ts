@@ -132,6 +132,11 @@ export const about = defineType({
       of: [{ type: 'clientColumn' }],
       group: 'lists',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     prepare() {

@@ -22,6 +22,11 @@ export const shop = defineType({
       type: 'array',
       of: [{ type: 'shopProduct' }],
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     prepare() {

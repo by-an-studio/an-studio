@@ -1,6 +1,28 @@
+import { pick as pickSeo } from "../../../../i18n/locale";
+import { urlFor } from "../../../../sanity/lib/image";
 import { Grid } from "../../../_components/Grid";
 import { WorkGrid, type WorkProject } from "../../../_components/WorkGrid";
 import { sanityFetch } from "../../../../sanity/lib/live";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { toLocale, buildAlternates } from "../../../../i18n/locale";
+const SITE_SEO_QUERY = `*[_type == "siteSeo"][0]{ work{ metaTitle, metaDescription, ogImage } }`;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const t = await getTranslations({ locale, namespace: "seo.work" });
+  const { data } = await sanityFetch({ query: SITE_SEO_QUERY });
+  const seoData = (data as any)?.work;
+  const title = pickSeo(locale, seoData?.metaTitle) || t("title");
+  const description = pickSeo(locale, seoData?.metaDescription) || t("description");
+  const ogImageUrl = seoData?.ogImage ? urlFor(seoData.ogImage).width(1200).height(630).url() : undefined;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/work"),
+    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+  };
+}
 
 const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc){
   title,

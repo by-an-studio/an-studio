@@ -21,7 +21,13 @@ const williamSubhead = localFont({
   ],
   variable: "--font-william",
 });
-export const metadata: Metadata = { title: "An Studio", description: "Independent Design Studio" };
+// TODO: cuando publiquéis con el dominio definitivo, quitar el bloque "robots" de abajo
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app"),
+  title: "An Studio",
+  description: "Independent Design Studio",
+  robots: { index: false, follow: false },
+};
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

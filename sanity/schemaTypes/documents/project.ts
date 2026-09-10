@@ -243,6 +243,12 @@ export const project = defineType({
       group: 'simple',
       hidden: ({ parent }) => parent?.variant !== 'simple',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'general',
+    }),
   ],
   preview: {
     select: { title: 'title', media: 'mainImage', category: 'category' },

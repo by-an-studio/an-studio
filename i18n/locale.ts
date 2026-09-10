@@ -41,3 +41,16 @@ export function pickLinkItem(locale: Locale, item?: LinkItem): { label: string; 
   if (!label) return undefined;
   return { label, href: item.href };
 }
+
+export function buildAlternates(locale: Locale, pathname: string) {
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app";
+  const path = pathname === "/" ? "" : pathname;
+  return {
+    canonical: `${base}/${locale}${path}`,
+    languages: {
+      en: `${base}/en${path}`,
+      es: `${base}/es${path}`,
+      "x-default": `${base}/en${path}`,
+    },
+  };
+}

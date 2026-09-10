@@ -24,7 +24,7 @@ export function WorkFilters({
               <button
                 type="button"
                 onClick={() => onSelect(isSelected ? null : c.label)}
-                className={`flex items-baseline gap-4 text-left ${isDimmed ? "text-muted" : "text-foreground"}`}
+                className={`flex items-baseline gap-4 text-left cursor-pointer ${isDimmed ? "text-muted" : "text-foreground"}`}
               >
                 <span className="underline decoration-[1.5px] text-[24px]">({c.number}.)</span>
                 <span className={`text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)] ${isSelected ? "italic" : ""}`}>{c.label}</span>

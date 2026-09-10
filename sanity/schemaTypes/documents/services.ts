@@ -55,6 +55,11 @@ export const services = defineType({
       type: 'array',
       of: [{ type: 'localeString' }],
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     prepare() {

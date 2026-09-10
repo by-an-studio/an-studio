@@ -1,8 +1,28 @@
+import { pick as pickSeo } from "../../../../i18n/locale";
 import Image from "next/image";
 import { Grid } from "../../../_components/Grid";
 import { urlFor } from "../../../../sanity/lib/image";
 import { sanityFetch } from "../../../../sanity/lib/live";
-import { pick, toLocale } from "../../../../i18n/locale";
+import { pick, toLocale, buildAlternates } from "../../../../i18n/locale";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+const SEO_QUERY = `*[_type == "shop"][0]{ seo }`;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = toLocale(rawLocale);
+  const t = await getTranslations({ locale, namespace: "seo.shop" });
+  const { data } = await sanityFetch({ query: SEO_QUERY });
+  const seoData = (data as any)?.seo;
+  const title = pickSeo(locale, seoData?.metaTitle) || t("title");
+  const description = pickSeo(locale, seoData?.metaDescription) || t("description");
+  const ogImageUrl = seoData?.ogImage ? urlFor(seoData.ogImage).width(1200).height(630).url() : undefined;
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, "/shop"),
+    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+  };
+}
 
 const SHOP_QUERY = `*[_type == "shop"][0]{
   title,

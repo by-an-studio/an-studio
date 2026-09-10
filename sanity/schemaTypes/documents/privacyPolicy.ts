@@ -38,6 +38,11 @@ export const privacyPolicy = defineType({
         defineField({ name: 'es', title: 'Español', type: 'array', of: [richTextBlock] }),
       ],
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     prepare() {

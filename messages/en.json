@@ -32,7 +32,7 @@
       "jobPosition": "Your job position",
       "website": "Website",
       "budgetLabel": "What is your budget for this project?",
-      "budgetHint": "Our minimum project investment starts at 3.000\u20ac",
+      "budgetHint": "Our minimum project investment starts at 3.000€",
       "answerPlaceholder": "Answer",
       "required": "(required)"
     },
@@ -48,15 +48,45 @@
       "questions": "I have questions",
       "no": "No"
     },
-    "budgetReadyText": "An Studio\u2019s full branding and website projects typically range from 4,000\u20ac to 14,000\u20ac+. Are you currently prepared to make this investment?",
-    "commitText": "I commit to responding to An Studio\u2019s emails, as each one is thoughtfully personalized. If I decide not to move forward, I will let the studio know in advance.",
+    "budgetReadyText": "An Studio’s full branding and website projects typically range from 4,000€ to 14,000€+. Are you currently prepared to make this investment?",
+    "commitText": "I commit to responding to An Studio’s emails, as each one is thoughtfully personalized. If I decide not to move forward, I will let the studio know in advance.",
     "commitYes": "Yes",
-    "disclaimer": "* By clicking \u201cLet\u2019s Create Together\u201d I agree to receive emails from An Studio regarding the information I have requested.",
-    "submitButton": "Let\u2019s Create Together",
+    "disclaimer": "* By clicking “Let’s Create Together” I agree to receive emails from An Studio regarding the information I have requested.",
+    "submitButton": "Let’s Create Together",
     "sending": "Sending...",
-    "successMessage": "Thank you! Your application has been sent \u2014 we\u2019ll be in touch soon.",
+    "successMessage": "Thank you! Your application has been sent — we’ll be in touch soon.",
     "errorCommit": "Please confirm \"Yes\" on the commitment question above before submitting.",
     "errorRequired": "Please fill in all required fields before submitting.",
     "errorGeneric": "Something went wrong, please try again."
+  },
+  "seo": {
+    "home": {
+      "title": "An Studio — Independent Design Studio",
+      "description": "An Studio is an independent design studio crafting considered branding, packaging, web design and social media identities for intentional brands."
+    },
+    "work": {
+      "title": "Work — An Studio",
+      "description": "A selection of branding, packaging, web design and social media projects by An Studio."
+    },
+    "services": {
+      "title": "Services — An Studio",
+      "description": "Branding, packaging, web design and social media services for brands that value intention and craft."
+    },
+    "about": {
+      "title": "About — An Studio",
+      "description": "Get to know An Studio, an independent design studio building distinct, considered brand identities."
+    },
+    "shop": {
+      "title": "Shop — An Studio",
+      "description": "Editable templates and design resources by An Studio."
+    },
+    "clientApplication": {
+      "title": "Client Application — An Studio",
+      "description": "Start a project with An Studio. Tell us about your brand, timeline and budget."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy — An Studio",
+      "description": "How An Studio collects, uses and protects your personal information."
+    }
   }
 }
