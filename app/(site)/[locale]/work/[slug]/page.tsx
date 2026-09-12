@@ -224,14 +224,14 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             <RichText
               value={p.bottomParagraph}
-              className="text-[16px] min-[1200px]:text-[18px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8"
+              className="text-[15px] min-[1200px]:text-[18px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8"
             />
           </div>
           {p.variant === "gallery" ? (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
               {hasRichText(p.rightIntroText) && (
                 <div className="grid grid-cols-9 gap-5 mb-8">
-                  <RichText value={p.rightIntroText} className="col-span-8 text-[16px] min-[1200px]:text-[18px] leading-tight" />
+                  <RichText value={p.rightIntroText} className="col-span-8 text-[15px] min-[1200px]:text-[18px] leading-tight" />
                 </div>
               )}
               <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
@@ -295,7 +295,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
       {p.variant === "gallery" && (
         <Grid className="mt-24 items-start">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8 mb-16 min-[1200px]:mb-0 min-[1200px]:self-stretch flex flex-col">
-            <RichText value={p.visualIdentityText} className="text-[16px] min-[1200px]:text-[18px] leading-tight mb-8" />
+            <RichText value={p.visualIdentityText} className="text-[15px] min-[1200px]:text-[18px] leading-tight mb-8" />
             {(p.timelineDuration || p.timelineService || hasRichText(p.timelineText)) && (
               <div className="grid grid-cols-8 gap-5 mb-8">
                 <div className="col-span-3 min-[1200px]:col-span-2 text-[12px] uppercase">
@@ -312,7 +312,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     </>
                   )}
                 </div>
-                <RichText value={p.timelineText} className="col-span-5 min-[1200px]:col-span-6 text-[16px] min-[1200px]:text-[18px] leading-tight" />
+                <RichText value={p.timelineText} className="col-span-5 min-[1200px]:col-span-6 text-[15px] min-[1200px]:text-[18px] leading-tight" />
               </div>
             )}
             <RichText value={p.mutedCaption} className="text-muted text-[12px]" />
@@ -351,7 +351,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           </div>
           {hasRichText(p.finalText) && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:13/17] min-[1600px]:[grid-column:13/16] mb-8 min-[1200px]:mb-0">
-              <RichText value={p.finalText} className="text-[16px] min-[1200px]:text-[14px] leading-tight" />
+              <RichText value={p.finalText} className="text-[15px] min-[1200px]:text-[14px] leading-tight" />
             </div>
           )}
           {p.image9 && (
@@ -394,7 +394,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-11 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
             />
           </div>
         )}
@@ -416,7 +416,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
             />
           </div>
         )}
@@ -472,7 +472,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[16px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7"
             />
           </div>
         )}

@@ -79,7 +79,7 @@ export default async function Work({
   ];
 
   return (
-    <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+    <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
       {(noteLabel || noteText) && (
         <Grid className="pt-5 min-h-[70px] min-[1200px]:min-h-0">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-11 flex gap-2">

@@ -68,7 +68,7 @@ const introComponents: PortableTextComponents = {
 };
 const ownerBioComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[16px] leading-tight mb-4">{children}</p>,
+    normal: ({ children }) => <p className="text-[15px] leading-tight mb-4">{children}</p>,
   },
 };
 export default async function About({ params }: { params: Promise<{ locale: string }> }) {
@@ -108,8 +108,8 @@ export default async function About({ params }: { params: Promise<{ locale: stri
   );
   return (
     <main className="w-full">
-      <div className="w-full pt-24 min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col justify-between min-h-[100svh]">
-        <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[calc(100svh-2*clamp(18px,1.5625vw,30px))]">
+      <div className="w-full pt-[150px] min-[1200px]:pt-[clamp(18px,1.5625vw,30px)] min-[1200px]:pb-[clamp(18px,1.5625vw,30px)] pb-[30px] flex flex-col justify-between min-h-[100svh]">
+        <div className="relative min-[1200px]:mt-0 min-[1200px]:h-[calc(100svh-2*clamp(18px,1.5625vw,30px))]">
           <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 mb-8 min-[1200px]:mb-0">
               {data?.ownerSectionLabel && (

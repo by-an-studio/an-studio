@@ -31,7 +31,7 @@ type ServicesData = {
 };
 const paragraphComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[16px] leading-tight mb-4 last:mb-0">{children}</p>,
+    normal: ({ children }) => <p className="text-[15px] leading-tight mb-4 last:mb-0">{children}</p>,
   },
   marks: {
     underline: ({ children }) => <span className="underline decoration-1">{children}</span>,
@@ -69,7 +69,7 @@ export function ServicesClient({
   }
 
   return (
-    <main className="w-full pt-24 min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+    <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
       <Grid className="pt-5 min-h-[70px] min-[1200px]:min-h-0">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8">
           {data?.headerLabel && <p className="underline decoration-1">{data.headerLabel}</p>}
@@ -136,19 +136,19 @@ export function ServicesClient({
       <Grid className="mt-16 min-[1200px]:mt-0 min-[1200px]:flex-nowrap">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
           {data?.otherServicesTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
-          <ul className="text-[12px]">
+          <ul className="text-[15px]">
             {data?.otherServices?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-4">
           {data?.industryTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.industryTitle}</p>}
-          <ul className="text-[12px]">
+          <ul className="text-[15px]">
             {data?.industry?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-6">
           {data?.contactTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.contactTitle}</p>}
-          <ul className="text-[12px]">
+          <ul className="text-[15px]">
             {data?.contactLines?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>

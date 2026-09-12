@@ -32,7 +32,7 @@ export function HeroImageCycle({
           src={`/pages/home/${i + 1}.webp`}
           alt=""
           fill
-          sizes="350px"
+          sizes="(min-width: 768px) 283px, 180px"
           priority={i === 0}
           quality={95}
           className={`object-cover transition-opacity duration-500 ${

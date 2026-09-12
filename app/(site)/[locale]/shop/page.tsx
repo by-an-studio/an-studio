@@ -77,8 +77,8 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
 
   const product = data?.products?.[0];
   return (
-    <main className="w-full pt-24 min-[1200px]:pt-0 flex flex-col justify-between min-h-[100svh]">
-      <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[100svh]">
+    <main className="w-full pt-[150px] min-[1200px]:pt-0 flex flex-col justify-between min-h-[100svh]">
+      <div className="relative min-[1200px]:mt-0 min-[1200px]:h-[100svh]">
         <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center pb-[30px]">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-6 mb-16 min-[1200px]:mb-0 grid grid-cols-1 min-[1200px]:grid-cols-6">
             {data?.title && (
@@ -119,7 +119,7 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
                     </div>
                   )}
                   {product.description && (
-                    <p className="text-[16px] min-[1200px]:text-[18px] leading-snug">{product.description}</p>
+                    <p className="text-[15px] min-[1200px]:text-[18px] leading-snug">{product.description}</p>
                   )}
                 </div>
               </div>
