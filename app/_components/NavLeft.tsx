@@ -1,7 +1,9 @@
 "use client";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
 import { Link, usePathname } from "../../i18n/navigation";
-import { useState } from "react";
+import { useMobileNav } from "./MobileNavContext";
+import { LiveDateTime } from "./LiveDateTime";
 
 const links = [
   { roman: "I", key: "work", href: "/work" },
@@ -15,38 +17,43 @@ const links = [
 export function NavLeft() {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const { open, setOpen } = useMobileNav();
+  const previousPathname = useRef(pathname);
+
+  useEffect(() => {
+    if (pathname !== previousPathname.current) {
+      previousPathname.current = pathname;
+      setOpen(false);
+    }
+  }, [pathname, setOpen]);
+
   return (
     <>
-      <button
-        type="button"
-        aria-label="Toggle navigation"
-        onClick={() => setOpen((v) => !v)}
-        className="min-[1200px]:hidden fixed left-5 top-[60px] z-30 w-[15px] h-[15px] rounded-full bg-foreground"
-      />
-      {/* Mobile/tablet: menú desplegable fixed */}
-      <nav
-        className={`min-[1200px]:hidden fixed left-5 top-1/2 -translate-y-1/2 flex-col gap-6 z-20 ${
+      {/* Mobile/tablet: menú a pantalla completa */}
+      <div
+        className={`min-[1200px]:hidden fixed top-0 left-0 right-0 h-[100svh] z-30 bg-white/92 flex-col items-start justify-center px-8 ${
           open ? "flex" : "hidden"
         }`}
       >
-        {links.map(({ roman, key, href }) => {
-          const isActive = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setOpen(false)}
-              className={isActive ? "text-foreground" : "text-muted"}
-            >
-              <span className="block text-[10px]">{roman}</span>
-              <span className={`block text-[18px] ${isActive ? "italic" : ""}`}>
-                {t(key)}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
+        <nav className="flex flex-col gap-6">
+          {links.map(({ roman, key, href }) => {
+            const isActive = pathname === href;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className="flex flex-row items-baseline gap-3 text-black"
+              >
+                <span className="text-[12px]">{roman}</span>
+                <span className={`text-[20px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="w-full flex justify-center mt-20">
+          <LiveDateTime align="center" />
+        </div>
+      </div>
       {/* Desktop: columna absoluta de ancho 0 que ocupa todo el contenedor relative del layout,
           con el nav sticky-centrado dentro. */}
       <div className="hidden min-[1200px]:block absolute left-5 top-0 bottom-0 w-0 z-20">

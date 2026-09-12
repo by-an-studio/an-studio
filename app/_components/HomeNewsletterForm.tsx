@@ -1,0 +1,119 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+function SendArrow() {
+  return (
+    <svg width="25" height="7" viewBox="0 0 25 7" fill="none">
+      <path d="M1 3.5H24M24 3.5L20 0.7M24 3.5L20 6.3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function HomeNewsletterForm({
+  buttonLabel,
+  emailPlaceholder,
+  comingSoonLabel,
+}: {
+  buttonLabel: string;
+  emailPlaceholder?: string;
+  comingSoonLabel?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [showEmptyWarning, setShowEmptyWarning] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+  }, [open]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) {
+      setShowEmptyWarning(true);
+      return;
+    }
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, company }),
+      });
+      if (!res.ok) throw new Error("failed");
+      setStatus("sent");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="md:ml-auto" suppressHydrationWarning>
+      <input
+        type="text"
+        name="company"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        autoComplete="off"
+        tabIndex={-1}
+        aria-hidden="true"
+        className="absolute w-0 h-0 opacity-0 -z-10"
+      />
+      <div className="relative">
+        <div
+          className={`overflow-hidden bg-[#EFECE6] py-2 flex items-center transition-[width,padding] duration-300 ease-out ${
+            open ? "w-[330px] px-4 justify-start" : "w-[220px] px-[60px] justify-center"
+          }`}
+        >
+          {open ? (
+            <>
+              <div className="flex-1 h-[24px] md:h-auto overflow-hidden flex items-center">
+                <div className="shrink-0 w-[114.2857%] h-[27px] md:w-full md:h-auto origin-left scale-[0.875] md:scale-100">
+                  <input
+                    ref={inputRef}
+                    type="email"
+                    placeholder={status === "sent" ? (comingSoonLabel ?? "Coming soon!") : (emailPlaceholder ?? "Email Address")}
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (showEmptyWarning) setShowEmptyWarning(false);
+                    }}
+                    suppressHydrationWarning
+                    className="bg-transparent text-[16px] w-full h-full box-border focus:outline-none"
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                aria-label="Send"
+                className="shrink-0 ml-3 cursor-pointer disabled:opacity-50"
+              >
+                <SendArrow />
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="whitespace-nowrap text-[14px] md:text-[16px] cursor-pointer"
+            >
+              {buttonLabel}
+            </button>
+          )}
+        </div>
+        <span
+          className={`absolute left-0 top-full mt-1 text-[10px] whitespace-nowrap transition-opacity duration-200 ${
+            showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          Please enter your email
+        </span>
+      </div>
+    </form>
+  );
+}

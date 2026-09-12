@@ -93,9 +93,13 @@ export function Footer({ data }: { data: FooterData | null }) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [showEmptyWarning, setShowEmptyWarning] = useState(false);
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email) return;
+    if (!email) {
+      setShowEmptyWarning(true);
+      return;
+    }
     setStatus("submitting");
     try {
       const res = await fetch("/api/newsletter", {
@@ -127,7 +131,7 @@ export function Footer({ data }: { data: FooterData | null }) {
       <Grid className="mt-24 md:mt-0 items-end">
         <div className="col-span-8 md:col-span-6">
           <p className="mb-4 text-[16px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
-          <form onSubmit={handleSubmit} className="flex gap-2" suppressHydrationWarning>
+          <form onSubmit={handleSubmit} className="relative flex gap-2" suppressHydrationWarning>
             <input
               type="text"
               name="company"
@@ -144,7 +148,10 @@ export function Footer({ data }: { data: FooterData | null }) {
                   type="email"
                   placeholder={status === "sent" ? (data?.comingSoonLabel ?? "Coming soon!") : (data?.emailPlaceholder ?? "Email Address")}
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (showEmptyWarning) setShowEmptyWarning(false);
+                  }}
                   suppressHydrationWarning
                   className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] w-full h-full box-border focus:outline-none"
                 />
@@ -153,14 +160,21 @@ export function Footer({ data }: { data: FooterData | null }) {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] md:text-[16px] focus:outline-none disabled:opacity-50"
+              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] md:text-[16px] focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-default"
             >
               {status === "submitting" ? "..." : (data?.subscribeButtonLabel ?? "Subscribe")}
             </button>
+            {status === "error" && (
+              <p className="absolute left-0 top-full mt-1 text-[10px] text-red-600">Something went wrong, please try again.</p>
+            )}
+            <span
+              className={`absolute left-0 top-full mt-1 text-[10px] transition-opacity duration-200 ${
+                showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              Please enter your email
+            </span>
           </form>
-          {status === "error" && (
-            <p className="text-[10px] mt-1 text-red-600">Something went wrong, please try again.</p>
-          )}
         </div>
         <div className="col-span-8 md:col-start-9 md:col-span-4 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left mt-16 md:mt-0">An Studio 2026®</div>
         <div className="col-span-8 md:col-start-13 md:col-span-6 text-[12px] md:text-[16px] leading-tight md:leading-normal text-center md:text-left -mt-3 md:mt-0">Independent Design Studio</div>

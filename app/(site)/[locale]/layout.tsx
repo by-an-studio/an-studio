@@ -8,6 +8,8 @@ import { Header } from "../../_components/Header";
 import { NavLeft } from "../../_components/NavLeft";
 import { ConditionalFooter } from "../../_components/ConditionalFooter";
 import { DisableScrollRestoration } from "../../_components/DisableScrollRestoration";
+import { MobileNavProvider } from "../../_components/MobileNavContext";
+import { PageTransition } from "../../_components/PageTransition";
 import { SanityLive } from "../../../sanity/lib/live";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { pick, pickLinkItems, pickLinkItem, toLocale } from "../../../i18n/locale";
@@ -86,11 +88,13 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <DisableScrollRestoration />
-          <Header />
-          <div className="relative flex-1 flex flex-col">
-            <NavLeft />
-            {children}
-          </div>
+          <MobileNavProvider>
+            <Header />
+            <div className="relative flex-1 flex flex-col">
+              <NavLeft />
+              <PageTransition>{children}</PageTransition>
+            </div>
+          </MobileNavProvider>
           <ConditionalFooter data={footerData} />
           <SanityLive />
         </NextIntlClientProvider>

@@ -2,6 +2,7 @@ import { pick as pickSeo } from "../../../i18n/locale";
 import { urlFor } from "../../../sanity/lib/image";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { HeroVisual } from "../../_components/HeroVisual";
+import { HomeNewsletterForm } from "../../_components/HomeNewsletterForm";
 import { ZoomWrapper } from "../../_components/ZoomWrapper";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -27,12 +28,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 }
 
 const HOME_QUERY = `*[_type == "home"][0]{
+  heroImages,
   studioLabel,
   heroGroup1,
   heroGroup2,
   availableLabel,
   description,
-  newsletterButtonLabel
+  newsletterButtonLabel,
+  emailPlaceholder,
+  comingSoonLabel
 }`;
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -40,6 +44,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const locale = toLocale(rawLocale);
   const { data: raw } = await sanityFetch({ query: HOME_QUERY });
   const r = raw as any;
+  const heroImages: string[] = Array.isArray(r?.heroImages) && r.heroImages.length > 0
+    ? r.heroImages.map((img: any) => urlFor(img).width(2000).quality(95).url())
+    : Array.from({ length: 8 }, (_, i) => `/pages/home/${i + 1}.webp`);
+
   const data = r
     ? {
         studioLabel: pick(locale, r.studioLabel),
@@ -56,6 +64,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         availableLabel: pick(locale, r.availableLabel),
         description: pick(locale, r.description),
         newsletterButtonLabel: pick(locale, r.newsletterButtonLabel),
+        emailPlaceholder: pick(locale, r.emailPlaceholder),
+        comingSoonLabel: pick(locale, r.comingSoonLabel),
       }
     : null;
 
@@ -71,7 +81,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
         <ZoomWrapper className="relative flex flex-col items-center justify-center">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
-            <HeroVisual />
+            <HeroVisual images={heroImages} />
           </div>
 
           {(data?.heroGroup1.line1 || data?.heroGroup1.line2 || data?.heroGroup1.line3) && (
@@ -111,9 +121,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
           {data?.newsletterButtonLabel && (
             <div className="md:flex-1 flex justify-center md:justify-end">
-              <button className="px-4 py-2 text-sm bg-[#EFECE6]">
-                {data.newsletterButtonLabel}
-              </button>
+              <HomeNewsletterForm
+                buttonLabel={data.newsletterButtonLabel}
+                emailPlaceholder={data.emailPlaceholder}
+                comingSoonLabel={data.comingSoonLabel}
+              />
             </div>
           )}
         </div>

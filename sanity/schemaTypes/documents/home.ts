@@ -7,6 +7,14 @@ export const home = defineType({
   icon: HomeIcon,
   fields: [
     defineField({
+      name: 'heroImages',
+      title: 'Imágenes del hero (rotación)',
+      description: 'Las imágenes que rotan en el bloque principal de la Home. Sube hasta 8, en el orden en que deben aparecer.',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      validation: (Rule) => Rule.max(8),
+    }),
+    defineField({
       name: 'studioLabel',
       title: 'Etiqueta superior (ej: "Independent Design Studio")',
       type: 'localeString',
@@ -44,6 +52,16 @@ export const home = defineType({
     defineField({
       name: 'newsletterButtonLabel',
       title: 'Texto del botón de newsletter',
+      type: 'localeString',
+    }),
+    defineField({
+      name: 'emailPlaceholder',
+      title: 'Placeholder del campo de email (newsletter)',
+      type: 'localeString',
+    }),
+    defineField({
+      name: 'comingSoonLabel',
+      title: 'Texto tras suscribirse (ej: "Coming soon!")',
       type: 'localeString',
     }),
     defineField({

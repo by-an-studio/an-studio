@@ -94,7 +94,7 @@ function PillGroup({
             key={option.value}
             type="button"
             onClick={() => onSelect(option.value)}
-            className={`px-4 py-1 text-[12px] italic bg-[#EFECE6] text-center ${widthClass} ${
+            className={`px-4 py-1 text-[12px] italic bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
               isSelected ? "" : "opacity-40"
             }`}
           >
@@ -314,25 +314,26 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
               />
             </div>
           </div>
-          <div className="min-[1200px]:mt-auto">
-            {status === "sent" ? (
-              <p className="text-[14px] italic">{t("successMessage")}</p>
-            ) : (
-              <>
-                <p className="text-muted text-[12px] italic mb-4">
-                  {t("disclaimer")}
-                </p>
+          <div className="min-[1200px]:mt-auto relative">
+            <div className={status === "sent" ? "invisible" : ""}>
+              <p className="text-muted text-[12px] italic mb-4">
+                {t("disclaimer")}
+              </p>
+              <div className="relative">
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[12px] disabled:opacity-50"
+                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[12px] cursor-pointer disabled:opacity-50 disabled:cursor-default"
                 >
                   {status === "submitting" ? t("sending") : t("submitButton")}
                 </button>
                 {status === "error" && (
-                  <p className="text-[12px] mt-2 text-red-600">{errorMessage}</p>
+                  <p className="absolute left-0 top-full mt-2 text-[12px] text-red-600">{errorMessage}</p>
                 )}
-              </>
+              </div>
+            </div>
+            {status === "sent" && (
+              <p className="absolute inset-0 text-[14px] italic">{t("successMessage")}</p>
             )}
           </div>
         </form>
