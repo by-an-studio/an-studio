@@ -41,10 +41,10 @@ function FeaturedImage({ item }: { item?: any }) {
   if (!item) return null;
   const rawUrl = urlFor(item).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-  const src = isGif ? rawUrl : urlFor(item).width(600).url();
+  const src = isGif ? rawUrl : urlFor(item).width(1400).url();
   return (
-    <div className="relative aspect-[3/4] bg-muted/20 overflow-hidden">
-      <Image src={src} alt="" fill unoptimized={isGif} quality={80} className="object-cover" />
+    <div className="relative aspect-[3/4] overflow-hidden">
+      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 55vw, 100vw" className="object-cover" />
     </div>
   );
 }

@@ -1,17 +1,5 @@
 import { defineType, defineField } from 'sanity'
 import { UserIcon } from '@sanity/icons'
-const richTextBlock = {
-  type: 'block',
-  styles: [{ title: 'Normal', value: 'normal' }],
-  lists: [],
-  marks: {
-    decorators: [
-      { title: 'Bold', value: 'strong' },
-      { title: 'Italic', value: 'em' },
-    ],
-    annotations: [],
-  },
-}
 export const about = defineType({
   name: 'about',
   title: 'About',
@@ -45,12 +33,8 @@ export const about = defineType({
     defineField({
       name: 'ownerBio',
       title: 'Biografía (texto enriquecido, ES/EN)',
-      type: 'object',
+      type: 'richText',
       group: 'owner',
-      fields: [
-        defineField({ name: 'en', title: 'English', type: 'array', of: [richTextBlock] }),
-        defineField({ name: 'es', title: 'Español', type: 'array', of: [richTextBlock] }),
-      ],
     }),
     defineField({
       name: 'ownerImageIndex',
@@ -73,12 +57,8 @@ export const about = defineType({
     defineField({
       name: 'introText',
       title: 'Texto intro (texto enriquecido, ES/EN)',
-      type: 'object',
+      type: 'richText',
       group: 'intro',
-      fields: [
-        defineField({ name: 'en', title: 'English', type: 'array', of: [richTextBlock] }),
-        defineField({ name: 'es', title: 'Español', type: 'array', of: [richTextBlock] }),
-      ],
     }),
     defineField({
       name: 'introSubtext',

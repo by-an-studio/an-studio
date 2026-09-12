@@ -29,11 +29,12 @@ export function HeroImageCycle({
       {Array.from({ length: TOTAL_IMAGES }).map((_, i) => (
         <Image
           key={i}
-          src={`/pages/home/${i + 1}.png`}
+          src={`/pages/home/${i + 1}.webp`}
           alt=""
           fill
-          sizes="283px"
+          sizes="350px"
           priority={i === 0}
+          quality={95}
           className={`object-cover transition-opacity duration-500 ${
             i === index ? "opacity-100" : "opacity-0"
           }`}

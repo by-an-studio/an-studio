@@ -122,13 +122,16 @@ type ProjectData = {
   simpleCaptionText?: any[];
   simpleImages?: SimpleImage[];
 };
-function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; className?: string }) {
+function ProjectImg({ item, className, sizes = "(min-width: 1200px) 55vw, 100vw" }: { item?: ImageWithTags | SimpleImage; className?: string; sizes?: string }) {
   if (!item?.image && !item?.videoUrl) return null;
   if (item.videoUrl) {
+    const posterUrl = item.image ? urlFor(item.image).width(1600).url() : undefined;
     return (
-      <div className={`relative bg-muted/20 overflow-hidden ${className ?? ""}`}>
+      <div className={`relative overflow-hidden ${className ?? ""}`}>
         <video
           src={item.videoUrl}
+          poster={posterUrl}
+          preload="auto"
           autoPlay
           muted
           loop
@@ -141,10 +144,10 @@ function ProjectImg({ item, className }: { item?: ImageWithTags | SimpleImage; c
   if (!item.image) return null;
   const rawUrl = urlFor(item.image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-  const src = isGif ? rawUrl : urlFor(item.image).width(1200).url();
+  const src = isGif ? rawUrl : urlFor(item.image).width(2000).url();
   return (
-    <div className={`relative bg-muted/20 overflow-hidden ${className ?? ""}`}>
-      <Image src={src} alt="" fill unoptimized={isGif} quality={80} className="object-cover" />
+    <div className={`relative overflow-hidden ${className ?? ""}`}>
+      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes={sizes} className="object-cover" />
     </div>
   );
 }
@@ -232,7 +235,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               )}
               <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
                 <div className="col-span-1 min-[1200px]:col-span-3">
-                  <ProjectImg item={p.image1} className="aspect-[4/5] mb-4" />
+                  <ProjectImg item={p.image1} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 18vw, 65vw" />
                   {p.image1 && (
                     <div className="flex gap-2 text-[12px]">
                       <span>Img. 01</span>
@@ -246,7 +249,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   )}
                 </div>
                 <div className="col-span-1 min-[1200px]:col-start-4 min-[1200px]:col-span-6">
-                  <ProjectImg item={p.image2} className="aspect-[4/5] mb-4" />
+                  <ProjectImg item={p.image2} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 33vw, 65vw" />
                   {p.image2 && (
                     <div className="flex gap-2 text-[12px]">
                       <span>Img. 02</span>
@@ -272,7 +275,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             <div className="flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:grid min-[1200px]:grid-cols-4 min-[1200px]:overflow-visible">
               {p.galleryImages.map((img, i) => (
                 <div key={i} className="shrink-0 w-[75vw] min-[1200px]:w-auto">
-                  <ProjectImg item={img} className="aspect-[3/4] mb-4" />
+                  <ProjectImg item={img} className="aspect-[3/4] mb-4" sizes="(min-width: 1200px) 30vw, 90vw" />
                   <div className="flex gap-2 text-[12px]">
                     <span>Img. {String(i + 3).padStart(2, "0")}</span>
                     <div>
@@ -316,7 +319,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <div className="grid grid-cols-2 min-[1200px]:grid-cols-8 gap-5 mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8">
                 {p.image7 && (
                   <div className="col-span-1 min-[1200px]:col-span-3">
-                    <ProjectImg item={p.image7} className="aspect-[4/5] mb-4" />
+                    <ProjectImg item={p.image7} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 20vw, 65vw" />
                     <div className="flex gap-2 text-[12px]">
                       <span>Img. 07</span>
                       <div>
@@ -330,7 +333,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 )}
                 {p.image8 && (
                   <div className="col-span-1 min-[1200px]:col-span-3">
-                    <ProjectImg item={p.image8} className="aspect-[4/5] mb-4" />
+                    <ProjectImg item={p.image8} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 20vw, 65vw" />
                     <div className="flex gap-2 text-[12px]">
                       <span>Img. 08</span>
                       <div>
@@ -352,7 +355,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           )}
           {p.image9 && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-7">
-              <ProjectImg item={p.image9} className="aspect-[4/5] mb-4" />
+              <ProjectImg item={p.image9} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 40vw, 100vw" />
               <div className="flex gap-2 text-[12px]">
                 <span>Img. 09</span>
                 <div>
@@ -398,8 +401,8 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="relative min-[1200px]:col-span-1">
             {img1 && captionBlock(0, img1)}
           </div>
-          <ProjectImg item={img1} className="aspect-[9/16] min-[1200px]:col-span-5" />
-          <ProjectImg item={img2} className="aspect-[9/16] min-[1200px]:col-span-5" />
+          <ProjectImg item={img1} className="aspect-[9/16] min-[1200px]:col-span-5" sizes="(min-width: 1200px) 28vw, 65vw" />
+          <ProjectImg item={img2} className="aspect-[9/16] min-[1200px]:col-span-5" sizes="(min-width: 1200px) 28vw, 65vw" />
         </div>
       </div>
     );
@@ -428,7 +431,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
               {(first?.image || first?.videoUrl) && (() => {
                 if (first.videoUrl) {
                   return (
-                    <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] bg-muted/20 rounded-full overflow-hidden">
+                    <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] rounded-full overflow-hidden">
                       <video
                         src={first.videoUrl}
                         autoPlay
@@ -442,10 +445,10 @@ function SimpleRight({ p }: { p: ProjectData }) {
                 }
                 const rawUrl = urlFor(first.image).url();
                 const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-                const src = isGif ? rawUrl : urlFor(first.image).width(1200).url();
+                const src = isGif ? rawUrl : urlFor(first.image).width(2000).url();
                 return (
-                  <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] bg-muted/20 rounded-full overflow-hidden">
-                    <Image src={src} alt="" fill unoptimized={isGif} quality={80} className="object-cover" />
+                  <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] rounded-full overflow-hidden">
+                    <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 28vw, 95vw" className="object-cover" />
                   </div>
                 );
               })()}
@@ -476,7 +479,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="relative min-[1200px]:col-span-2">
             {first && captionBlock(0, first)}
           </div>
-          <ProjectImg item={first} className="aspect-[4/5] w-full min-[1200px]:col-start-3 min-[1200px]:col-span-7" />
+          <ProjectImg item={first} className="aspect-[4/5] w-full min-[1200px]:col-start-3 min-[1200px]:col-span-7" sizes="(min-width: 1200px) 40vw, 100vw" />
         </div>
       </div>
     );
@@ -488,7 +491,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
         <div className="relative min-[1200px]:col-span-4">
           {first && captionBlock(0, first)}
         </div>
-        <ProjectImg item={first} className="aspect-[9/16] min-[1200px]:col-span-5" />
+        <ProjectImg item={first} className="aspect-[9/16] min-[1200px]:col-span-5" sizes="(min-width: 1200px) 28vw, 100vw" />
       </div>
     </div>
   );

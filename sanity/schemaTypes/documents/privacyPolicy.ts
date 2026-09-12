@@ -1,18 +1,5 @@
 import { defineType, defineField } from 'sanity'
 import { LockIcon } from '@sanity/icons'
-const richTextBlock = {
-  type: 'block',
-  styles: [{ title: 'Normal', value: 'normal' }],
-  lists: [],
-  marks: {
-    decorators: [
-      { title: 'Bold', value: 'strong' },
-      { title: 'Italic', value: 'em' },
-      { title: 'Underline', value: 'underline' },
-    ],
-    annotations: [],
-  },
-}
 export const privacyPolicy = defineType({
   name: 'privacyPolicy',
   title: 'Privacy Policy',
@@ -32,11 +19,7 @@ export const privacyPolicy = defineType({
     defineField({
       name: 'content',
       title: 'Contenido (texto enriquecido, ES/EN)',
-      type: 'object',
-      fields: [
-        defineField({ name: 'en', title: 'English', type: 'array', of: [richTextBlock] }),
-        defineField({ name: 'es', title: 'Español', type: 'array', of: [richTextBlock] }),
-      ],
+      type: 'richText',
     }),
     defineField({
       name: 'seo',

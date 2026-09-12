@@ -17,8 +17,9 @@ import { newsletterSubscriber } from './documents/newsletterSubscriber'
 import { footerLinkItem } from './objects/footerLinkItem'
 import { footer } from './documents/footer'
 import { privacyPolicy } from './documents/privacyPolicy'
+import { home } from './documents/home'
+import { workPage } from './documents/workPage'
 import { seo } from './objects/seo'
-import { siteSeo } from './documents/siteSeo'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -40,7 +41,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     footerLinkItem,
     footer,
     privacyPolicy,
+    home,
+    workPage,
     seo,
-    siteSeo,
   ],
 }

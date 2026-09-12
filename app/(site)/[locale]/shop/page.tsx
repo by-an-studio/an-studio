@@ -44,10 +44,10 @@ function ProductImage({ image }: { image?: any }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-  const src = isGif ? rawUrl : urlFor(image).width(800).url();
+  const src = isGif ? rawUrl : urlFor(image).width(1800).url();
   return (
-    <div className="relative w-full aspect-[4/5] bg-muted/20 overflow-hidden">
-      <Image src={src} alt="" fill unoptimized={isGif} quality={80} className="object-cover" />
+    <div className="relative w-full aspect-[4/5] overflow-hidden">
+      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 45vw, 60vw" className="object-cover" />
     </div>
   );
 }

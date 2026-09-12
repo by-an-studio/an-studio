@@ -69,8 +69,8 @@ export function NavLeft() {
             })}
           </nav>
           {pathname !== "/" && (
-            <p className="absolute bottom-[30px] text-[16px] whitespace-nowrap">
-              Available Worldwide
+            <p className="absolute bottom-[30px] text-[clamp(12px,0.8333vw,16px)] whitespace-nowrap">
+              {t('availableWorldwide')}
             </p>
           )}
         </div>

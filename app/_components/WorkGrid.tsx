@@ -13,12 +13,17 @@ export type WorkProject = {
   mainImage?: any;
 };
 
+type Category = { value: string; label: string };
 export function WorkGrid({
   projects,
   initialCategory,
+  categoriesLabel,
+  categories,
 }: {
   projects: WorkProject[];
   initialCategory: string | null;
+  categoriesLabel?: string;
+  categories: Category[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -37,7 +42,7 @@ export function WorkGrid({
   return (
     <>
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-5 mb-16 min-[1200px]:mb-0 min-[1200px]:-translate-y-22">
-        <WorkFilters selected={selected} onSelect={handleSelect} />
+        <WorkFilters selected={selected} onSelect={handleSelect} categoriesLabel={categoriesLabel} categories={categories} />
       </div>
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-16 min-[1200px]:h-full">
         <div className="grid grid-cols-2 md:max-[1199px]:grid-cols-4 min-[1200px]:grid-cols-5 min-[1200px]:grid-rows-3 gap-x-5 gap-y-16 min-[1200px]:h-full">
@@ -48,10 +53,10 @@ export function WorkGrid({
                 {p.mainImage && (() => {
                   const rawUrl = urlFor(p.mainImage).url();
                   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-                  const src = isGif ? rawUrl : urlFor(p.mainImage).width(800).url();
+                  const src = isGif ? rawUrl : urlFor(p.mainImage).width(1400).url();
                   return (
                     <div className="absolute inset-x-0 top-5 bottom-5">
-                      <Image src={src} alt={p.title} fill unoptimized={isGif} quality={80} className="object-contain" />
+                      <Image src={src} alt={p.title} fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 22vw, (min-width: 768px) 33vw, 65vw" className="object-contain" />
                     </div>
                   );
                 })()}

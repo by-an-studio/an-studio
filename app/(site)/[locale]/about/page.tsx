@@ -50,10 +50,10 @@ function SanityImg({ image, className }: { image?: any; className?: string }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
-  const src = isGif ? rawUrl : urlFor(image).width(1000).url();
+  const src = isGif ? rawUrl : urlFor(image).width(2200).url();
   return (
-    <div className={`relative bg-muted/20 overflow-hidden ${className ?? ""}`}>
-      <Image src={src} alt="" fill unoptimized={isGif} quality={80} className="object-cover" />
+    <div className={`relative overflow-hidden ${className ?? ""}`}>
+      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
     </div>
   );
 }
@@ -116,8 +116,8 @@ export default async function About({ params }: { params: Promise<{ locale: stri
                 <p className="text-[32px] min-[1200px]:text-[clamp(24px,2.1vw,40px)]">{data.ownerSectionLabel}</p>
               )}
             </div>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-7 min-[1200px]:col-span-11 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full">
-              <SanityImg image={data?.ownerImage} className="aspect-[4/5] min-[1200px]:aspect-auto min-[1200px]:h-full" />
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-8 min-[1200px]:col-span-10 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full min-[1200px]:flex min-[1200px]:justify-center">
+              <SanityImg image={data?.ownerImage} className="aspect-[4/5] min-[1200px]:max-h-full min-[1200px]:max-w-full min-[1200px]:w-auto min-[1200px]:h-auto" />
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-19 min-[1200px]:col-span-6">
               {data?.ownerNameLabel && <p className="underline decoration-1 mb-6">{data.ownerNameLabel}</p>}
