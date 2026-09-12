@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
+import { FadeImage } from "./FadeImage";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Grid } from "./Grid";
 import { urlFor } from "../../sanity/lib/image";
@@ -44,7 +44,7 @@ function FeaturedImage({ item }: { item?: any }) {
   const src = isGif ? rawUrl : urlFor(item).width(1400).url();
   return (
     <div className="relative aspect-[3/4] overflow-hidden">
-      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 55vw, 100vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 55vw, 100vw" className="object-cover" />
     </div>
   );
 }

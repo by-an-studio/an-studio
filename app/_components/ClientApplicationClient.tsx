@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
+import { FadeImage } from "./FadeImage";
 import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
 import { urlFor } from "../../sanity/lib/image";
@@ -26,7 +26,7 @@ function SanityImg({ image, className }: { image?: any; className?: string }) {
   const src = isGif ? rawUrl : urlFor(image).width(1800).url();
   return (
     <div className={`relative overflow-hidden ${className ?? ""}`}>
-      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
     </div>
   );
 }

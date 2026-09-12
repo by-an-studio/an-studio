@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import Image from "next/image";
+import { FadeImage } from "./FadeImage";
 import { WorkFilters } from "./WorkFilters";
 import { urlFor } from "../../sanity/lib/image";
 import { Link, useRouter, usePathname } from "../../i18n/navigation";
@@ -56,7 +56,7 @@ export function WorkGrid({
                   const src = isGif ? rawUrl : urlFor(p.mainImage).width(1400).url();
                   return (
                     <div className="absolute inset-x-0 top-5 bottom-5">
-                      <Image src={src} alt={p.title} fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 22vw, (min-width: 768px) 33vw, 65vw" className="object-contain" />
+                      <FadeImage src={src} alt={p.title} fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 22vw, (min-width: 768px) 33vw, 65vw" className="object-contain" />
                     </div>
                   );
                 })()}

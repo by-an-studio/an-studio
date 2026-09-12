@@ -1,6 +1,6 @@
 import { pick as pickSeo } from "../../../../i18n/locale";
 import { Fragment } from "react";
-import Image from "next/image";
+import { FadeImage } from "../../../_components/FadeImage";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Grid } from "../../../_components/Grid";
 import { urlFor } from "../../../../sanity/lib/image";
@@ -53,7 +53,7 @@ function SanityImg({ image, className }: { image?: any; className?: string }) {
   const src = isGif ? rawUrl : urlFor(image).width(2200).url();
   return (
     <div className={`relative overflow-hidden ${className ?? ""}`}>
-      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
     </div>
   );
 }

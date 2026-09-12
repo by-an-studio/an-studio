@@ -1,5 +1,5 @@
 import { pick as pickSeo } from "../../../../i18n/locale";
-import Image from "next/image";
+import { FadeImage } from "../../../_components/FadeImage";
 import { Grid } from "../../../_components/Grid";
 import { urlFor } from "../../../../sanity/lib/image";
 import { sanityFetch } from "../../../../sanity/lib/live";
@@ -47,7 +47,7 @@ function ProductImage({ image }: { image?: any }) {
   const src = isGif ? rawUrl : urlFor(image).width(1800).url();
   return (
     <div className="relative w-full aspect-[4/5] overflow-hidden">
-      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 45vw, 60vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 45vw, 60vw" className="object-cover" />
     </div>
   );
 }

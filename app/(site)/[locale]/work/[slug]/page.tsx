@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { FadeImage } from "../../../../_components/FadeImage";
+import { FadeVideo } from "../../../../_components/FadeVideo";
 import { notFound } from "next/navigation";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Link } from "../../../../../i18n/navigation";
@@ -128,7 +129,7 @@ function ProjectImg({ item, className, sizes = "(min-width: 1200px) 55vw, 100vw"
     const posterUrl = item.image ? urlFor(item.image).width(1600).url() : undefined;
     return (
       <div className={`relative overflow-hidden ${className ?? ""}`}>
-        <video
+        <FadeVideo
           src={item.videoUrl}
           poster={posterUrl}
           preload="auto"
@@ -147,7 +148,7 @@ function ProjectImg({ item, className, sizes = "(min-width: 1200px) 55vw, 100vw"
   const src = isGif ? rawUrl : urlFor(item.image).width(2000).url();
   return (
     <div className={`relative overflow-hidden ${className ?? ""}`}>
-      <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes={sizes} className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes={sizes} className="object-cover" />
     </div>
   );
 }
@@ -432,7 +433,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
                 if (first.videoUrl) {
                   return (
                     <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] rounded-full overflow-hidden">
-                      <video
+                      <FadeVideo
                         src={first.videoUrl}
                         autoPlay
                         muted
@@ -448,7 +449,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
                 const src = isGif ? rawUrl : urlFor(first.image).width(2000).url();
                 return (
                   <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] rounded-full overflow-hidden">
-                    <Image src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 28vw, 95vw" className="object-cover" />
+                    <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 28vw, 95vw" className="object-cover" />
                   </div>
                 );
               })()}
