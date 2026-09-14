@@ -1,12 +1,20 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
 const REFERENCE_WIDTH = 1920;
 const REFERENCE_HEIGHT = 1080;
 const MIN_SCALE = 0.3;
 const MAX_SCALE = 1;
-const DESKTOP_BREAKPOINT = 767;
+const DESKTOP_BREAKPOINT = 768;
+
+function computeScale() {
+  if (window.innerWidth < DESKTOP_BREAKPOINT) return 1;
+  const widthRatio = window.innerWidth / REFERENCE_WIDTH;
+  const heightRatio = window.innerHeight / REFERENCE_HEIGHT;
+  const raw = Math.min(widthRatio, heightRatio);
+  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, raw));
+}
 
 export function ZoomWrapper({
   children,
@@ -15,26 +23,33 @@ export function ZoomWrapper({
   children: ReactNode;
   className?: string;
 }) {
-  const rawId = useId().replace(/[:]/g, "");
-  const cls = `zw-${rawId}`;
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    function updateScale() {
+      if (ref.current) {
+        ref.current.style.transform = `scale(${computeScale()})`;
+      }
+    }
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, []);
 
   return (
-    <div className={`${cls} ${className}`}>
-      {/* Pure-CSS composition scaling: no JS/resize listeners needed, and no risk of a
-          flash on initial paint since this is plain CSS applied on the very first render.
-          calc(100vw / <ref>px) divides two lengths, yielding a unitless number usable in
-          scale(); clamp() then bounds it, and the media query keeps mobile untouched
-          (fixed sizes, no scaling) below the desktop breakpoint. */}
-      <style>{`
-        .${cls} {
-          transform-origin: center center;
-        }
-        @media (min-width: ${DESKTOP_BREAKPOINT}px) {
-          .${cls} {
-            transform: scale(clamp(${MIN_SCALE}, min(calc(100vw / ${REFERENCE_WIDTH}px), calc(100vh / ${REFERENCE_HEIGHT}px)), ${MAX_SCALE}));
-          }
-        }
-      `}</style>
+    <div ref={ref} className={className} style={{ transformOrigin: "center center" }} suppressHydrationWarning>
+      {/* Runs synchronously as the browser parses this HTML, before first paint,
+          so the correct scale is applied immediately and there's no flash/jump.
+          Uses transform:scale computed in JS (not CSS calc()/clamp() dividing two
+          lengths, which Firefox doesn't reliably support inside transform — that's
+          what silently broke the zoom effect there while Chrome/Safari were fine).
+          Below the desktop breakpoint, scale is forced to 1 so mobile keeps its own
+          fixed sizes untouched by this composition-scaling effect. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){var s=document.currentScript;var el=s.parentElement;var bw=${DESKTOP_BREAKPOINT};var r=1;if(window.innerWidth>=bw){var w=window.innerWidth/${REFERENCE_WIDTH};var h=window.innerHeight/${REFERENCE_HEIGHT};r=Math.min(w,h);r=Math.min(${MAX_SCALE},Math.max(${MIN_SCALE},r));}el.style.transform='scale('+r+')';})();`,
+        }}
+      />
       {children}
     </div>
   );

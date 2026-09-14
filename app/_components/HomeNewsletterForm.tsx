@@ -76,6 +76,7 @@ export function HomeNewsletterForm({
         autoComplete="off"
         tabIndex={-1}
         aria-hidden="true"
+        suppressHydrationWarning
         className="absolute w-0 h-0 opacity-0 -z-10"
       />
       <div className="relative">

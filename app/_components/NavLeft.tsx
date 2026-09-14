@@ -45,7 +45,7 @@ export function NavLeft() {
                 className="text-black"
               >
                 <span className="block text-[12px]">{roman}</span>
-                <span className={`block text-[20px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
+                <span className={`block text-[17px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
               </Link>
             );
           })}
