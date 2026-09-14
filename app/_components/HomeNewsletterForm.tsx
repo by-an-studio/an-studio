@@ -25,9 +25,22 @@ export function HomeNewsletterForm({
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [showEmptyWarning, setShowEmptyWarning] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    function handlePointerDown(e: PointerEvent) {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setShowEmptyWarning(false);
+      }
+    }
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [open]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -52,7 +65,7 @@ export function HomeNewsletterForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="md:ml-auto" suppressHydrationWarning>
+    <form ref={formRef} onSubmit={handleSubmit} className="md:ml-auto" suppressHydrationWarning>
       <input
         type="text"
         name="company"
@@ -65,7 +78,7 @@ export function HomeNewsletterForm({
       />
       <div className="relative">
         <div
-          className={`overflow-hidden bg-[#EFECE6] py-2 flex items-center transition-[width,padding] duration-300 ease-out ${
+          className={`relative overflow-hidden bg-[#EFECE6] h-[41px] py-2 flex items-center transition-[width,padding] duration-300 ease-out ${
             open ? "w-[330px] px-4 justify-start" : "w-[220px] px-[60px] justify-center"
           }`}
         >
@@ -91,7 +104,7 @@ export function HomeNewsletterForm({
                 type="submit"
                 disabled={status === "submitting"}
                 aria-label="Send"
-                className="shrink-0 ml-3 cursor-pointer disabled:opacity-50"
+                className="shrink-0 ml-3 p-3 -m-3 cursor-pointer disabled:opacity-50"
               >
                 <SendArrow />
               </button>
@@ -100,7 +113,7 @@ export function HomeNewsletterForm({
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="whitespace-nowrap text-[14px] md:text-[16px] cursor-pointer"
+              className="absolute inset-0 w-full h-full flex items-center justify-center whitespace-nowrap text-[14px] md:text-[16px] cursor-pointer"
             >
               {buttonLabel}
             </button>

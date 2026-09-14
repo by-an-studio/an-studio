@@ -31,7 +31,7 @@ export function NavLeft() {
     <>
       {/* Mobile/tablet: menú a pantalla completa */}
       <div
-        className={`min-[1200px]:hidden fixed top-0 left-0 right-0 h-[100svh] z-30 bg-white/92 flex-col items-start justify-center px-8 ${
+        className={`min-[1200px]:hidden fixed top-0 left-0 right-0 h-[100dvh] z-30 bg-[rgba(255,255,255,0.95)] flex-col items-start justify-center px-8 ${
           open ? "flex" : "hidden"
         }`}
       >
@@ -42,10 +42,10 @@ export function NavLeft() {
               <Link
                 key={href}
                 href={href}
-                className="flex flex-row items-baseline gap-3 text-black"
+                className="text-black"
               >
-                <span className="text-[12px]">{roman}</span>
-                <span className={`text-[20px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
+                <span className="block text-[12px]">{roman}</span>
+                <span className={`block text-[20px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
               </Link>
             );
           })}
