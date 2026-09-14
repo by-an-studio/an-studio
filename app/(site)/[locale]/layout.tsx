@@ -13,6 +13,7 @@ import { PageTransition } from "../../_components/PageTransition";
 import { SanityLive } from "../../../sanity/lib/live";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { pick, pickLinkItems, pickLinkItem, toLocale } from "../../../i18n/locale";
+import { draftMode } from "next/headers";
 
 const williamSubhead = localFont({
   src: [
@@ -60,6 +61,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale: rawLocale } = await params;
+  const { isEnabled: isDraftMode } = await draftMode();
   const locale = toLocale(rawLocale);
   const messages = await getMessages();
   const { data: rawFooter } = await sanityFetch({ query: FOOTER_QUERY });
@@ -97,6 +99,14 @@ export default async function RootLayout({
           </MobileNavProvider>
           <ConditionalFooter data={footerData} />
           <SanityLive />
+          {isDraftMode && (
+            <div className="fixed bottom-0 left-0 right-0 z-[9999] flex items-center justify-center gap-3 bg-black px-4 py-2 text-center text-xs text-white">
+              <span>Estás viendo una vista previa (borrador sin publicar).</span>
+              <a href="/api/draft-mode/disable" className="underline">
+                Salir de la vista previa
+              </a>
+            </div>
+          )}
         </NextIntlClientProvider>
       </body>
     </html>

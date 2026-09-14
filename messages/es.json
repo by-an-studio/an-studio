@@ -1,12 +1,12 @@
 {
   "nav": {
-    "work": "Work",
-    "services": "Services",
-    "about": "About",
-    "clientApplication": "Client Application",
+    "work": "Proyectos",
+    "services": "Servicios",
+    "about": "Nosotros",
+    "clientApplication": "Solicitud de Cliente",
     "journal": "Journal",
     "shop": "Shop",
-    "availableWorldwide": "Disponible en Todo el Mundo"
+    "availableWorldwide": "Disponible Mundialmente"
   },
   "footer": {
     "subscribe": "Suscríbete a nuestra Newsletter",

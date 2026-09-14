@@ -6,12 +6,13 @@
 
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-import {media} from 'sanity-plugin-media'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import {dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
+import {previewActionEn, previewActionEs} from './sanity/actions/previewAction'
 
 export default defineConfig({
   basePath: '/studio',
@@ -21,4 +22,30 @@ export default defineConfig({
   schema,
   plugins: [structureTool({structure}), media()],
   releases: {enabled: false},
+  document: {
+    actions: (prev, context) => {
+      const previewableTypes = [
+        'home',
+        'about',
+        'services',
+        'workPage',
+        'shop',
+        'privacyPolicy',
+        'clientApplication',
+        'project',
+      ]
+      if (!previewableTypes.includes(context.schemaType)) return prev
+      return [...prev, previewActionEn, previewActionEs]
+    },
+  },
+  form: {
+    image: {
+      assetSources: (previousAssetSources) =>
+        previousAssetSources.filter((assetSource) => assetSource === mediaAssetSource),
+    },
+    file: {
+      assetSources: (previousAssetSources) =>
+        previousAssetSources.filter((assetSource) => assetSource === mediaAssetSource),
+    },
+  },
 })

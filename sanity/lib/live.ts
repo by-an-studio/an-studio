@@ -6,4 +6,8 @@ import { client } from './client'
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
+  // Lets sanityFetch() automatically resolve to draft content whenever
+  // Next.js draft mode is enabled (see app/api/draft-mode/*), so an editor
+  // can preview an unpublished document without publishing it first.
+  serverToken: process.env.SANITY_API_WRITE_TOKEN,
 });
