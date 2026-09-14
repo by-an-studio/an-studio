@@ -15,6 +15,8 @@ import {structure} from './sanity/structure'
 import {previewActionEn, previewActionEs} from './sanity/actions/previewAction'
 
 export default defineConfig({
+  name: 'an-studio',
+  title: 'An Studio',
   basePath: '/studio',
   projectId,
   dataset,
