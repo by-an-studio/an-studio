@@ -22,6 +22,7 @@ export default defineConfig({
   schema,
   plugins: [structureTool({structure}), media()],
   releases: {enabled: false},
+  scheduledDrafts: {enabled: false},
   document: {
     actions: (prev, context) => {
       const previewableTypes = [
