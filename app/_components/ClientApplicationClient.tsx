@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FadeImage } from "./FadeImage";
 import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
+import { Turnstile } from "./Turnstile";
 import { urlFor } from "../../sanity/lib/image";
 type CaptionedImage = {
   image?: any;
@@ -140,6 +141,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [company, setCompany] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const heroImages = data?.heroImages ?? [];
   const featuredImages = data?.featuredImages ?? [];
   function handleChange(name: string, value: string) {
@@ -174,7 +176,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       const res = await fetch("/api/client-application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, projectType, budgetReady, commit, company }),
+        body: JSON.stringify({ ...formData, projectType, budgetReady, commit, company, turnstileToken }),
       });
       if (!res.ok) throw new Error("failed");
       setStatus("sent");
@@ -192,7 +194,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <p className="italic text-[24px] min-[1200px]:text-[clamp(18px,1.25vw,24px)]">{data.heroTagline}</p>
           )}
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-16 min-[1200px]:mb-0 grid grid-cols-3 min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:items-center min-[1200px]:justify-center gap-4 min-[1200px]:h-[100svh] min-[1200px]:py-5">
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-16 min-[1200px]:mb-0 grid grid-cols-3 min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:items-center min-[1200px]:justify-center gap-[10px] min-[1200px]:gap-4 min-[1200px]:h-[100svh] min-[1200px]:py-5">
           {heroImages.map((img, i) => (
             <SanityImg
               key={i}
@@ -316,7 +318,8 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           </div>
           <div className="min-[1200px]:mt-auto relative">
             <div className={status === "sent" ? "invisible" : ""}>
-              <p className="text-muted text-[12px] italic mb-4">
+              <Turnstile onToken={setTurnstileToken} />
+              <p className="text-muted text-[12px] italic mb-4 mt-2">
                 {t("disclaimer")}
               </p>
               <div className="relative">

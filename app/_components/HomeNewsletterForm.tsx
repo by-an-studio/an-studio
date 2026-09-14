@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Turnstile } from "./Turnstile";
 
 function SendArrow() {
   return (
@@ -24,6 +25,7 @@ export function HomeNewsletterForm({
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [showEmptyWarning, setShowEmptyWarning] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -54,7 +56,7 @@ export function HomeNewsletterForm({
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, company }),
+        body: JSON.stringify({ email, company, turnstileToken }),
       });
       if (!res.ok) throw new Error("failed");
       setStatus("sent");
@@ -77,6 +79,9 @@ export function HomeNewsletterForm({
         className="absolute w-0 h-0 opacity-0 -z-10"
       />
       <div className="relative">
+        <div className="absolute right-0 top-full mt-2">
+          <Turnstile onToken={setTurnstileToken} />
+        </div>
         <div
           className={`relative overflow-hidden bg-[#EFECE6] h-[41px] py-2 flex items-center transition-[width,padding] duration-300 ease-out ${
             open ? "w-[330px] px-4 justify-start" : "w-[220px] px-[60px] justify-center"

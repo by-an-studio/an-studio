@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
+import { Turnstile } from "./Turnstile";
 import { Link } from "../../i18n/navigation";
 
 type FooterLinkItem = { label: string; href?: string };
@@ -94,6 +95,7 @@ export function Footer({ data }: { data: FooterData | null }) {
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const [showEmptyWarning, setShowEmptyWarning] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) {
@@ -105,7 +107,7 @@ export function Footer({ data }: { data: FooterData | null }) {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, company }),
+        body: JSON.stringify({ email, company, turnstileToken }),
       });
       if (!res.ok) throw new Error("failed");
       setStatus("sent");
@@ -137,6 +139,9 @@ export function Footer({ data }: { data: FooterData | null }) {
               aria-hidden="true"
               className="absolute w-0 h-0 opacity-0 -z-10"
             />
+            <div className="absolute left-0 top-full mt-6">
+              <Turnstile onToken={setTurnstileToken} />
+            </div>
             <div className="flex-1 h-[27px] overflow-hidden flex items-center">
               <div className="shrink-0 w-[133.3333%] h-[36px] min-[1200px]:w-full min-[1200px]:h-[27px] origin-left scale-75 min-[1200px]:scale-100">
                 <input

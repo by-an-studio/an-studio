@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { writeClient } from "../../../sanity/lib/writeClient";
 import { checkRateLimit, getClientIp } from "../_utils/rateLimit";
+import { verifyTurnstileToken } from "../_utils/turnstile";
 
 export async function POST(request: Request) {
   try {
-    const { email, company } = await request.json();
+    const { email, company, turnstileToken } = await request.json();
 
     // Honeypot: si un bot rellena este campo oculto, respondemos "ok" sin guardar nada.
     if (company) {
@@ -12,7 +13,13 @@ export async function POST(request: Request) {
     }
 
     const ip = getClientIp(request);
-    const { allowed } = checkRateLimit(`newsletter:${ip}`, 5, 10 * 60 * 1000);
+
+    const validCaptcha = await verifyTurnstileToken(turnstileToken, ip);
+    if (!validCaptcha) {
+      return NextResponse.json({ error: "Failed captcha verification" }, { status: 400 });
+    }
+
+    const { allowed } = await checkRateLimit(`newsletter:${ip}`, 5, 10 * 60 * 1000);
     if (!allowed) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }

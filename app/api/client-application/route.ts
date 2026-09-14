@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "../_utils/rateLimit";
+import { verifyTurnstileToken } from "../_utils/turnstile";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,7 +15,13 @@ export async function POST(request: Request) {
     }
 
     const ip = getClientIp(request);
-    const { allowed } = checkRateLimit(`client-application:${ip}`, 3, 30 * 60 * 1000);
+
+    const validCaptcha = await verifyTurnstileToken(data.turnstileToken, ip);
+    if (!validCaptcha) {
+      return NextResponse.json({ error: "Failed captcha verification" }, { status: 400 });
+    }
+
+    const { allowed } = await checkRateLimit(`client-application:${ip}`, 3, 30 * 60 * 1000);
     if (!allowed) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
