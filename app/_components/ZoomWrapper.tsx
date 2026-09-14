@@ -25,6 +25,13 @@ export function ZoomWrapper({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
+  // useLayoutEffect corre de forma síncrona, después de montar el DOM pero
+  // ANTES de que el navegador pinte ese frame, así que el escalado ya está
+  // aplicado en el primer pintado sin ningún salto visible. (Antes había
+  // además un <script> inline pensado para el instante previo a que cargue
+  // el JS de React; se quita porque React ahora avisa por consola al
+  // renderizar <script> como JSX, y con useLayoutEffect el resultado visual
+  // ya es el mismo en la práctica.)
   useLayoutEffect(() => {
     function updateScale() {
       if (ref.current) {
@@ -38,18 +45,6 @@ export function ZoomWrapper({
 
   return (
     <div ref={ref} className={className} style={{ transformOrigin: "center center" }} suppressHydrationWarning>
-      {/* Runs synchronously as the browser parses this HTML, before first paint,
-          so the correct scale is applied immediately and there's no flash/jump.
-          Uses transform:scale computed in JS (not CSS calc()/clamp() dividing two
-          lengths, which Firefox doesn't reliably support inside transform — that's
-          what silently broke the zoom effect there while Chrome/Safari were fine).
-          Below the desktop breakpoint, scale is forced to 1 so mobile keeps its own
-          fixed sizes untouched by this composition-scaling effect. */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(function(){var s=document.currentScript;var el=s.parentElement;var bw=${DESKTOP_BREAKPOINT};var r=1;if(window.innerWidth>=bw){var w=window.innerWidth/${REFERENCE_WIDTH};var h=window.innerHeight/${REFERENCE_HEIGHT};r=Math.min(w,h);r=Math.min(${MAX_SCALE},Math.max(${MIN_SCALE},r));}el.style.transform='scale('+r+')';})();`,
-        }}
-      />
       {children}
     </div>
   );

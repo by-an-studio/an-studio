@@ -2,6 +2,7 @@ import { pick as pickSeo } from "../../../i18n/locale";
 import { urlFor } from "../../../sanity/lib/image";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { HeroVisual } from "../../_components/HeroVisual";
+import { LoadingScreen } from "../../_components/LoadingScreen";
 import { HomeNewsletterForm } from "../../_components/HomeNewsletterForm";
 import { ZoomWrapper } from "../../_components/ZoomWrapper";
 import type { Metadata } from "next";
@@ -70,7 +71,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     : null;
 
   return (
-    <main className="w-full flex flex-col items-center">
+    <>
+      <LoadingScreen />
+      <main className="w-full flex flex-col items-center">
       {/* Bloque 1 home */}
       <section className="h-[100svh] w-full flex flex-col items-center justify-center gap-10 px-5 overflow-hidden">
         {data?.studioLabel && (
@@ -130,6 +133,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           )}
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

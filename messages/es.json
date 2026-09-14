@@ -89,5 +89,97 @@
       "title": "Privacy Policy — An Studio",
       "description": "Cómo An Studio recopila, utiliza y protege tu información personal."
     }
+  },
+  "loadingScreen": {
+    "taglineLines": [
+      [
+        {
+          "text": "\"Diseñando",
+          "italic": false
+        },
+        {
+          "text": "Marcas",
+          "italic": false
+        },
+        {
+          "text": "Con",
+          "italic": false
+        },
+        {
+          "text": "Presencia",
+          "italic": false
+        },
+        {
+          "text": "Duradera\"",
+          "italic": false
+        },
+        {
+          "text": "Identidad",
+          "italic": false
+        },
+        {
+          "text": "de",
+          "italic": false
+        },
+        {
+          "text": "Marca,",
+          "italic": false
+        },
+        {
+          "text": "Packaging",
+          "italic": false
+        }
+      ],
+      [
+        {
+          "text": "y",
+          "italic": false
+        },
+        {
+          "text": "Diseño",
+          "italic": false
+        },
+        {
+          "text": "Web",
+          "italic": false
+        },
+        {
+          "text": "Para",
+          "italic": false
+        },
+        {
+          "text": "Marcas",
+          "italic": false
+        },
+        {
+          "text": "de",
+          "italic": false
+        },
+        {
+          "text": "Belleza,",
+          "italic": true
+        },
+        {
+          "text": "Moda",
+          "italic": true
+        },
+        {
+          "text": "y",
+          "italic": false
+        },
+        {
+          "text": "Estilo",
+          "italic": true
+        },
+        {
+          "text": "de",
+          "italic": false
+        },
+        {
+          "text": "Vida",
+          "italic": true
+        }
+      ]
+    ]
   }
 }
