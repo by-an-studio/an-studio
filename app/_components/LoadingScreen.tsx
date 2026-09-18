@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { usePathname } from "../../i18n/navigation";
 
 const SESSION_KEY = "an-studio-loading-shown";
 const TOTAL_DURATION_MS = 4000;
@@ -18,6 +19,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 export function LoadingScreen() {
   const t = useTranslations("loadingScreen");
   const lines = t.raw("taglineLines") as Word[][];
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   // El servidor no puede saber si ya se mostró esta sesión (no tiene acceso
   // a sessionStorage), así que SIEMPRE arranca visible tanto en servidor
@@ -37,6 +40,11 @@ export function LoadingScreen() {
   const alreadyShownRef = useRef<boolean | null>(null);
 
   useIsomorphicLayoutEffect(() => {
+    if (!isHome) {
+      setVisible(false);
+      return;
+    }
+
     if (alreadyShownRef.current === null) {
       try {
         alreadyShownRef.current = window.sessionStorage.getItem(SESSION_KEY) === "1";
@@ -63,16 +71,18 @@ export function LoadingScreen() {
       if (exitTimer.current) clearTimeout(exitTimer.current);
       if (removeTimer.current) clearTimeout(removeTimer.current);
     };
-  }, []);
+  }, [isHome]);
 
   if (!visible) return null;
 
   return (
     <div
+      id="an-studio-loading-screen"
       aria-hidden="true"
       className={`fixed inset-0 z-[999] flex flex-col items-center justify-center gap-6 px-6 text-center loading-bg ${
         exiting ? "loading-screen-exit pointer-events-none" : ""
       }`}
+      style={{ backgroundColor: "rgba(228, 223, 206, 1)" }}
     >
       <div className="loading-icon">
         <Image src="/logo/an-studio-horse.svg" alt="" width={110} height={93} priority />
@@ -82,12 +92,13 @@ export function LoadingScreen() {
         {lines.map((line, lineIndex) => (
           <span key={lineIndex} className="block">
             {line.map((word, i) => (
-              <span
-                key={i}
-                className="loading-word"
-                style={{ animationDelay: `${400 + (lineIndex * line.length + i) * 70}ms` }}
-              >
-                <span className={word.italic ? "italic" : undefined}>{word.text}</span>{" "}
+              <span key={i}>
+                <span
+                  className="loading-word"
+                  style={{ animationDelay: `${400 + (lineIndex * line.length + i) * 70}ms` }}
+                >
+                  <span className={word.italic ? "italic" : undefined}>{word.text}</span>
+                </span>{" "}
               </span>
             ))}
           </span>

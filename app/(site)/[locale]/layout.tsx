@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -10,6 +11,7 @@ import { ConditionalFooter } from "../../_components/ConditionalFooter";
 import { DisableScrollRestoration } from "../../_components/DisableScrollRestoration";
 import { MobileNavProvider } from "../../_components/MobileNavContext";
 import { PageTransition } from "../../_components/PageTransition";
+import { LoadingScreen } from "../../_components/LoadingScreen";
 import { SanityLive } from "../../../sanity/lib/live";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { pick, pickLinkItems, pickLinkItem, toLocale } from "../../../i18n/locale";
@@ -88,9 +90,17 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${williamSubhead.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <Script id="loading-screen-flag" strategy="beforeInteractive">
+          {`try {
+            if (sessionStorage.getItem("an-studio-loading-shown") === "1") {
+              document.documentElement.classList.add("ls-hide");
+            }
+          } catch (e) {}`}
+        </Script>
         <NextIntlClientProvider messages={messages}>
           <DisableScrollRestoration />
           <MobileNavProvider>
+            <LoadingScreen />
             <Header />
             <div className="relative flex-1 flex flex-col">
               <NavLeft />
