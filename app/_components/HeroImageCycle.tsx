@@ -28,21 +28,23 @@ export function HeroImageCycle({
   }, [total]);
 
   return (
-    <div className="relative w-full aspect-[367/459]">
-      {images.map((src, i) => (
-        <Image
-          key={src}
-          src={src}
-          alt=""
-          fill
-          sizes="(min-width: 768px) 283px, 180px"
-          priority={i === 0}
-          quality={95}
-          className={`object-cover transition-opacity duration-500 ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
+    <div className="relative w-full aspect-[367/459] p-[10px]" style={{ backgroundColor: "#F2F0EC" }}>
+      <div className="relative w-full h-full overflow-hidden">
+        {images.map((src, i) => (
+          <Image
+            key={src}
+            src={src}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 283px, 180px"
+            priority={i === 0}
+            quality={95}
+            className={`object-cover transition-opacity duration-500 ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }

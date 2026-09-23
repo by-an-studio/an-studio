@@ -38,19 +38,26 @@ export function Header() {
           scrolled ? "opacity-100" : "opacity-0"
         }`}
       />
-      <div className="relative flex flex-row items-center justify-between min-[1200px]:h-[45px] text-[clamp(12px,0.9375vw,18px)] font-normal">
-        <Link href="/">
+      <div className="relative grid grid-cols-3 items-center min-[1200px]:flex min-[1200px]:flex-row min-[1200px]:justify-between min-[1200px]:h-[45px] text-[clamp(12px,0.9375vw,18px)] min-[1200px]:text-[clamp(9px,0.9375vw,15px)] font-normal">
+        <div className="justify-self-start min-[1200px]:hidden">
+          <Link href={pathname} locale={locale === "es" ? "en" : "es"} className="text-foreground relative -top-[1px]">
+            {locale === "es" ? "EN" : "ES"}
+          </Link>
+        </div>
+
+        <Link href="/" className="justify-self-center min-[1200px]:justify-self-auto">
           <Image
             src="/logo/an-studio.svg"
             alt="An Studio"
-            width={140}
-            height={24}
-            style={{ width: "140px", height: "24px" }}
+            width={120}
+            height={21}
+            style={{ width: "120px", height: "20.57px" }}
             priority
           />
         </Link>
-        <div className="flex flex-row items-start gap-4 text-[14px] min-[1200px]:gap-8 min-[1200px]:text-[clamp(12px,0.9375vw,18px)]">
-          <Link href={pathname} locale={locale === "es" ? "en" : "es"} className="text-foreground relative -top-[1px] min-[1200px]:top-0">
+
+        <div className="justify-self-end flex flex-row items-start gap-4 text-[14px] min-[1200px]:gap-8 min-[1200px]:text-[clamp(9px,0.9375vw,15px)]">
+          <Link href={pathname} locale={locale === "es" ? "en" : "es"} className="hidden min-[1200px]:block text-foreground relative min-[1200px]:top-0">
             {locale === "es" ? "EN" : "ES"}
           </Link>
           <button
@@ -58,7 +65,7 @@ export function Header() {
             onClick={toggle}
             aria-expanded={open}
             aria-label="Toggle navigation menu"
-            className="min-[1200px]:hidden text-foreground relative -top-[1px] cursor-pointer touch-manipulation py-2 -my-2 w-[46px] text-left"
+            className="min-[1200px]:hidden text-foreground relative -top-[1px] cursor-pointer touch-manipulation py-2 -my-2 w-[36px] text-left"
           >
             {open ? "Close" : "Menu"}
           </button>

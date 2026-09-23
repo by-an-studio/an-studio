@@ -110,7 +110,7 @@ export default async function RootLayout({
           <ConditionalFooter data={footerData} />
           <SanityLive />
           {isDraftMode && (
-            <div className="fixed bottom-0 left-0 right-0 z-[9999] flex items-center justify-center gap-3 bg-black px-4 py-2 text-center text-xs text-white">
+            <div className="fixed bottom-0 left-0 right-0 z-[9999] flex items-center justify-center gap-3 bg-black px-4 py-2 text-center text-[12px] min-[1200px]:text-[9px] text-white">
               <span>Estás viendo una vista previa (borrador sin publicar).</span>
               <a href="/api/draft-mode/disable" className="underline">
                 Salir de la vista previa

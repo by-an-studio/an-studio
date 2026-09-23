@@ -84,8 +84,8 @@ export function HomeNewsletterForm({
           <Turnstile onToken={setTurnstileToken} />
         </div>
         <div
-          className={`relative overflow-hidden bg-[#EFECE6] h-[41px] py-2 flex items-center transition-[width,padding] duration-300 ease-out ${
-            open ? "w-[330px] px-4 justify-start" : "w-[220px] px-[60px] justify-center"
+          className={`relative overflow-hidden bg-[#EFECE6] h-[34px] py-1 flex items-center transition-[width,padding] duration-300 ease-out ${
+            open ? "w-[330px] px-3 justify-start" : "w-[220px] px-[48px] justify-center"
           }`}
         >
           {open ? (
@@ -102,7 +102,7 @@ export function HomeNewsletterForm({
                       if (showEmptyWarning) setShowEmptyWarning(false);
                     }}
                     suppressHydrationWarning
-                    className="bg-transparent text-[16px] w-full h-full box-border focus:outline-none"
+                    className="bg-transparent text-[16px] md:text-[13px] w-full h-full box-border focus:outline-none"
                   />
                 </div>
               </div>
@@ -119,14 +119,14 @@ export function HomeNewsletterForm({
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="absolute inset-0 w-full h-full flex items-center justify-center whitespace-nowrap text-[14px] md:text-[16px] cursor-pointer"
+              className="absolute inset-0 w-full h-full flex items-center justify-center whitespace-nowrap text-[14px] md:text-[13px] cursor-pointer"
             >
               {buttonLabel}
             </button>
           )}
         </div>
         <span
-          className={`absolute left-0 top-full mt-1 text-[10px] whitespace-nowrap transition-opacity duration-200 ${
+          className={`absolute left-0 top-full mt-1 text-[11px] md:text-[8px] whitespace-nowrap transition-opacity duration-200 ${
             showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >

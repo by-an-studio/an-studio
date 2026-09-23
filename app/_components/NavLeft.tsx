@@ -31,18 +31,18 @@ export function NavLeft() {
     <>
       {/* Mobile/tablet: menú a pantalla completa */}
       <div
-        className={`min-[1200px]:hidden fixed top-0 left-0 right-0 h-[100dvh] z-30 bg-[rgba(255,255,255,0.95)] flex-col items-start justify-center px-8 ${
+        className={`min-[1200px]:hidden fixed top-0 left-0 right-0 h-[100dvh] z-30 bg-[rgba(244,241,232,0.95)] flex-col items-center justify-center px-8 ${
           open ? "flex" : "hidden"
         }`}
       >
-        <nav className="flex flex-col gap-6">
+        <nav className="flex flex-col items-center gap-6">
           {links.map(({ roman, key, href }) => {
-            const isActive = pathname === href;
+            const isActive = pathname === href || (href === "/work" && pathname.startsWith("/work/"));
             return (
               <Link
                 key={href}
                 href={href}
-                className="text-black"
+                className="text-black text-center"
               >
                 <span className="block text-[12px]">{roman}</span>
                 <span className={`block text-[17px] ${isActive ? "italic" : ""}`}>{t(key)}</span>
@@ -60,15 +60,15 @@ export function NavLeft() {
         <div className="sticky top-0 h-[100dvh]">
           <nav className="absolute top-1/2 -translate-y-1/2 flex flex-col gap-6">
             {links.map(({ roman, key, href }) => {
-              const isActive = pathname === href;
+              const isActive = pathname === href || (href === "/work" && pathname.startsWith("/work/"));
               return (
                 <Link
                   key={href}
                   href={href}
                   className={`whitespace-nowrap ${isActive ? "text-foreground" : "text-muted"}`}
                 >
-                  <span className="block text-[clamp(7px,0.5208vw,10px)]">{roman}</span>
-                  <span className={`block text-[clamp(13px,0.9375vw,18px)] ${isActive ? "italic" : ""}`}>
+                  <span className="block text-[clamp(8px,0.5208vw,8px)]">{roman}</span>
+                  <span className={`block text-[clamp(10px,0.9375vw,15px)] ${isActive ? "italic" : ""}`}>
                     {t(key)}
                   </span>
                 </Link>
@@ -76,7 +76,7 @@ export function NavLeft() {
             })}
           </nav>
           {pathname !== "/" && (
-            <p className="absolute bottom-[30px] text-[clamp(12px,0.8333vw,16px)] whitespace-nowrap">
+            <p className="absolute bottom-[30px] text-[clamp(9px,0.8333vw,13px)] whitespace-nowrap">
               {t('availableWorldwide')}
             </p>
           )}

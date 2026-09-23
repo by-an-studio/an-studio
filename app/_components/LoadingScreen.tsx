@@ -88,7 +88,7 @@ export function LoadingScreen() {
         <Image src="/logo/an-studio-horse.svg" alt="" width={110} height={93} priority />
       </div>
 
-      <p className="text-[15px] md:text-[18px] leading-snug text-white">
+      <p className="text-[15px] md:text-[15px] leading-snug text-white">
         {lines.map((line, lineIndex) => (
           <span key={lineIndex} className="block">
             {line.map((word, i) => (

@@ -48,7 +48,7 @@ export function WorkGrid({
         <div className="grid grid-cols-2 md:max-[1199px]:grid-cols-4 min-[1200px]:grid-cols-5 min-[1200px]:grid-rows-3 gap-x-5 gap-y-16 min-[1200px]:h-full">
           {filtered.map((p) => (
             <Link key={p.slug} href={`/work/${p.slug}`} className="flex flex-col min-[1200px]:h-full min-[1200px]:min-h-0">
-              <p className="text-xs mb-2 shrink-0">{p.projectNumber}</p>
+              <p className="text-[12px] min-[1200px]:text-[9px] mb-2 shrink-0 text-center min-[1200px]:text-left">{p.projectNumber}</p>
               <div className="relative aspect-[3/4] min-[1200px]:h-full min-[1200px]:w-auto min-[1200px]:max-w-full min-[1200px]:min-h-0">
                 {p.mainImage && (() => {
                   const rawUrl = urlFor(p.mainImage).url();

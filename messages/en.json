@@ -32,6 +32,7 @@
       "projectTypeLabel": "What type of project are you looking to develop?",
       "jobPosition": "Your job position",
       "website": "Website",
+      "brandStage": "What stage is your brand currently at?",
       "budgetLabel": "What is your budget for this project?",
       "budgetHint": "Our minimum project investment starts at 3.000€",
       "answerPlaceholder": "Answer",

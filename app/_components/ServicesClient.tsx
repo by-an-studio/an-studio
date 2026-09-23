@@ -31,7 +31,7 @@ type ServicesData = {
 };
 const paragraphComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[15px] leading-tight mb-4 last:mb-0">{children}</p>,
+    normal: ({ children }) => <p className="text-[15px] min-[1200px]:text-[12px] leading-tight mb-4 last:mb-0">{children}</p>,
   },
   marks: {
     underline: ({ children }) => <span className="underline decoration-1">{children}</span>,
@@ -63,6 +63,7 @@ export function ServicesClient({
   const [selected, setSelected] = useState(initialIndex !== -1 ? initialIndex : 0);
   const active = services[selected];
 
+
   function handleSelect(number: string, index: number) {
     setSelected(index);
     router.replace(`${pathname}?service=${number}`, { scroll: false });
@@ -70,28 +71,32 @@ export function ServicesClient({
 
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
-      <Grid className="pt-5 min-h-[70px] min-[1200px]:min-h-0">
+      <div className="min-[1200px]:hidden px-5 mb-4 text-center">
+        <span className="block text-[14px]">II</span>
+        <span className="block text-[25px]">{data?.headerLabel?.replace(/:\s*$/, "")}</span>
+      </div>
+      <Grid className="pt-0 min-[1200px]:pt-5 min-h-0">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8">
-          {data?.headerLabel && <p className="underline decoration-1">{data.headerLabel}</p>}
-          {data?.headerTagline && <p className="italic text-[20px]">{data.headerTagline}</p>}
+          {data?.headerLabel && <p className="hidden min-[1200px]:block underline decoration-1">{data.headerLabel}</p>}
+          {data?.headerTagline && <p className="italic text-[17px] min-[1200px]:text-[17px] text-center min-[1200px]:text-left">{data.headerTagline}</p>}
         </div>
       </Grid>
-      <Grid className="mt-16 min-[1200px]:mt-0 items-start min-[1200px]:items-center">
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-7 mb-16 min-[1200px]:mb-0">
-          <ul className="space-y-1">
+      <Grid className="mt-0 min-[1200px]:mt-0 items-start min-[1200px]:items-center">
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-7 mb-6 min-[1200px]:mb-0">
+          <ul className="mt-10 min-[1200px]:mt-0 space-y-[16px] min-[1200px]:space-y-1">
             {services.map((s, i) => {
               const isSelected = selected === i;
               return (
-                <li key={s.number ?? i}>
+                <li key={s.number ?? i} className="flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4">
                   <button
                     type="button"
                     onClick={() => handleSelect(s.number, i)}
-                    className={`flex items-baseline gap-4 text-left cursor-pointer ${!isSelected ? "text-muted" : "text-foreground"}`}
+                    className={`flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4 text-left cursor-pointer ${!isSelected ? "text-muted" : "text-foreground"}`}
                   >
-                    <span className="underline decoration-1 text-[16px] min-[1200px]:text-[clamp(12px,0.8333vw,16px)]">
+                    <span className="underline decoration-[0.5px] min-[1200px]:decoration-1 text-[12px] min-[1200px]:text-[clamp(9px,0.8333vw,13px)]">
                       ({s.number}.)
                     </span>
-                    <span className={`text-[24px] min-[1200px]:text-[clamp(24px,1.875vw,36px)]${isSelected ? " italic" : ""}`}>
+                    <span className={`text-[17px] min-[1200px]:text-[clamp(21px,1.875vw,33px)]${isSelected ? " italic" : ""}`}>
                       {s.label}
                     </span>
                   </button>
@@ -99,30 +104,22 @@ export function ServicesClient({
               );
             })}
           </ul>
-          <div className="flex items-baseline gap-4 mt-16">
-            <span className="invisible underline decoration-1 text-[16px] min-[1200px]:text-[clamp(12px,0.8333vw,16px)]">
-              (00.)
-            </span>
-            <Link href="/client-application" className="underline decoration-1 text-[18px]">
-              Start Your Project Now &rarr;
-            </Link>
-          </div>
         </div>
         {active && (
           <>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-6">
+            <div className="order-2 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-6 text-center min-[1200px]:text-left">
               {active.paragraphs && (
                 <PortableText value={active.paragraphs} components={paragraphComponents} />
               )}
-              {active.timeline && <p className="text-muted text-[12px] mt-8">{active.timeline}</p>}
+              {active.timeline && <p className="text-muted text-[12px] min-[1200px]:text-[9px] mt-8">{active.timeline}</p>}
             </div>
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-20 min-[1200px]:col-span-5">
+            <div className="order-1 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-20 min-[1200px]:col-span-5 w-[50%] min-[1200px]:w-auto mx-auto min-[1200px]:mx-0 mb-8 min-[1200px]:mb-0">
               <FeaturedImage item={active.featuredProject?.mainImage} />
-              <div className="mt-4 flex gap-2 text-[12px]">
+              <div className="hidden min-[1200px]:flex mt-4 gap-2 text-[12px] min-[1200px]:text-[9px]">
                 {active.featuredImageIndex && <span>Img. {active.featuredImageIndex}</span>}
                 <div>
                   {active.featuredProject?.title && <p>{active.featuredProject.title}</p>}
-                  <div className="text-muted mt-[15px]">
+                  <div className="text-muted mt-[15px] leading-tight">
                     {active.featuredTags?.map((tag, i) => (
                       <p key={i}>{tag}</p>
                     ))}
@@ -132,23 +129,45 @@ export function ServicesClient({
             </div>
           </>
         )}
+        <div className="order-3 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-7 flex items-baseline gap-4 mt-8 min-[1200px]:mt-16 justify-center min-[1200px]:justify-start">
+          <span className="hidden min-[1200px]:inline invisible underline decoration-1 text-[16px] min-[1200px]:text-[clamp(9px,0.8333vw,13px)]">
+            (00.)
+          </span>
+          <Link href="/client-application" className="underline decoration-1 text-[15px] min-[1200px]:text-[15px]">
+            Start Your Project Now &rarr;
+          </Link>
+        </div>
       </Grid>
-      <Grid className="mt-16 min-[1200px]:mt-0 min-[1200px]:flex-nowrap">
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4">
-          {data?.otherServicesTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
-          <ul className="text-[15px]">
+      <div className="min-[1200px]:hidden flex justify-center gap-8 mt-16 px-5">
+        <div className="text-center">
+          {data?.otherServicesTitle && <p className="text-[13px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
+          <ul className="text-[10px]">
             {data?.otherServices?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-12 min-[1200px]:col-span-4">
-          {data?.industryTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.industryTitle}</p>}
-          <ul className="text-[15px]">
+        <div className="text-center">
+          {data?.industryTitle && <p className="text-[13px] underline decoration-1 mb-2">{data.industryTitle}</p>}
+          <ul className="text-[10px]">
             {data?.industry?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-6">
-          {data?.contactTitle && <p className="text-[18px] underline decoration-1 mb-2">{data.contactTitle}</p>}
-          <ul className="text-[15px]">
+      </div>
+      <Grid className="hidden min-[1200px]:grid mt-16 min-[1200px]:mt-0 min-[1200px]:flex-nowrap">
+        <div className="min-[1200px]:col-start-4 min-[1200px]:col-span-4">
+          {data?.otherServicesTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
+          <ul className="text-[12px]">
+            {data?.otherServices?.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <div className="min-[1200px]:col-start-12 min-[1200px]:col-span-4">
+          {data?.industryTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.industryTitle}</p>}
+          <ul className="text-[12px]">
+            {data?.industry?.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <div className="min-[1200px]:col-start-16 min-[1200px]:col-span-6">
+          {data?.contactTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.contactTitle}</p>}
+          <ul className="text-[12px]">
             {data?.contactLines?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>

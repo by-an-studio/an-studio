@@ -127,8 +127,9 @@ function ProjectImg({ item, className, sizes = "(min-width: 1200px) 55vw, 100vw"
   if (!item?.image && !item?.videoUrl) return null;
   if (item.videoUrl) {
     const posterUrl = item.image ? urlFor(item.image).width(1600).url() : undefined;
+    const containerClass = (className ?? "").replace(/aspect-\[[^\]]*\]/g, "").trim();
     return (
-      <div className={`relative overflow-hidden ${className ?? ""}`}>
+      <div className={`relative overflow-hidden ${containerClass}`}>
         <FadeVideo
           src={item.videoUrl}
           poster={posterUrl}
@@ -137,7 +138,7 @@ function ProjectImg({ item, className, sizes = "(min-width: 1200px) 55vw, 100vw"
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="relative w-full h-auto object-contain"
         />
       </div>
     );
@@ -181,40 +182,143 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   };
   return (
     <main className={`w-full ${p.variant === "gallery" ? "pb-[30px]" : ""}`}>
-      <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-16 min-[1200px]:gap-[50px]">
+      <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-0 min-[1200px]:gap-[50px]">
         <Grid>
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] flex justify-between">
-            <Link href="/work" className="flex items-center gap-3 text-[14px] uppercase">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] min-[1200px]:pt-[clamp(90px,9.5vh,135px)] flex justify-between">
+            <Link href="/work" className="flex items-center gap-3 text-[14px] min-[1200px]:text-[11px] uppercase">
               <BackNextArrow flipped />
               <span>Back</span>
             </Link>
-            <Link href="/work" className="flex items-center gap-3 text-[14px] uppercase">
+            <Link href="/work" className="flex items-center gap-3 text-[14px] min-[1200px]:text-[11px] uppercase">
               <span>Next</span>
               <BackNextArrow />
             </Link>
           </div>
         </Grid>
-        <Grid className="pb-[30px] min-[1200px]:flex-1 min-[1200px]:min-h-0 items-start min-[1200px]:items-center">
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:4/15] min-[1400px]:[grid-column:4/14] min-[1600px]:[grid-column:4/13] min-[1800px]:[grid-column:4/12] min-[1200px]:self-stretch mb-8 min-[1200px]:mb-0 flex flex-col">
-            <div>
-              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[40px]">({p.projectNumber}.)</p>
-              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[40px]">{p.title}</p>
+        {p.variant === "gallery" && (
+          <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
+            <div className="text-center">
+              <p className="text-[28px] leading-tight">({p.projectNumber}.)</p>
+              <p className="text-[28px] leading-tight">{p.title}</p>
               {p.subtitleLine && (
-                <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[40px] mb-8">{p.subtitleLine}</p>
+                <p className="text-[28px] leading-tight">{p.subtitleLine}</p>
               )}
               {p.collaboration && (
-                <p className="italic text-[16px] min-[1200px]:text-[18px] mb-8">
+                <p className="italic text-[13px] mt-4">
+                  In Collaboration with <span className="underline decoration-1">{p.collaboration}</span>
+                </p>
+              )}
+            </div>
+            <RichText value={p.rightIntroText} className="text-[15px] leading-tight text-center px-6" />
+            <ProjectImg item={p.image2} className="aspect-[4/5]" sizes="90vw" />
+            <div className="text-center">
+              {hasRichText(p.aboutParagraph) && (
+                <p className="underline decoration-1 mb-4 text-[15px]">(About)</p>
+              )}
+              <RichText value={p.aboutParagraph} className="text-[15px] leading-tight" />
+            </div>
+            {p.projectTags && p.projectTags.length > 0 && (
+              <div className="text-center">
+                <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
+                <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
+                  {p.projectTags.map((t, i) => (
+                    <span key={i}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {p.galleryImages && p.galleryImages.length > 0 && (
+              <div className="grid grid-cols-2 gap-5">
+                {p.galleryImages.map((img, i) => (
+                  <ProjectImg key={i} item={img} className="aspect-[3/4]" sizes="45vw" />
+                ))}
+              </div>
+            )}
+            <RichText value={p.visualIdentityText} className="text-[15px] leading-tight text-center" />
+            {(p.timelineDuration || p.timelineService || hasRichText(p.timelineText)) && (
+              <div className="flex flex-col gap-8">
+                <div className="flex justify-center gap-8 text-[12px] uppercase text-center">
+                  {p.timelineDuration && (
+                    <div>
+                      <p>Timeline:</p>
+                      <p>{p.timelineDuration}</p>
+                    </div>
+                  )}
+                  {p.timelineService && (
+                    <div>
+                      <p>Service:</p>
+                      <p>{p.timelineService}</p>
+                    </div>
+                  )}
+                </div>
+                <RichText value={p.timelineText} className="text-[15px] leading-tight text-center" />
+              </div>
+            )}
+            <RichText value={p.mutedCaption} className="text-muted text-[12px] text-center leading-tight" />
+            {p.image9 && <ProjectImg item={p.image9} className="aspect-[4/5]" sizes="90vw" />}
+            <RichText value={p.finalText} className="text-[12px] leading-tight text-center px-6" />
+          </div>
+        )}
+        {p.variant === "simple" && (
+          <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
+            <div className="text-center">
+              <p className="text-[28px] leading-tight">({p.projectNumber}.)</p>
+              <p className="text-[28px] leading-tight">{p.title}</p>
+              {p.subtitleLine && (
+                <p className="text-[28px] leading-tight">{p.subtitleLine}</p>
+              )}
+              {p.collaboration && (
+                <p className="italic text-[13px] mt-4">
+                  In Collaboration with <span className="underline decoration-1">{p.collaboration}</span>
+                </p>
+              )}
+            </div>
+            <RichText value={p.simpleCaptionText} className="text-[15px] leading-tight text-center px-6" />
+            <ProjectImg
+              item={p.simpleLayout === "double" ? p.simpleImages?.[1] : p.simpleImages?.[0]}
+              className="aspect-[4/5]"
+              sizes="90vw"
+            />
+            <div className="text-center">
+              {hasRichText(p.aboutParagraph) && (
+                <p className="underline decoration-1 mb-4 text-[15px]">(About)</p>
+              )}
+              <RichText value={p.aboutParagraph} className="text-[15px] leading-tight" />
+            </div>
+            {p.projectTags && p.projectTags.length > 0 && (
+              <div className="text-center">
+                <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
+                <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
+                  {p.projectTags.map((t, i) => (
+                    <span key={i}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <RichText value={p.bottomParagraph} className="text-[15px] leading-tight text-center" />
+          </div>
+        )}
+        <Grid className="hidden min-[1200px]:grid pb-[30px] min-[1200px]:flex-1 min-[1200px]:min-h-0 items-start min-[1200px]:items-center">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:4/15] min-[1400px]:[grid-column:4/14] min-[1600px]:[grid-column:4/13] min-[1800px]:[grid-column:4/12] min-[1200px]:self-stretch mb-8 min-[1200px]:mb-0 flex flex-col">
+            <div>
+              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">({p.projectNumber}.)</p>
+              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">{p.title}</p>
+              {p.subtitleLine && (
+                <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight mb-8">{p.subtitleLine}</p>
+              )}
+              {p.collaboration && (
+                <p className="italic text-[16px] min-[1200px]:text-[15px] mb-8">
                   In Collaboration with <span className="underline decoration-1">{p.collaboration}</span>
                 </p>
               )}
               {hasRichText(p.aboutParagraph) && (
-                <p className="underline decoration-1 mb-4 text-[18px]">(About)</p>
+                <p className="underline decoration-1 mb-4 text-[18px] min-[1200px]:text-[15px]">(About)</p>
               )}
-              <RichText value={p.aboutParagraph} className="text-[18px] leading-tight mb-8" />
+              <RichText value={p.aboutParagraph} className="text-[18px] min-[1200px]:text-[15px] leading-tight mb-8" />
               {p.projectTags && p.projectTags.length > 0 && (
                 <>
-                  <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
-                  <div className="flex flex-wrap gap-4 min-[1200px]:gap-8 text-[12px] uppercase">
+                  <p className="underline decoration-1 mb-16 text-[18px] min-[1200px]:text-[15px]">(Categories)</p>
+                  <div className="flex flex-wrap gap-4 min-[1200px]:gap-8 text-[12px] min-[1200px]:text-[9px] uppercase">
                     {p.projectTags.map((t, i) => (
                       <span key={i}>{t}</span>
                     ))}
@@ -224,25 +328,25 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             <RichText
               value={p.bottomParagraph}
-              className="text-[15px] min-[1200px]:text-[18px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8"
+              className="text-[15px] min-[1200px]:text-[15px] leading-tight mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8"
             />
           </div>
           {p.variant === "gallery" ? (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-16 min-[1200px]:col-span-9 min-[1200px]:self-stretch flex flex-col min-[1200px]:justify-end">
               {hasRichText(p.rightIntroText) && (
                 <div className="grid grid-cols-9 gap-5 mb-8">
-                  <RichText value={p.rightIntroText} className="col-span-8 text-[15px] min-[1200px]:text-[18px] leading-tight" />
+                  <RichText value={p.rightIntroText} className="col-span-8 text-[15px] min-[1200px]:text-[15px] leading-tight" />
                 </div>
               )}
               <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5">
                 <div className="col-span-1 min-[1200px]:col-span-3">
                   <ProjectImg item={p.image1} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 18vw, 65vw" />
                   {p.image1 && (
-                    <div className="flex gap-2 text-[12px]">
+                    <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                       <span>Img. 01</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted mt-[15px]">
+                        <div className="text-muted mt-[15px] leading-tight">
                           {p.image1.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -252,11 +356,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 <div className="col-span-1 min-[1200px]:col-start-4 min-[1200px]:col-span-6">
                   <ProjectImg item={p.image2} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 33vw, 65vw" />
                   {p.image2 && (
-                    <div className="flex gap-2 text-[12px]">
+                    <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                       <span>Img. 02</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted mt-[15px]">
+                        <div className="text-muted mt-[15px] leading-tight">
                           {p.image2.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -271,17 +375,17 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         </Grid>
       </div>
       {p.variant === "gallery" && p.galleryImages && p.galleryImages.length > 0 && (
-        <Grid className="mt-24">
+        <Grid className="hidden min-[1200px]:grid mt-24">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21">
             <div className="flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:grid min-[1200px]:grid-cols-4 min-[1200px]:overflow-visible">
               {p.galleryImages.map((img, i) => (
                 <div key={i} className="shrink-0 w-[75vw] min-[1200px]:w-auto">
                   <ProjectImg item={img} className="aspect-[3/4] mb-4" sizes="(min-width: 1200px) 30vw, 90vw" />
-                  <div className="flex gap-2 text-[12px]">
+                  <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                     <span>Img. {String(i + 3).padStart(2, "0")}</span>
                     <div>
                       <p>{p.title}</p>
-                      <div className="text-muted mt-[15px]">
+                      <div className="text-muted mt-[15px] leading-tight">
                         {img.tags?.map((t, j) => <p key={j}>{t}</p>)}
                       </div>
                     </div>
@@ -293,12 +397,12 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         </Grid>
       )}
       {p.variant === "gallery" && (
-        <Grid className="mt-24 items-start">
+        <Grid className="hidden min-[1200px]:grid mt-24 items-start">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8 mb-16 min-[1200px]:mb-0 min-[1200px]:self-stretch flex flex-col">
-            <RichText value={p.visualIdentityText} className="text-[15px] min-[1200px]:text-[18px] leading-tight mb-8" />
+            <RichText value={p.visualIdentityText} className="text-[15px] min-[1200px]:text-[15px] leading-tight mb-8" />
             {(p.timelineDuration || p.timelineService || hasRichText(p.timelineText)) && (
               <div className="grid grid-cols-8 gap-5 mb-8">
-                <div className="col-span-3 min-[1200px]:col-span-2 text-[12px] uppercase">
+                <div className="col-span-3 min-[1200px]:col-span-2 text-[12px] min-[1200px]:text-[9px] uppercase">
                   {p.timelineDuration && (
                     <>
                       <p>Timeline:</p>
@@ -312,20 +416,20 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     </>
                   )}
                 </div>
-                <RichText value={p.timelineText} className="col-span-5 min-[1200px]:col-span-6 text-[15px] min-[1200px]:text-[18px] leading-tight" />
+                <RichText value={p.timelineText} className="col-span-5 min-[1200px]:col-span-6 text-[15px] min-[1200px]:text-[15px] leading-tight" />
               </div>
             )}
-            <RichText value={p.mutedCaption} className="text-muted text-[12px]" />
+            <RichText value={p.mutedCaption} className="text-muted text-[12px] min-[1200px]:text-[9px]" />
             {(p.image7 || p.image8) && (
               <div className="grid grid-cols-2 min-[1200px]:grid-cols-8 gap-5 mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8">
                 {p.image7 && (
                   <div className="col-span-1 min-[1200px]:col-span-3">
                     <ProjectImg item={p.image7} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 20vw, 65vw" />
-                    <div className="flex gap-2 text-[12px]">
+                    <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                       <span>Img. 07</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted mt-[15px]">
+                        <div className="text-muted mt-[15px] leading-tight">
                           {p.image7.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -335,11 +439,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                 {p.image8 && (
                   <div className="col-span-1 min-[1200px]:col-span-3">
                     <ProjectImg item={p.image8} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 20vw, 65vw" />
-                    <div className="flex gap-2 text-[12px]">
+                    <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                       <span>Img. 08</span>
                       <div>
                         <p>{p.title}</p>
-                        <div className="text-muted mt-[15px]">
+                        <div className="text-muted mt-[15px] leading-tight">
                           {p.image8.tags?.map((t, i) => <p key={i}>{t}</p>)}
                         </div>
                       </div>
@@ -351,17 +455,17 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
           </div>
           {hasRichText(p.finalText) && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:13/17] min-[1600px]:[grid-column:13/16] mb-8 min-[1200px]:mb-0">
-              <RichText value={p.finalText} className="text-[15px] min-[1200px]:text-[14px] leading-tight" />
+              <RichText value={p.finalText} className="text-[15px] min-[1200px]:text-[11px] leading-tight" />
             </div>
           )}
           {p.image9 && (
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-7">
               <ProjectImg item={p.image9} className="aspect-[4/5] mb-4" sizes="(min-width: 1200px) 40vw, 100vw" />
-              <div className="flex gap-2 text-[12px]">
+              <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
                 <span>Img. 09</span>
                 <div>
                   <p>{p.title}</p>
-                  <div className="text-muted mt-[15px]">
+                  <div className="text-muted mt-[15px] leading-tight">
                     {p.image9.tags?.map((t, i) => <p key={i}>{t}</p>)}
                   </div>
                 </div>
@@ -376,11 +480,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 function SimpleRight({ p }: { p: ProjectData }) {
   const images = p.simpleImages ?? [];
   const captionBlock = (idx: number, item: SimpleImage) => (
-    <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px]">
+    <div className="min-[1200px]:absolute min-[1200px]:right-0 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px] min-[1200px]:text-[9px]">
       <span>{item.mediaType ?? "Img"}. {String(idx + 1).padStart(2, "0")}</span>
       <div>
         <p>{p.title}</p>
-        <div className="text-muted mt-[15px]">
+        <div className="text-muted mt-[15px] leading-tight">
           {item.tags?.map((t, i) => <p key={i}>{t}</p>)}
         </div>
       </div>
@@ -394,7 +498,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-11 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[15px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
             />
           </div>
         )}
@@ -416,7 +520,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[15px] leading-tight min-[1200px]:col-start-2 min-[1200px]:col-span-7"
             />
           </div>
         )}
@@ -472,7 +576,7 @@ function SimpleRight({ p }: { p: ProjectData }) {
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-9 gap-5 mb-8">
             <RichText
               value={p.simpleCaptionText}
-              className="text-[15px] min-[1200px]:text-[18px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7"
+              className="text-[15px] min-[1200px]:text-[15px] leading-tight min-[1200px]:col-start-3 min-[1200px]:col-span-7"
             />
           </div>
         )}

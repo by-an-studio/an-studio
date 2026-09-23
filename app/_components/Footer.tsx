@@ -47,14 +47,37 @@ function SubItemLink({ item }: { item: PlainSubItem }) {
 function FooterColumn({ col }: { col: FooterColumnData }) {
   return (
     <div className="md:shrink-0">
-      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[18px]">
-        <span className="text-[10px]">{col.roman}</span>
+      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[15px]">
+        <span className="inline-block min-w-[20px] min-[1200px]:min-w-[14px] text-[11px] min-[1200px]:text-[8px]">{col.roman}</span>
         <span>{col.label}</span>
       </Link>
       {col.subItems.length > 0 && (
-        <ul className="mt-[2px] md:mt-2 space-y-1">
+        <ul className="mt-[2px] md:mt-2 space-y-1 ml-[28px] min-[1200px]:ml-[22px]">
           {col.subItems.map((item, i) => (
-            <li key={i} className="text-[12px] md:text-sm whitespace-nowrap">
+            <li key={i} className="text-[12px] md:text-[11px] whitespace-nowrap">
+              <SubItemLink item={item} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// Composición específica para responsive: numeral romano centrado encima del
+// título (en vez de al lado, como en escritorio), y agrupado en filas
+// concretas en vez del grid uniforme de 2 columnas.
+function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hideSubItems?: boolean }) {
+  return (
+    <div className="flex flex-col items-center text-center leading-tight">
+      <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight">
+        <span className="text-[11px] leading-tight">{col.roman}</span>
+        <span className="text-[19px] leading-tight">{col.label}</span>
+      </Link>
+      {!hideSubItems && col.subItems.length > 0 && (
+        <ul className="mt-2 space-y-1 leading-tight">
+          {col.subItems.map((item, i) => (
+            <li key={i} className="text-[15px] leading-tight whitespace-nowrap">
               <SubItemLink item={item} />
             </li>
           ))}
@@ -117,17 +140,33 @@ export function Footer({ data }: { data: FooterData | null }) {
     }
   }
   return (
-    <footer className="w-full pt-20 pb-[30px]">
-      <div className="h-auto md:h-[400px] min-[1200px]:h-[600px] flex flex-col gap-[60px] px-5 md:flex-row md:flex-wrap md:content-start md:justify-between md:gap-y-14">
-        <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:contents">
-          {[...mainColumns, ...secondaryColumns].map((col) => (
-            <FooterColumn key={col.roman} col={col} />
+    <footer className="w-full pt-20 pb-[30px] bg-[#FFFDF7]">
+      {/* Responsive: composición agrupada por filas específicas */}
+      <div className="min-[1200px]:hidden flex flex-col gap-10 px-5">
+        <div className="flex flex-row justify-center gap-[clamp(64px,16vw,220px)]">
+          {mainColumns.slice(0, 3).map((col) => (
+            <FooterColumnMobile key={col.roman} col={col} hideSubItems />
           ))}
         </div>
+        <FooterColumnMobile col={mainColumns[3]} hideSubItems />
+        <div className="flex flex-row justify-center gap-[clamp(64px,16vw,220px)]">
+          <FooterColumnMobile col={mainColumns[4]} />
+          <FooterColumnMobile col={mainColumns[5]} />
+        </div>
+        {secondaryColumns.map((col) => (
+          <FooterColumnMobile key={col.roman} col={col} />
+        ))}
+      </div>
+
+      {/* Escritorio: grid flex-wrap sin cambios */}
+      <div className="hidden min-[1200px]:flex min-[1200px]:h-[600px] px-5 min-[1200px]:flex-row min-[1200px]:flex-wrap min-[1200px]:content-start min-[1200px]:justify-between min-[1200px]:gap-y-14">
+        {[...mainColumns, ...secondaryColumns].map((col) => (
+          <FooterColumn key={col.roman} col={col} />
+        ))}
       </div>
       <Grid className="mt-24 min-[1200px]:mt-0 items-end">
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-span-6">
-          <p className="mb-4 text-[16px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-span-6 min-[1200px]:row-start-1">
+          <p className="mb-4 text-center min-[1200px]:text-left text-[16px] min-[1200px]:text-[13px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
           <form onSubmit={handleSubmit} className="relative flex gap-2" suppressHydrationWarning>
             <input
               type="text"
@@ -154,22 +193,22 @@ export function Footer({ data }: { data: FooterData | null }) {
                     if (showEmptyWarning) setShowEmptyWarning(false);
                   }}
                   suppressHydrationWarning
-                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] w-full h-full box-border focus:outline-none"
+                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] min-[1200px]:text-[13px] w-full h-full box-border focus:outline-none"
                 />
               </div>
             </div>
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] min-[1200px]:text-[16px] focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-default"
+              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] min-[1200px]:text-[13px] focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-default"
             >
               {status === "submitting" ? "..." : (data?.subscribeButtonLabel ?? "Subscribe")}
             </button>
             {status === "error" && (
-              <p className="absolute left-0 top-full mt-1 text-[10px] text-red-600">Something went wrong, please try again.</p>
+              <p className="absolute left-0 top-full mt-1 text-[11px] min-[1200px]:text-[8px] text-red-600">Something went wrong, please try again.</p>
             )}
             <span
-              className={`absolute left-0 top-full mt-1 text-[10px] transition-opacity duration-200 ${
+              className={`absolute left-0 top-full mt-1 text-[11px] min-[1200px]:text-[8px] transition-opacity duration-200 ${
                 showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
@@ -177,15 +216,15 @@ export function Footer({ data }: { data: FooterData | null }) {
             </span>
           </form>
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-4 text-[12px] min-[1200px]:text-[16px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left mt-16 min-[1200px]:mt-0">An Studio 2026®</div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-6 text-[12px] min-[1200px]:text-[16px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left -mt-5 min-[1200px]:mt-0">Independent Design Studio</div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-21 min-[1200px]:col-span-4 flex justify-center min-[1200px]:justify-end mt-10 min-[1200px]:mt-0 w-full">
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-6 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[13px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left mt-16 min-[1200px]:mt-0">Independent Design Studio</div>
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-4 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[13px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left -mt-5 min-[1200px]:mt-0">An Studio 2026®</div>
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-21 min-[1200px]:col-span-4 min-[1200px]:row-start-1 flex justify-center min-[1200px]:justify-end mt-10 min-[1200px]:mt-0 w-full">
           <Image
             src="/logo/an-studio.svg"
             alt="An Studio"
-            width={140}
-            height={24}
-            className="w-full h-auto min-[1200px]:w-[140px]"
+            width={150}
+            height={26}
+            className="w-[150px] h-auto min-[1200px]:w-[120px]"
           />
         </div>
       </Grid>

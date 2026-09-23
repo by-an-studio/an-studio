@@ -82,10 +82,10 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
         <Grid className="min-[1200px]:min-h-[100svh] min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center pb-[30px]">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-6 mb-16 min-[1200px]:mb-0 grid grid-cols-1 min-[1200px]:grid-cols-6">
             {data?.title && (
-              <p className="text-[32px] min-[1200px]:text-[36px] min-[1200px]:col-span-6">{data.title}</p>
+              <p className="text-[32px] min-[1200px]:text-[33px] min-[1200px]:col-span-6">{data.title}</p>
             )}
             {data?.tagline && (
-              <p className="italic text-[24px] leading-tight min-[1200px]:col-span-4">{data.tagline}</p>
+              <p className="italic text-[24px] min-[1200px]:text-[21px] leading-tight min-[1200px]:col-span-4">{data.tagline}</p>
             )}
           </div>
           {product && (
@@ -93,33 +93,33 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
               <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-span-5 mb-16 min-[1200px]:mb-0 flex flex-col gap-16 min-[1200px]:gap-0 min-[1200px]:justify-between">
                 <div>
                   {product.categoryLabel && (
-                    <p className="not-italic text-[16px] min-[1200px]:text-[18px] mb-2">
+                    <p className="not-italic text-[16px] min-[1200px]:text-[15px] mb-2">
                       For <em className="italic">{product.categoryLabel}</em>
                     </p>
                   )}
                   {product.name && (
-                    <p className="text-[28px] min-[1200px]:text-[40px] underline decoration-2 underline-offset-4">
+                    <p className="text-[28px] min-[1200px]:text-[37px] underline decoration-2 underline-offset-4">
                       {product.name}
                     </p>
                   )}
-                  {product.subtitle && <p className="text-[20px] min-[1200px]:text-[26px]">{product.subtitle}</p>}
+                  {product.subtitle && <p className="text-[20px] min-[1200px]:text-[23px]">{product.subtitle}</p>}
                 </div>
                 <div className="flex flex-col gap-8">
-                  {product.comingSoon && <p className="italic text-[16px] min-[1200px]:text-[18px]">Coming Soon!</p>}
+                  {product.comingSoon && <p className="italic text-[16px] min-[1200px]:text-[15px]">Coming Soon!</p>}
                   {product.price && (
                     <div>
-                      <p className="text-[16px] min-[1200px]:text-[18px]">PRICE:</p>
-                      <p className="italic text-[16px] min-[1200px]:text-[18px]">{product.price}</p>
+                      <p className="text-[16px] min-[1200px]:text-[15px]">PRICE:</p>
+                      <p className="italic text-[16px] min-[1200px]:text-[15px]">{product.price}</p>
                     </div>
                   )}
                   {product.format && (
                     <div>
-                      <p className="text-[16px] min-[1200px]:text-[18px]">FORMAT:</p>
-                      <p className="text-[16px] min-[1200px]:text-[18px]">{product.format}</p>
+                      <p className="text-[16px] min-[1200px]:text-[15px]">FORMAT:</p>
+                      <p className="text-[16px] min-[1200px]:text-[15px]">{product.format}</p>
                     </div>
                   )}
                   {product.description && (
-                    <p className="text-[15px] min-[1200px]:text-[18px] leading-snug">{product.description}</p>
+                    <p className="text-[15px] min-[1200px]:text-[15px] leading-snug">{product.description}</p>
                   )}
                 </div>
               </div>

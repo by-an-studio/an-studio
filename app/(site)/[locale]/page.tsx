@@ -70,11 +70,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     : null;
 
   return (
-      <main className="w-full flex flex-col items-center">
+      <main className="relative w-full flex flex-col items-center">
       {/* Bloque 1 home */}
-      <section className="h-[100svh] w-full flex flex-col items-center justify-center gap-10 px-5 overflow-hidden">
+      <section className="h-[100svh] w-full flex flex-col items-center justify-center gap-4 md:gap-10 px-5 overflow-hidden">
         {data?.studioLabel && (
-          <div className="text-center text-[clamp(12px,0.9375vw,18px)] md:fixed md:top-6 md:inset-x-0 md:z-10 md:pointer-events-none">
+          <div className="text-center text-[clamp(12px,0.9375vw,18px)] md:text-[clamp(9px,0.9375vw,15px)] md:fixed md:top-6 md:inset-x-0 md:z-10 md:pointer-events-none">
             {data.studioLabel}
           </div>
         )}
@@ -85,7 +85,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
 
           {(data?.heroGroup1.line1 || data?.heroGroup1.line2 || data?.heroGroup1.line3) && (
-            <div className="relative z-10 text-center text-[18px] md:text-[60px] md:whitespace-nowrap leading-tight">
+            <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.12] md:leading-[1.05]">
               <p>
                 {data.heroGroup1.line1 && <span className="md:block">{data.heroGroup1.line1} </span>}
                 {data.heroGroup1.line2 && <span className="md:block">{data.heroGroup1.line2} </span>}
@@ -94,10 +94,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           )}
 
-          <div className="h-[280px]" />
+          <div className="h-[390px] md:h-[280px]" />
 
           {(data?.heroGroup2.line1 || data?.heroGroup2.line2 || data?.heroGroup2.line3) && (
-            <div className="relative z-10 text-center text-[18px] md:text-[60px] md:whitespace-nowrap leading-tight">
+            <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.12] md:leading-[1.05]">
               <p>
                 {data.heroGroup2.line1 && <span className="md:block">{data.heroGroup2.line1} </span>}
                 {data.heroGroup2.line2 && <span className="md:block">{data.heroGroup2.line2} </span>}
@@ -109,23 +109,27 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Bloque 2 home */}
-      <section className="w-full min-h-[30svh] md:min-h-0 md:py-[30px] md:fixed md:bottom-0 md:inset-x-0 z-20 px-5 flex flex-col justify-center">
-        <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-5 text-center text-[15px] md:text-[16px]">
-          <div className="flex flex-col gap-2 md:contents">
+      <section className="w-full min-h-[18svh] md:min-h-0 mt-10 md:mt-0 md:py-[30px] md:fixed md:bottom-0 md:inset-x-0 z-20 px-5 flex flex-col justify-start md:justify-center">
+        <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-5 text-center text-[15px] md:text-[13px]">
+          <div className="flex flex-col gap-14 md:gap-2 md:contents">
             {data?.availableLabel && (
-              <div className="md:flex-1 text-[15px] md:text-[clamp(13px,0.8333vw,16px)] md:text-left">{data.availableLabel}</div>
+              <div className="order-2 md:order-none md:flex-1 text-[15px] md:text-[clamp(10px,0.8333vw,13px)] md:text-left">{data.availableLabel}</div>
             )}
             {data?.description && (
-              <div className="md:flex-[2] max-w-[240px] mx-auto md:max-w-none md:mx-0 text-[12px] md:text-[clamp(14px,0.9375vw,18px)]">{data.description}</div>
+              <div className="order-1 md:order-none md:flex-[2] w-full whitespace-nowrap md:whitespace-normal md:max-w-none md:mx-0 text-[clamp(7px,calc((100vw-40px)*0.0298),16px)] md:text-[clamp(11px,0.9375vw,15px)]">{data.description}</div>
             )}
           </div>
           {data?.newsletterButtonLabel && (
-            <div className="md:flex-1 flex justify-center md:justify-end">
-              <HomeNewsletterForm
-                buttonLabel={data.newsletterButtonLabel}
-                emailPlaceholder={data.emailPlaceholder}
-                comingSoonLabel={data.comingSoonLabel}
-              />
+            <div className="absolute top-[calc(50svh+110px)] right-0 md:static md:top-auto md:right-auto md:flex-1 flex justify-center md:justify-end">
+              <div className="rotate-90 origin-top-right md:rotate-0 md:origin-center">
+                <div className="rotate-180 md:rotate-0">
+                  <HomeNewsletterForm
+                    buttonLabel={data.newsletterButtonLabel}
+                    emailPlaceholder={data.emailPlaceholder}
+                    comingSoonLabel={data.comingSoonLabel}
+                  />
+                </div>
+              </div>
             </div>
           )}
         </div>

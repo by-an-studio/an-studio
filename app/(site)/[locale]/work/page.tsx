@@ -78,21 +78,28 @@ export default async function Work({
     { value: "Social Media", label: pick(locale, w?.categorySocialMedia) || "Social Media" },
   ];
 
+  const navT = await getTranslations("nav");
+  const pageTitle = navT("work");
+
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+      <div className="min-[1200px]:hidden px-5 mb-0 text-center">
+        <span className="block text-[14px]">I</span>
+        <span className="block text-[25px]">{pageTitle}</span>
+      </div>
       {(noteLabel || noteText) && (
-        <Grid className="pt-5 min-h-[70px] min-[1200px]:min-h-0">
+        <Grid className="hidden min-[1200px]:grid pt-5 min-h-[70px] min-[1200px]:min-h-0">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-11 flex gap-2">
-            {noteLabel && <span className="text-xs underline mt-[6px] shrink-0">{noteLabel}</span>}
+            {noteLabel && <span className="text-[12px] min-[1200px]:text-[9px] underline mt-[6px] shrink-0">{noteLabel}</span>}
             {noteText && (
-              <div className="text-[20px] leading-snug">
+              <div className="text-[20px] min-[1200px]:text-[17px] leading-snug">
                 <PortableText value={noteText} components={noteComponents} />
               </div>
             )}
           </div>
         </Grid>
       )}
-      <div className="relative mt-16 min-[1200px]:mt-0 min-[1200px]:h-[78svh]">
+      <div className="relative mt-8 min-[1200px]:mt-0 min-[1200px]:h-[78svh]">
         <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
           <WorkGrid
             key={initialCategory ?? "all"}
