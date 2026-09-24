@@ -14,7 +14,7 @@ import { PageTransition } from "../../_components/PageTransition";
 import { LoadingScreen } from "../../_components/LoadingScreen";
 import { SanityLive } from "../../../sanity/lib/live";
 import { sanityFetch } from "../../../sanity/lib/live";
-import { pick, pickLinkItems, pickLinkItem, toLocale } from "../../../i18n/locale";
+import { pick, pickLinkItems, toLocale } from "../../../i18n/locale";
 import { draftMode } from "next/headers";
 
 const williamSubhead = localFont({
@@ -42,17 +42,24 @@ const FOOTER_QUERY = `*[_type == "footer"][0]{
   emailPlaceholder,
   subscribeButtonLabel,
   comingSoonLabel,
-  workSubItems[]{label, href},
-  servicesSubItems[]{label, href},
   aboutSubItems[]{label, href},
   clientApplicationSubItems[]{label, href},
   contactLabel,
-  contactMail{label, href},
-  contactPhone{label, href},
+  contactItems[]{label, href},
   socialLabel,
-  socialInstagram{label, href},
-  socialPinterest{label, href},
+  socialItems[]{label, href},
   privacyPolicyLabel
+}`;
+// Work / Services footer sub-menus are generated automatically from the real
+// work categories and services list, instead of being maintained by hand.
+const FOOTER_WORK_CATEGORIES_QUERY = `*[_type == "workPage"][0]{
+  categoryBrandIdentity,
+  categoryPackaging,
+  categoryWebDesign,
+  categorySocialMedia
+}`;
+const FOOTER_SERVICES_LIST_QUERY = `*[_type == "services"][0]{
+  servicesList[]{number, label}
 }`;
 
 export default async function RootLayout({
@@ -66,24 +73,41 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
   const locale = toLocale(rawLocale);
   const messages = await getMessages();
-  const { data: rawFooter } = await sanityFetch({ query: FOOTER_QUERY });
+  const [{ data: rawFooter }, { data: rawWorkCategories }, { data: rawServicesList }] = await Promise.all([
+    sanityFetch({ query: FOOTER_QUERY }),
+    sanityFetch({ query: FOOTER_WORK_CATEGORIES_QUERY }),
+    sanityFetch({ query: FOOTER_SERVICES_LIST_QUERY }),
+  ]);
   const raw = rawFooter as any;
+  const workCategoriesData = rawWorkCategories as any;
+  const workCategoryDefs = [
+    { value: "Brand Identity", label: pick(locale, workCategoriesData?.categoryBrandIdentity) || "Brand Identity" },
+    { value: "Packaging", label: pick(locale, workCategoriesData?.categoryPackaging) || "Packaging" },
+    { value: "Web Design", label: pick(locale, workCategoriesData?.categoryWebDesign) || "Web Design" },
+    { value: "Social Media", label: pick(locale, workCategoriesData?.categorySocialMedia) || "Social Media" },
+  ];
+  const dynamicWorkSubItems = workCategoryDefs.map((c) => ({
+    label: c.label,
+    href: `/work?category=${encodeURIComponent(c.value)}`,
+  }));
+  const servicesListData = ((rawServicesList as any)?.servicesList ?? []) as any[];
+  const dynamicServicesSubItems = servicesListData
+    .map((s) => ({ label: pick(locale, s.label), href: `/services?service=${s.number}` }))
+    .filter((item): item is { label: string; href: string } => Boolean(item.label));
   const footerData = raw
     ? {
         subscribeLabel: pick(locale, raw.subscribeLabel),
         emailPlaceholder: pick(locale, raw.emailPlaceholder),
         subscribeButtonLabel: pick(locale, raw.subscribeButtonLabel),
         comingSoonLabel: pick(locale, raw.comingSoonLabel),
-        workSubItems: pickLinkItems(locale, raw.workSubItems),
-        servicesSubItems: pickLinkItems(locale, raw.servicesSubItems),
+        workSubItems: dynamicWorkSubItems,
+        servicesSubItems: dynamicServicesSubItems,
         aboutSubItems: pickLinkItems(locale, raw.aboutSubItems),
         clientApplicationSubItems: pickLinkItems(locale, raw.clientApplicationSubItems),
         contactLabel: pick(locale, raw.contactLabel),
-        contactMail: pickLinkItem(locale, raw.contactMail),
-        contactPhone: pickLinkItem(locale, raw.contactPhone),
+        contactItems: pickLinkItems(locale, raw.contactItems),
         socialLabel: pick(locale, raw.socialLabel),
-        socialInstagram: pickLinkItem(locale, raw.socialInstagram),
-        socialPinterest: pickLinkItem(locale, raw.socialPinterest),
+        socialItems: pickLinkItems(locale, raw.socialItems),
         privacyPolicyLabel: pick(locale, raw.privacyPolicyLabel),
       }
     : null;

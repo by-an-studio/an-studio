@@ -18,11 +18,9 @@ export type FooterData = {
   aboutSubItems?: FooterLinkItem[];
   clientApplicationSubItems?: FooterLinkItem[];
   contactLabel?: string;
-  contactMail?: FooterLinkItem;
-  contactPhone?: FooterLinkItem;
+  contactItems?: FooterLinkItem[];
   socialLabel?: string;
-  socialInstagram?: FooterLinkItem;
-  socialPinterest?: FooterLinkItem;
+  socialItems?: FooterLinkItem[];
   privacyPolicyLabel?: string;
 };
 
@@ -56,7 +54,7 @@ function SubItemLink({ item }: { item: PlainSubItem }) {
 function FooterColumn({ col }: { col: FooterColumnData }) {
   return (
     <div className="md:shrink-0">
-      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 hover:opacity-40">
+      <Link href={col.href} className={`flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 ${col.href === "#" ? "" : "hover:opacity-40"}`}>
         <span className="inline-block min-w-[20px] min-[1200px]:min-w-[14px] text-[11px] min-[1200px]:text-[8px]">{col.roman}</span>
         <span>{col.label}</span>
       </Link>
@@ -79,7 +77,7 @@ function FooterColumn({ col }: { col: FooterColumnData }) {
 function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hideSubItems?: boolean }) {
   return (
     <div className="flex flex-col items-center text-center leading-tight">
-      <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 hover:opacity-40">
+      <Link href={col.href} className={`flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 ${col.href === "#" ? "" : "hover:opacity-40"}`}>
         <span className="text-[11px] leading-tight">{col.roman}</span>
         <span className="text-[19px] leading-tight">{col.label}</span>
       </Link>
@@ -112,13 +110,13 @@ export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: s
       roman: "VII",
       label: data?.contactLabel ?? "Contact",
       href: "#",
-      subItems: [data?.contactMail, data?.contactPhone].filter((v): v is PlainSubItem => Boolean(v)),
+      subItems: data?.contactItems ?? [],
     },
     {
       roman: "VIII",
       label: data?.socialLabel ?? "Social",
       href: "#",
-      subItems: [data?.socialInstagram, data?.socialPinterest].filter((v): v is PlainSubItem => Boolean(v)),
+      subItems: data?.socialItems ?? [],
     },
     { roman: "IX", label: data?.privacyPolicyLabel ?? "Privacy Policy", href: "/privacy-policy", subItems: [] },
   ];

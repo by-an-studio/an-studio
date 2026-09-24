@@ -117,7 +117,7 @@ export function ServicesClient({
               {active.paragraphs && (
                 <PortableText value={active.paragraphs} components={paragraphComponents} />
               )}
-              {active.timeline && <p className="text-muted text-[12px] min-[1200px]:text-[9px] mt-8">{active.timeline}</p>}
+              {active.timeline && <p className="text-muted text-[12px] min-[1200px]:text-[10px] mt-8">{active.timeline}</p>}
             </div>
             <div className="order-1 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-20 min-[1200px]:col-span-5 w-[50%] min-[1200px]:w-auto mx-auto min-[1200px]:mx-0 mb-8 min-[1200px]:mb-0">
               <FeaturedImage item={active.featuredImage} />

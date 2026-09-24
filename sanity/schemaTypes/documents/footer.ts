@@ -35,20 +35,6 @@ export const footer = defineType({
       group: 'newsletter',
     }),
     defineField({
-      name: 'workSubItems',
-      title: 'Work — sublista',
-      type: 'array',
-      of: [{ type: 'footerLinkItem' }],
-      group: 'columns',
-    }),
-    defineField({
-      name: 'servicesSubItems',
-      title: 'Services — sublista',
-      type: 'array',
-      of: [{ type: 'footerLinkItem' }],
-      group: 'columns',
-    }),
-    defineField({
       name: 'aboutSubItems',
       title: 'About — sublista',
       type: 'array',
@@ -69,15 +55,11 @@ export const footer = defineType({
       group: 'columns',
     }),
     defineField({
-      name: 'contactMail',
-      title: 'Contact — línea de mail',
-      type: 'footerLinkItem',
-      group: 'columns',
-    }),
-    defineField({
-      name: 'contactPhone',
-      title: 'Contact — línea de teléfono',
-      type: 'footerLinkItem',
+      name: 'contactItems',
+      title: 'Contact — enlaces',
+      description: 'Añade tantas líneas como quieras (mail, teléfono, dirección, etc).',
+      type: 'array',
+      of: [{ type: 'footerLinkItem' }],
       group: 'columns',
     }),
     defineField({
@@ -87,15 +69,11 @@ export const footer = defineType({
       group: 'columns',
     }),
     defineField({
-      name: 'socialInstagram',
-      title: 'Social — línea Instagram',
-      type: 'footerLinkItem',
-      group: 'columns',
-    }),
-    defineField({
-      name: 'socialPinterest',
-      title: 'Social — línea Pinterest',
-      type: 'footerLinkItem',
+      name: 'socialItems',
+      title: 'Social — enlaces',
+      description: 'Añade tantas líneas como quieras (Instagram, Pinterest, TikTok, etc).',
+      type: 'array',
+      of: [{ type: 'footerLinkItem' }],
       group: 'columns',
     }),
     defineField({
