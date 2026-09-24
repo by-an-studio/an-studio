@@ -53,13 +53,15 @@ function Field({
       <label className="block text-[15px] min-[1200px]:text-[15px] mb-4">
         {label} {required && requiredLabel}
       </label>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(name, e.target.value)}
-        className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
-      />
+      <div className="w-[106.6667%] min-[1200px]:w-full origin-left scale-[0.9375] min-[1200px]:scale-100">
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(name, e.target.value)}
+          className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
+        />
+      </div>
     </div>
   );
 }
@@ -291,13 +293,15 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <p className="text-foreground text-[12px] min-[1200px]:text-[12px] mb-4">
               {t("fields.budgetHint")}
             </p>
-            <input
-              type="text"
-              placeholder={t("fields.answerPlaceholder")}
-              value={formData.budget}
-              onChange={(e) => handleChange("budget", e.target.value)}
-              className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
-            />
+            <div className="w-[106.6667%] min-[1200px]:w-full origin-left scale-[0.9375] min-[1200px]:scale-100">
+              <input
+                type="text"
+                placeholder={t("fields.answerPlaceholder")}
+                value={formData.budget}
+                onChange={(e) => handleChange("budget", e.target.value)}
+                className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
+              />
+            </div>
           </div>
           <Field label={t("fields.brandStage")} name="website2" value={formData.website2} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           <div className="flex flex-col gap-8">
