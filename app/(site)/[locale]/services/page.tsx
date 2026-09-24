@@ -33,7 +33,8 @@ const SERVICES_QUERY = `*[_type == "services"][0]{
     timeline,
     featuredImageIndex,
     featuredTags,
-    featuredProject->{title, mainImage}
+    featuredImage,
+    featuredTitle
   },
   otherServicesTitle,
   otherServices,
@@ -68,7 +69,8 @@ export default async function Services({
           timeline: pick(locale, s.timeline),
           featuredImageIndex: s.featuredImageIndex,
           featuredTags: pickList(locale, s.featuredTags),
-          featuredProject: s.featuredProject,
+          featuredImage: s.featuredImage,
+          featuredTitle: pick(locale, s.featuredTitle),
         })),
         otherServicesTitle: pick(locale, raw.otherServicesTitle),
         otherServices: pickList(locale, raw.otherServices),
@@ -79,5 +81,5 @@ export default async function Services({
       }
     : null;
 
-  return <ServicesClient key={initialService ?? "default"} data={data} initialService={initialService} />;
+  return <ServicesClient data={data} initialService={initialService} />;
 }

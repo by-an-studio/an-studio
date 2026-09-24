@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc){
   title,
   "slug": slug.current,
-  category,
+  categories,
   projectNumber,
   mainImage
 }`;
@@ -102,7 +102,6 @@ export default async function Work({
       <div className="relative mt-8 min-[1200px]:mt-0 min-[1200px]:h-[78svh]">
         <Grid className="min-[1200px]:h-full min-[1200px]:grid-rows-1 items-start min-[1200px]:items-center">
           <WorkGrid
-            key={initialCategory ?? "all"}
             projects={projectList}
             initialCategory={initialCategory ?? null}
             categoriesLabel={categoriesLabel}

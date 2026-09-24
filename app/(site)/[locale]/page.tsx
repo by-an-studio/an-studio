@@ -120,9 +120,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             )}
           </div>
           {data?.newsletterButtonLabel && (
-            <div className="absolute top-[calc(50svh+110px)] right-0 md:static md:top-auto md:right-auto md:flex-1 flex justify-center md:justify-end">
-              <div className="rotate-90 origin-top-right md:rotate-0 md:origin-center">
-                <div className="rotate-180 md:rotate-0">
+            <div className="md:flex-1 flex justify-center md:justify-end">
+              <div className="md:rotate-0 md:origin-center">
+                <div className="md:rotate-0">
                   <HomeNewsletterForm
                     buttonLabel={data.newsletterButtonLabel}
                     emailPlaceholder={data.emailPlaceholder}

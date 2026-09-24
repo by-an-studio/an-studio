@@ -14,6 +14,7 @@ import { about } from './documents/about'
 import { shop } from './documents/shop'
 import { clientApplication } from './documents/clientApplication'
 import { newsletterSubscriber } from './documents/newsletterSubscriber'
+import { shopWaitlistSubscriber } from './documents/shopWaitlistSubscriber'
 import { footerLinkItem } from './objects/footerLinkItem'
 import { footer } from './documents/footer'
 import { privacyPolicy } from './documents/privacyPolicy'
@@ -38,6 +39,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     shop,
     clientApplication,
     newsletterSubscriber,
+    shopWaitlistSubscriber,
     footerLinkItem,
     footer,
     privacyPolicy,

@@ -50,7 +50,7 @@ function Field({
 }) {
   return (
     <div className="text-center min-[1200px]:text-left">
-      <label className="block text-[15px] min-[1200px]:text-[12px] mb-4">
+      <label className="block text-[15px] min-[1200px]:text-[15px] mb-4">
         {label} {required && requiredLabel}
       </label>
       <input
@@ -58,7 +58,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(name, e.target.value)}
-        className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[11px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
+        className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
       />
     </div>
   );
@@ -95,7 +95,7 @@ function PillGroup({
             key={option.value}
             type="button"
             onClick={() => onSelect(option.value)}
-            className={`px-4 py-1 text-[12px] min-[1200px]:text-[9px] bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
+            className={`px-4 py-1 text-[12px] min-[1200px]:text-[12px] bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
               isSelected ? "italic" : "opacity-40"
             }`}
           >
@@ -215,7 +215,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
               {featuredImages.map((item, i) => (
                 <div key={i} className="min-[1200px]:col-span-3">
                   <SanityImg image={item.image} className="aspect-[4/5] mb-4" />
-                  <div className="flex gap-2 text-[12px] min-[1200px]:text-[9px]">
+                  <div className="flex gap-2 text-[12px] min-[1200px]:text-[10px]">
                     {item.imageIndex && <span>Img. {item.imageIndex}</span>}
                     <div>
                       {item.caption && <p>{item.caption}</p>}
@@ -257,14 +257,14 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             className="absolute w-0 h-0 opacity-0 -z-10"
           />
           <div>
-            <p className="text-[18px] min-[1200px]:text-[15px] mb-8">{t("sections.name")}</p>
+            <p className="text-[18px] min-[1200px]:text-[16px] mb-8">{t("sections.name")}</p>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
               <Field label={t("fields.firstName")} required requiredLabel={t("fields.required")} name="firstName" value={formData.firstName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
               <Field label={t("fields.lastName")} required requiredLabel={t("fields.required")} name="lastName" value={formData.lastName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             </div>
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[15px] -mb-4">{t("sections.contact")}</p>
+            <p className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.contact")}</p>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
               <Field label={t("fields.email")} required requiredLabel={t("fields.required")} name="email" value={formData.email} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
               <Field label={t("fields.phone")} required requiredLabel={t("fields.required")} name="phone" value={formData.phone} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
@@ -272,11 +272,11 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <Field label={t("fields.country")} required requiredLabel={t("fields.required")} name="country" value={formData.country} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[15px] -mb-4">{t("sections.aboutProject")}</p>
+            <p className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.aboutProject")}</p>
             <Field label={t("fields.companyName")} required requiredLabel={t("fields.required")} name="companyName" value={formData.companyName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             <Field label={t("fields.projectBrief")} required requiredLabel={t("fields.required")} name="projectBrief" value={formData.projectBrief} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             <div>
-              <label className="block text-[15px] min-[1200px]:text-[12px] mb-4">
+              <label className="block text-[15px] min-[1200px]:text-[15px] mb-4">
                 {t("fields.projectTypeLabel")} {t("fields.required")}
               </label>
               <PillGroup options={projectTypes} selected={projectType} onSelect={setProjectType} fullWidth mobileGrid />
@@ -285,10 +285,10 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <Field label={t("fields.website")} name="website" value={formData.website} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           </div>
           <div>
-            <label className="block text-[15px] min-[1200px]:text-[12px] mb-1">
+            <label className="block text-[15px] min-[1200px]:text-[15px] mb-1">
               {t("fields.budgetLabel")} {t("fields.required")}
             </label>
-            <p className="text-foreground text-[12px] min-[1200px]:text-[9px] mb-4">
+            <p className="text-foreground text-[12px] min-[1200px]:text-[12px] mb-4">
               {t("fields.budgetHint")}
             </p>
             <input
@@ -296,20 +296,20 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
               placeholder={t("fields.answerPlaceholder")}
               value={formData.budget}
               onChange={(e) => handleChange("budget", e.target.value)}
-              className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[11px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
+              className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[15px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left placeholder:italic placeholder:text-muted focus:outline-none focus:border-foreground/30"
             />
           </div>
           <Field label={t("fields.brandStage")} name="website2" value={formData.website2} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[15px]">{t("sections.workingWithUs")}</p>
+            <p className="text-[18px] min-[1200px]:text-[16px]">{t("sections.workingWithUs")}</p>
             <div>
-              <p className="text-[15px] min-[1200px]:text-[12px] leading-snug mb-4">
+              <p className="text-[14px] min-[1200px]:text-[13px] leading-snug mb-4">
                 {t("budgetReadyText")}
               </p>
               <PillGroup options={budgetOptions} selected={budgetReady} onSelect={setBudgetReady} fullWidth mobileGrid />
             </div>
             <div>
-              <p className="text-[15px] min-[1200px]:text-[12px] leading-snug mb-4">
+              <p className="text-[14px] min-[1200px]:text-[13px] leading-snug mb-4">
                 {t("commitText")}
               </p>
               <PillGroup
@@ -323,14 +323,14 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           <div className="min-[1200px]:mt-auto relative">
             <div className={status === "sent" ? "invisible" : ""}>
               <Turnstile onToken={setTurnstileToken} />
-              <p className="text-muted text-[12px] min-[1200px]:text-[9px] italic mb-4 mt-2">
+              <p className="text-muted text-[12px] min-[1200px]:text-[12px] italic mb-4 mt-2">
                 {t("disclaimer")}
               </p>
               <div className="relative">
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[9px] cursor-pointer disabled:opacity-50 disabled:cursor-default"
+                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[12px] cursor-pointer disabled:opacity-50 disabled:cursor-default"
                 >
                   {status === "submitting" ? t("sending") : t("submitButton")}
                 </button>

@@ -23,7 +23,9 @@ export const shopProduct = defineType({
     }),
     defineField({
       name: 'comingSoon',
-      title: '¿Mostrar "Coming Soon!"?',
+      title: '¿Producto en "Coming Soon"?',
+      description:
+        'Si está activo: se muestra el texto "Coming Soon!" y el botón de lista de espera (con el texto de "Texto del botón de lista de espera"), que permite dejar el email. Si está desactivado: se muestra el botón de compra (con el texto de "Texto del botón de compra") enlazando a Gumroad.',
       type: 'boolean',
       initialValue: true,
     }),
@@ -50,8 +52,19 @@ export const shopProduct = defineType({
     }),
     defineField({
       name: 'gumroadUrl',
-      title: 'Enlace de Gumroad (opcional)',
+      title: 'Enlace de Gumroad',
+      description: 'Se usa cuando "Coming Soon" está desactivado, como destino del botón de compra.',
       type: 'url',
+    }),
+    defineField({
+      name: 'buyButtonLabel',
+      title: 'Texto del botón de compra (ej: "Buy now"). Si se deja vacío, se usa "Buy now".',
+      type: 'localeString',
+    }),
+    defineField({
+      name: 'waitlistButtonLabel',
+      title: 'Texto del botón de lista de espera (ej: "Join the waitlist"). Solo se usa si "Coming Soon" está activo y no hay enlace de Gumroad. Si se deja vacío, se usa "Join the waitlist".',
+      type: 'localeString',
     }),
   ],
   preview: {

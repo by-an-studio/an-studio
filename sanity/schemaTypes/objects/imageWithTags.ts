@@ -17,17 +17,11 @@ export const imageWithTags = defineType({
       description: 'Si se rellena, se mostrará este vídeo en bucle en vez de la imagen (ej: enlace de Cloudflare R2).',
       type: 'url',
     }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
   ],
   preview: {
-    select: { tags: 'tags', media: 'image' },
-    prepare({ tags, media }) {
-      return { title: tags?.join(', ') || 'Sin tags', media }
+    select: { media: 'image' },
+    prepare({ media }) {
+      return { title: 'Imagen', media }
     },
   },
 })

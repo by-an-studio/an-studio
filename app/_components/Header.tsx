@@ -11,6 +11,13 @@ export function Header() {
   const pathname = usePathname();
   const { open, toggle } = useMobileNav();
   const [scrolled, setScrolled] = useState(false);
+  const isShop = pathname.startsWith("/shop");
+  const shopGradientStyle = isShop
+    ? {
+        backgroundImage:
+          "linear-gradient(to bottom, rgba(255,253,232,1) 0%, rgba(255,253,232,0.85) 25%, rgba(255,253,232,0.5) 55%, rgba(255,253,232,0.15) 80%, rgba(255,253,232,0) 100%)",
+      }
+    : undefined;
 
   useEffect(() => {
     function handleScroll() {
@@ -31,12 +38,14 @@ export function Header() {
       <div
         aria-hidden
         className="header-gradient absolute inset-x-0 top-0 h-28 -z-10 pointer-events-none min-[1200px]:hidden"
+        style={shopGradientStyle}
       />
       <div
         aria-hidden
         className={`header-gradient hidden min-[1200px]:block absolute inset-x-0 top-0 h-36 -z-10 pointer-events-none transition-opacity duration-300 ${
           scrolled ? "opacity-100" : "opacity-0"
         }`}
+        style={shopGradientStyle}
       />
       <div className="relative grid grid-cols-3 items-center min-[1200px]:flex min-[1200px]:flex-row min-[1200px]:justify-between min-[1200px]:h-[45px] text-[clamp(12px,0.9375vw,18px)] min-[1200px]:text-[clamp(9px,0.9375vw,15px)] font-normal">
         <div className="justify-self-start min-[1200px]:hidden">

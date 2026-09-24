@@ -27,10 +27,15 @@ export const serviceItem = defineType({
       type: 'localeString',
     }),
     defineField({
-      name: 'featuredProject',
-      title: 'Proyecto destacado',
-      type: 'reference',
-      to: [{ type: 'project' }],
+      name: 'featuredImage',
+      title: 'Imagen destacada',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'featuredTitle',
+      title: 'Título mostrado junto a la imagen destacada',
+      type: 'localeString',
     }),
     defineField({
       name: 'featuredImageIndex',

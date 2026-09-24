@@ -36,25 +36,34 @@ function SubItemLink({ item }: { item: PlainSubItem }) {
   const isExternal = /^https?:\/\//.test(item.href) || item.href.startsWith("mailto:") || item.href.startsWith("tel:");
   if (isExternal) {
     return (
-      <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+      <a
+        href={item.href}
+        target={item.href.startsWith("http") ? "_blank" : undefined}
+        rel="noopener noreferrer"
+        className="transition-opacity duration-200 hover:opacity-40"
+      >
         {item.label}
       </a>
     );
   }
-  return <Link href={item.href}>{item.label}</Link>;
+  return (
+    <Link href={item.href} className="transition-opacity duration-200 hover:opacity-40">
+      {item.label}
+    </Link>
+  );
 }
 
 function FooterColumn({ col }: { col: FooterColumnData }) {
   return (
     <div className="md:shrink-0">
-      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[15px]">
+      <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 hover:opacity-40">
         <span className="inline-block min-w-[20px] min-[1200px]:min-w-[14px] text-[11px] min-[1200px]:text-[8px]">{col.roman}</span>
         <span>{col.label}</span>
       </Link>
       {col.subItems.length > 0 && (
         <ul className="mt-[2px] md:mt-2 space-y-1 ml-[28px] min-[1200px]:ml-[22px]">
           {col.subItems.map((item, i) => (
-            <li key={i} className="text-[12px] md:text-[11px] whitespace-nowrap">
+            <li key={i} className="text-[12px] md:text-[12px] whitespace-nowrap">
               <SubItemLink item={item} />
             </li>
           ))}
@@ -70,7 +79,7 @@ function FooterColumn({ col }: { col: FooterColumnData }) {
 function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hideSubItems?: boolean }) {
   return (
     <div className="flex flex-col items-center text-center leading-tight">
-      <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight">
+      <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 hover:opacity-40">
         <span className="text-[11px] leading-tight">{col.roman}</span>
         <span className="text-[19px] leading-tight">{col.label}</span>
       </Link>
@@ -87,7 +96,7 @@ function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hide
   );
 }
 
-export function Footer({ data }: { data: FooterData | null }) {
+export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: string }) {
   const tNav = useTranslations("nav");
 
   const mainColumns: FooterColumnData[] = [
@@ -140,7 +149,7 @@ export function Footer({ data }: { data: FooterData | null }) {
     }
   }
   return (
-    <footer className="w-full pt-20 pb-[30px] bg-[#FFFDF7]">
+    <footer className="w-full pt-20 pb-[30px] bg-[#FFFDF7]" style={bgColor ? { backgroundColor: bgColor } : undefined}>
       {/* Responsive: composición agrupada por filas específicas */}
       <div className="min-[1200px]:hidden flex flex-col gap-10 px-5">
         <div className="flex flex-row justify-center gap-[clamp(64px,16vw,220px)]">
@@ -166,7 +175,7 @@ export function Footer({ data }: { data: FooterData | null }) {
       </div>
       <Grid className="mt-24 min-[1200px]:mt-0 items-end">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-span-6 min-[1200px]:row-start-1">
-          <p className="mb-4 text-center min-[1200px]:text-left text-[16px] min-[1200px]:text-[13px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
+          <p className="mb-4 text-center min-[1200px]:text-left text-[16px] min-[1200px]:text-[14px]">{data?.subscribeLabel ?? "Subscribe to our Newsletter"}</p>
           <form onSubmit={handleSubmit} className="relative flex gap-2" suppressHydrationWarning>
             <input
               type="text"
@@ -193,14 +202,14 @@ export function Footer({ data }: { data: FooterData | null }) {
                     if (showEmptyWarning) setShowEmptyWarning(false);
                   }}
                   suppressHydrationWarning
-                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] min-[1200px]:text-[13px] w-full h-full box-border focus:outline-none"
+                  className="bg-[#EFECE6]/60 text-black/60 placeholder:text-black/60 px-4 text-[16px] min-[1200px]:text-[14px] w-full h-full box-border focus:outline-none"
                 />
               </div>
             </div>
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] min-[1200px]:text-[13px] focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-default"
+              className="shrink-0 bg-[#EFECE6]/60 text-black/60 px-4 h-[27px] flex items-center justify-center text-[12px] min-[1200px]:text-[14px] focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-default"
             >
               {status === "submitting" ? "..." : (data?.subscribeButtonLabel ?? "Subscribe")}
             </button>
@@ -216,8 +225,8 @@ export function Footer({ data }: { data: FooterData | null }) {
             </span>
           </form>
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-6 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[13px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left mt-16 min-[1200px]:mt-0">Independent Design Studio</div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-4 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[13px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left -mt-5 min-[1200px]:mt-0">An Studio 2026®</div>
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-6 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[14px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left mt-16 min-[1200px]:mt-0">Independent Design Studio</div>
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-4 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[14px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left -mt-5 min-[1200px]:mt-0">An Studio 2026®</div>
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-21 min-[1200px]:col-span-4 min-[1200px]:row-start-1 flex justify-center min-[1200px]:justify-end mt-10 min-[1200px]:mt-0 w-full">
           <Image
             src="/logo/an-studio.svg"

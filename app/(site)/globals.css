@@ -148,3 +148,16 @@ textarea:-webkit-autofill:focus {
     background-color: rgba(228, 223, 206, 0.98);
   }
 }
+
+
+@media (min-width: 1200px) {
+  html {
+    cursor: url('/icons/an-studio-mouse-cursor.svg') 12 12, auto;
+  }
+
+  a,
+  button,
+  [role="button"] {
+    cursor: url('/icons/an-studio-mouse-cursor.svg') 12 12, pointer;
+  }
+}

@@ -37,9 +37,11 @@ export const project = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Categoría (para el filtro de Work)',
-      type: 'string',
+      name: 'categories',
+      title: 'Categorías (para el filtro de Work)',
+      description: 'Puedes seleccionar varias categorías para el mismo proyecto.',
+      type: 'array',
+      of: [{ type: 'string' }],
       group: 'general',
       options: {
         list: [
@@ -49,7 +51,7 @@ export const project = defineType({
           { title: 'Social Media', value: 'Social Media' },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'mainImage',
@@ -63,6 +65,20 @@ export const project = defineType({
       name: 'order',
       title: 'Orden manual (opcional)',
       type: 'number',
+      group: 'general',
+    }),
+    defineField({
+      name: 'imageTag1',
+      title: 'Tag 1 de imágenes (debajo de cada foto, ej: "Brand Identity")',
+      description: 'Se muestra bajo todas las fotos de este proyecto (Img. 01, 02, 03...), en vez de tener que escribirlo imagen por imagen.',
+      type: 'localeString',
+      group: 'general',
+    }),
+    defineField({
+      name: 'imageTag2',
+      title: 'Tag 2 de imágenes (debajo de cada foto, ej: "Packaging")',
+      description: 'Se muestra bajo todas las fotos de este proyecto (Img. 01, 02, 03...), en vez de tener que escribirlo imagen por imagen.',
+      type: 'localeString',
       group: 'general',
     }),
     defineField({
@@ -110,8 +126,8 @@ export const project = defineType({
     defineField({
       name: 'collaboration',
       title: 'Colaboración (opcional)',
-      description: 'Ej: "Wave Hello Studio". Se muestra como "In Collaboration with...". Déjalo vacío si no aplica.',
-      type: 'localeString',
+      description: 'Ej: "Wave Hello Studio", o varios nombres con enlaces distintos (ej: "Ravageadam Design Studio, Andrea Chacin, and Dylan"). Se muestra como "In Collaboration with...". Selecciona el texto y usa el botón de enlace para linkear cada nombre a su propia URL. Déjalo vacío si no aplica.',
+      type: 'richText',
       group: 'left',
     }),
     defineField({
@@ -251,9 +267,9 @@ export const project = defineType({
     }),
   ],
   preview: {
-    select: { title: 'title', media: 'mainImage', category: 'category' },
-    prepare({ title, media, category }) {
-      return { title, subtitle: category, media }
+    select: { title: 'title', media: 'mainImage', categories: 'categories' },
+    prepare({ title, media, categories }) {
+      return { title, subtitle: (categories ?? []).join(', '), media }
     },
   },
 })

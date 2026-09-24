@@ -9,7 +9,21 @@ const richTextBlock = {
       { title: 'Italic', value: 'em' },
       { title: 'Underline', value: 'underline' },
     ],
-    annotations: [],
+    annotations: [
+      {
+        name: 'link',
+        title: 'Enlace',
+        type: 'object',
+        fields: [
+          {
+            name: 'href',
+            title: 'URL',
+            type: 'url',
+            validation: (Rule: any) => Rule.required(),
+          },
+        ],
+      },
+    ],
   },
 }
 export const richText = defineType({

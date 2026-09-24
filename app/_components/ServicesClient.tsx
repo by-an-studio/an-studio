@@ -13,10 +13,8 @@ type ServiceItem = {
   timeline?: string;
   featuredImageIndex?: string;
   featuredTags?: string[];
-  featuredProject?: {
-    title?: string;
-    mainImage?: any;
-  };
+  featuredImage?: any;
+  featuredTitle?: string;
 };
 type ServicesData = {
   headerLabel?: string;
@@ -31,7 +29,7 @@ type ServicesData = {
 };
 const paragraphComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[15px] min-[1200px]:text-[12px] leading-tight mb-4 last:mb-0">{children}</p>,
+    normal: ({ children }) => <p className="text-[14px] min-[1200px]:text-[16px] leading-tight mb-4 last:mb-0">{children}</p>,
   },
   marks: {
     underline: ({ children }) => <span className="underline decoration-1">{children}</span>,
@@ -44,7 +42,7 @@ function FeaturedImage({ item }: { item?: any }) {
   const src = isGif ? rawUrl : urlFor(item).width(1400).url();
   return (
     <div className="relative aspect-[3/4] overflow-hidden">
-      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 55vw, 100vw" className="object-cover" />
+      <FadeImage key={src} src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 55vw, 100vw" className="object-cover" />
     </div>
   );
 }
@@ -81,9 +79,9 @@ export function ServicesClient({
           {data?.headerTagline && <p className="italic text-[17px] min-[1200px]:text-[17px] text-center min-[1200px]:text-left">{data.headerTagline}</p>}
         </div>
       </Grid>
-      <Grid className="mt-0 min-[1200px]:mt-0 items-start min-[1200px]:items-center">
+      <Grid className="mt-0 min-[1200px]:mt-24 items-start min-[1200px]:items-center">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-7 mb-6 min-[1200px]:mb-0">
-          <ul className="mt-10 min-[1200px]:mt-0 space-y-[16px] min-[1200px]:space-y-1">
+          <ul className="mt-10 min-[1200px]:mt-0 space-y-[16px] min-[1200px]:space-y-0">
             {services.map((s, i) => {
               const isSelected = selected === i;
               return (
@@ -91,7 +89,7 @@ export function ServicesClient({
                   <button
                     type="button"
                     onClick={() => handleSelect(s.number, i)}
-                    className={`flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4 text-left cursor-pointer ${!isSelected ? "text-muted" : "text-foreground"}`}
+                    className={`flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4 text-left cursor-pointer transition-colors duration-200 ${!isSelected ? "text-muted hover:text-[#808080]!" : "text-foreground"}`}
                   >
                     <span className="underline decoration-[0.5px] min-[1200px]:decoration-1 text-[12px] min-[1200px]:text-[clamp(9px,0.8333vw,13px)]">
                       ({s.number}.)
@@ -104,6 +102,14 @@ export function ServicesClient({
               );
             })}
           </ul>
+          <div className="hidden min-[1200px]:flex items-baseline gap-4 mt-16">
+            <span className="invisible underline decoration-1 text-[clamp(9px,0.8333vw,13px)]">
+              (00.)
+            </span>
+            <Link href="/client-application" className="underline decoration-1 text-[15px]">
+              Start Your Project Now &rarr;
+            </Link>
+          </div>
         </div>
         {active && (
           <>
@@ -114,11 +120,11 @@ export function ServicesClient({
               {active.timeline && <p className="text-muted text-[12px] min-[1200px]:text-[9px] mt-8">{active.timeline}</p>}
             </div>
             <div className="order-1 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-20 min-[1200px]:col-span-5 w-[50%] min-[1200px]:w-auto mx-auto min-[1200px]:mx-0 mb-8 min-[1200px]:mb-0">
-              <FeaturedImage item={active.featuredProject?.mainImage} />
-              <div className="hidden min-[1200px]:flex mt-4 gap-2 text-[12px] min-[1200px]:text-[9px]">
+              <FeaturedImage item={active.featuredImage} />
+              <div className="hidden min-[1200px]:flex mt-4 gap-2 text-[12px] min-[1200px]:text-[10px]">
                 {active.featuredImageIndex && <span>Img. {active.featuredImageIndex}</span>}
                 <div>
-                  {active.featuredProject?.title && <p>{active.featuredProject.title}</p>}
+                  {active.featuredTitle && <p>{active.featuredTitle}</p>}
                   <div className="text-muted mt-[15px] leading-tight">
                     {active.featuredTags?.map((tag, i) => (
                       <p key={i}>{tag}</p>
@@ -129,11 +135,8 @@ export function ServicesClient({
             </div>
           </>
         )}
-        <div className="order-3 min-[1200px]:order-none col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-7 flex items-baseline gap-4 mt-8 min-[1200px]:mt-16 justify-center min-[1200px]:justify-start">
-          <span className="hidden min-[1200px]:inline invisible underline decoration-1 text-[16px] min-[1200px]:text-[clamp(9px,0.8333vw,13px)]">
-            (00.)
-          </span>
-          <Link href="/client-application" className="underline decoration-1 text-[15px] min-[1200px]:text-[15px]">
+        <div className="order-3 min-[1200px]:hidden col-span-8 md:max-[1199px]:col-span-24 flex items-baseline gap-4 mt-8 justify-center">
+          <Link href="/client-application" className="underline decoration-1 text-[15px]">
             Start Your Project Now &rarr;
           </Link>
         </div>
@@ -154,19 +157,19 @@ export function ServicesClient({
       </div>
       <Grid className="hidden min-[1200px]:grid mt-16 min-[1200px]:mt-0 min-[1200px]:flex-nowrap">
         <div className="min-[1200px]:col-start-4 min-[1200px]:col-span-4">
-          {data?.otherServicesTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
+          {data?.otherServicesTitle && <p className="text-[16px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
           <ul className="text-[12px]">
             {data?.otherServices?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
         <div className="min-[1200px]:col-start-12 min-[1200px]:col-span-4">
-          {data?.industryTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.industryTitle}</p>}
+          {data?.industryTitle && <p className="text-[16px] underline decoration-1 mb-2">{data.industryTitle}</p>}
           <ul className="text-[12px]">
             {data?.industry?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
         <div className="min-[1200px]:col-start-16 min-[1200px]:col-span-6">
-          {data?.contactTitle && <p className="text-[15px] underline decoration-1 mb-2">{data.contactTitle}</p>}
+          {data?.contactTitle && <p className="text-[16px] underline decoration-1 mb-2">{data.contactTitle}</p>}
           <ul className="text-[12px]">
             {data?.contactLines?.map((item) => <li key={item}>{item}</li>)}
           </ul>

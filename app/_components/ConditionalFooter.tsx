@@ -5,5 +5,6 @@ import { Footer, type FooterData } from "./Footer";
 export function ConditionalFooter({ data }: { data: FooterData | null }) {
   const pathname = usePathname();
   if (pathname === "/") return null;
-  return <Footer data={data} />;
+  const bgColor = pathname.startsWith("/shop") ? "#FFFDE8" : undefined;
+  return <Footer data={data} bgColor={bgColor} />;
 }

@@ -68,7 +68,7 @@ const introComponents: PortableTextComponents = {
 };
 const ownerBioComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => <p className="text-[15px] min-[1200px]:text-[12px] leading-tight mb-4">{children}</p>,
+    normal: ({ children }) => <p className="text-[14px] min-[1200px]:text-[16px] leading-tight mb-4">{children}</p>,
   },
 };
 export default async function About({ params }: { params: Promise<{ locale: string }> }) {
@@ -114,7 +114,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 mb-8 min-[1200px]:mb-0 text-center min-[1200px]:text-left">
               <span className="block min-[1200px]:hidden text-[14px]">III</span>
               {data?.ownerSectionLabel && (
-                <p className="text-[32px] min-[1200px]:text-[clamp(21px,2.1vw,37px)]">{data.ownerSectionLabel}</p>
+                <p className="text-[32px] min-[1200px]:text-[36px]">{data.ownerSectionLabel}</p>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-8 min-[1200px]:col-span-10 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full min-[1200px]:flex min-[1200px]:justify-end">
@@ -123,9 +123,9 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-7 min-[1200px]:ml-[1vw] px-5 min-[1200px]:px-0 text-center min-[1200px]:text-left">
               {data?.ownerNameLabel && <p className="hidden min-[1200px]:block underline decoration-1 mb-6">{data.ownerNameLabel}</p>}
               {data?.ownerBio && <PortableText value={data.ownerBio} components={ownerBioComponents} />}
-              {data?.ownerImageIndex && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[9px] mt-8 mb-2">{data.ownerImageIndex}</p>}
-              {data?.ownerName && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[9px]">{data.ownerName}</p>}
-              {data?.ownerRole && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[9px]">{data.ownerRole}</p>}
+              {data?.ownerImageIndex && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[10px] mt-8 mb-2">{data.ownerImageIndex}</p>}
+              {data?.ownerName && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[10px]">{data.ownerName}</p>}
+              {data?.ownerRole && <p className="hidden min-[1200px]:block text-[12px] min-[1200px]:text-[10px]">{data.ownerRole}</p>}
             </div>
           </Grid>
         </div>
@@ -136,7 +136,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             {data?.introText && <PortableText value={data.introText} components={introComponents} />}
           </div>
           <div className="hidden min-[1200px]:block min-[1200px]:col-start-18 min-[1200px]:col-span-3 min-[1200px]:mt-0">
-            {data?.introSubtext && <p className="text-[9px] leading-snug">{data.introSubtext}</p>}
+            {data?.introSubtext && <p className="text-[12px] leading-snug">{data.introSubtext}</p>}
           </div>
         </Grid>
         <Grid className="order-1 min-[1200px]:order-none mt-0 min-[1200px]:mt-0">
@@ -154,7 +154,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0 text-center min-[1200px]:text-left">
               <ul className="space-y-1">
                 {data?.awards?.map((item: string, i: number) => (
-                  <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[15px] leading-tight w-full">
+                  <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[16px] leading-tight w-full">
                     <span className="text-[7px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
                     <span className="flex-1 min-[1200px]:flex-1 text-center min-[1200px]:text-left">{item}</span>
                   </li>
@@ -171,7 +171,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0 text-center min-[1200px]:text-left">
               <ul className="space-y-1">
                 {data?.exhibitions?.map((item: string, i: number) => (
-                  <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[15px] leading-tight w-full">
+                  <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[16px] leading-tight w-full">
                     <span className="text-[7px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
                     <span className="flex-1 min-[1200px]:flex-1 text-center min-[1200px]:text-left">{item}</span>
                   </li>
