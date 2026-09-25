@@ -9,7 +9,6 @@ export const home = defineType({
     defineField({
       name: 'heroImages',
       title: 'Imágenes del hero (rotación)',
-      description: 'Las imágenes que rotan en el bloque principal de la Home. Sube hasta 8, en el orden en que deben aparecer.',
       type: 'array',
       of: [{ type: 'image', options: { hotspot: true } }],
       validation: (Rule) => Rule.max(8),

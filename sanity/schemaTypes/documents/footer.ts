@@ -57,7 +57,6 @@ export const footer = defineType({
     defineField({
       name: 'contactItems',
       title: 'Contact — enlaces',
-      description: 'Añade tantas líneas como quieras (mail, teléfono, dirección, etc).',
       type: 'array',
       of: [{ type: 'footerLinkItem' }],
       group: 'columns',
@@ -71,7 +70,6 @@ export const footer = defineType({
     defineField({
       name: 'socialItems',
       title: 'Social — enlaces',
-      description: 'Añade tantas líneas como quieras (Instagram, Pinterest, TikTok, etc).',
       type: 'array',
       of: [{ type: 'footerLinkItem' }],
       group: 'columns',

@@ -16,7 +16,7 @@ export function WorkFilters({
       {categoriesLabel && (
         <p className="text-[10px] min-[1200px]:text-[clamp(9px,0.8333vw,13px)] underline decoration-[0.5px] min-[1200px]:decoration-1 mb-0 min-[1200px]:mb-6 text-center min-[1200px]:text-left">{categoriesLabel}</p>
       )}
-      <ul className="mt-10 min-[1200px]:mt-0 space-y-[16px] min-[1200px]:space-y-[3px]">
+      <ul className="mt-10 min-[1200px]:mt-0 space-y-[16px] min-[1200px]:-space-y-1">
         {categories.map((c, i) => {
           const isSelected = selected === c.value;
           const isDimmed = selected !== null && !isSelected;

@@ -53,7 +53,7 @@ function BuyNowArrow() {
 }
 function ProductCta({
   product,
-  className = "self-start flex items-center gap-2 text-[16px] min-[1200px]:text-[15px]",
+  className = "self-start flex items-center gap-2 text-[16px] min-[1200px]:text-[12px]",
 }: {
   product: { name?: string; gumroadUrl?: string; comingSoon?: boolean; buyButtonLabel?: string; waitlistButtonLabel?: string };
   className?: string;
@@ -69,7 +69,7 @@ function ProductCta({
   }
   if (product.gumroadUrl) {
     return (
-      <a href={product.gumroadUrl} target="_blank" rel="noopener noreferrer" className={className}>
+      <a href={product.gumroadUrl} target="_blank" rel="noopener noreferrer" className={`${className} transition-opacity duration-200 hover:opacity-40`}>
         <BuyNowArrow />
         <span className="italic">{product.buyButtonLabel || "Buy now"}</span>
       </a>
@@ -186,7 +186,7 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
         </div>
         <div className="hidden min-[1200px]:block min-[1200px]:min-h-[calc(100svh-150px)]">
           <Grid className="min-[1200px]:pt-[150px] min-[1200px]:min-h-[100svh] pb-[30px]">
-            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 min-[1200px]:self-start min-[1200px]:h-[calc(100svh-150px)] min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:justify-center min-[1200px]:-mt-16">
+            <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 min-[1200px]:self-start min-[1200px]:h-[calc(100svh-150px)] min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:justify-center min-[1200px]:-mt-16">
               {data?.title && (
                 <p className="text-[32px] min-[1200px]:text-[33px] min-[1200px]:col-span-6">{data.title}</p>
               )}
@@ -206,45 +206,45 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
                   }
                 >
                   <div className="grid grid-cols-2 gap-5 min-[1200px]:grid-cols-13">
-                    <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-span-6 mb-16 min-[1200px]:mb-0">
+                    <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-span-7 mb-16 min-[1200px]:mb-0">
                       <ProductImage image={product.image} />
                     </div>
-                    <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-start-8 min-[1200px]:col-span-6 min-[1200px]:-ml-10 flex flex-col gap-16 min-[1200px]:gap-16 min-[1200px]:justify-between">
+                    <div className="col-span-2 md:max-[1199px]:col-span-2 min-[1200px]:col-start-9 min-[1200px]:col-span-5 min-[1200px]:-ml-10 flex flex-col gap-16 min-[1200px]:gap-16 min-[1200px]:justify-between">
                       <div className="leading-tight">
                         {product.categoryLabel && (
-                          <p className="not-italic text-[16px] min-[1200px]:text-[15px] leading-tight mb-0">
+                          <p className="not-italic text-[16px] min-[1200px]:text-[12px] leading-tight mb-0">
                             For <em className="italic">{product.categoryLabel}</em>
                           </p>
                         )}
                         {product.name && (
-                          <p className="text-[28px] min-[1200px]:text-[28px] leading-tight underline decoration-[1.5px] underline-offset-4">
+                          <p className="text-[28px] min-[1200px]:text-[24px] leading-tight underline decoration-[1.5px] underline-offset-4">
                             {product.name}
                           </p>
                         )}
-                        {product.subtitle && <p className="mt-2 text-[16px] min-[1200px]:text-[15px] leading-tight">{product.subtitle}</p>}
+                        {product.subtitle && <p className="mt-2 text-[16px] min-[1200px]:text-[12px] leading-tight">{product.subtitle}</p>}
                       </div>
                       <div className={`flex flex-col gap-8 ${product.comingSoon ? "min-[1200px]:-mt-24" : ""}`}>
                         {product.comingSoon && (
-                          <p className="italic text-[16px] min-[1200px]:text-[15px]">Coming Soon!</p>
+                          <p className="italic text-[16px] min-[1200px]:text-[12px]">Coming Soon!</p>
                         )}
                         {(product.format || product.price) && (
                           <div className="flex gap-8">
                             {product.format && (
                               <div>
-                                <p className="text-[16px] min-[1200px]:text-[15px]">FORMAT:</p>
-                                <p className="text-[16px] min-[1200px]:text-[15px]">{product.format}</p>
+                                <p className="text-[16px] min-[1200px]:text-[10px]">FORMAT:</p>
+                                <p className="text-[16px] min-[1200px]:text-[10px]">{product.format}</p>
                               </div>
                             )}
                             {product.price && (
                               <div>
-                                <p className="text-[16px] min-[1200px]:text-[15px]">PRICE:</p>
-                                <p className="italic text-[16px] min-[1200px]:text-[15px]">{product.price}</p>
+                                <p className="text-[16px] min-[1200px]:text-[10px]">PRICE:</p>
+                                <p className="italic text-[16px] min-[1200px]:text-[10px]">{product.price}</p>
                               </div>
                             )}
                           </div>
                         )}
                         {product.description && (
-                          <p className="text-[14px] min-[1200px]:text-[14px] leading-snug">{product.description}</p>
+                          <p className="text-[14px] min-[1200px]:text-[12px] leading-snug">{product.description}</p>
                         )}
                         <ProductCta product={product} />
                       </div>

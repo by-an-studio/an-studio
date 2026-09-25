@@ -31,7 +31,6 @@ export const project = defineType({
     defineField({
       name: 'projectNumber',
       title: 'Número de proyecto',
-      description: 'Se muestra como "(006.)" arriba del título. Escribe solo el número, ej: 006',
       type: 'string',
       group: 'general',
       validation: (Rule) => Rule.required(),
@@ -39,7 +38,6 @@ export const project = defineType({
     defineField({
       name: 'categories',
       title: 'Categorías (para el filtro de Work)',
-      description: 'Puedes seleccionar varias categorías para el mismo proyecto.',
       type: 'array',
       of: [{ type: 'string' }],
       group: 'general',
@@ -70,14 +68,12 @@ export const project = defineType({
     defineField({
       name: 'imageTag1',
       title: 'Tag 1 de imágenes (debajo de cada foto, ej: "Brand Identity")',
-      description: 'Se muestra bajo todas las fotos de este proyecto (Img. 01, 02, 03...), en vez de tener que escribirlo imagen por imagen.',
       type: 'localeString',
       group: 'general',
     }),
     defineField({
       name: 'imageTag2',
       title: 'Tag 2 de imágenes (debajo de cada foto, ej: "Packaging")',
-      description: 'Se muestra bajo todas las fotos de este proyecto (Img. 01, 02, 03...), en vez de tener que escribirlo imagen por imagen.',
       type: 'localeString',
       group: 'general',
     }),
@@ -126,7 +122,6 @@ export const project = defineType({
     defineField({
       name: 'collaboration',
       title: 'Colaboración (opcional)',
-      description: 'Ej: "Wave Hello Studio", o varios nombres con enlaces distintos (ej: "Ravageadam Design Studio, Andrea Chacin, and Dylan"). Se muestra como "In Collaboration with...". Selecciona el texto y usa el botón de enlace para linkear cada nombre a su propia URL. Déjalo vacío si no aplica.',
       type: 'richText',
       group: 'left',
     }),
@@ -139,7 +134,6 @@ export const project = defineType({
     defineField({
       name: 'projectTags',
       title: 'Categorías mostradas en la página (tags libres)',
-      description: 'Distinto del campo "Categoría" de arriba — estos son los tags que se ven en el bloque "(Categories)" de la página del proyecto.',
       type: 'array',
       of: [{ type: 'localeString' }],
       group: 'left',
@@ -245,7 +239,6 @@ export const project = defineType({
     defineField({
       name: 'simpleCaptionText',
       title: 'Texto encima de las imágenes',
-      description: 'Si se deja vacío, no se renderiza en la página.',
       type: 'richText',
       group: 'simple',
       hidden: ({ parent }) => parent?.variant !== 'simple',
@@ -253,7 +246,6 @@ export const project = defineType({
     defineField({
       name: 'simpleImages',
       title: 'Imágenes',
-      description: '1 imagen para single/singleWide, 2 para double, varias para gallery (carrusel).',
       type: 'array',
       of: [{ type: 'simpleImage' }],
       group: 'simple',

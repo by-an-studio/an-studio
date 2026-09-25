@@ -1,3 +1,4 @@
+import { BodyBackground } from "../../../../_components/BodyBackground";
 import type { Metadata } from "next";
 import { FadeImage } from "../../../../_components/FadeImage";
 import { FadeVideo } from "../../../../_components/FadeVideo";
@@ -206,6 +207,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   };
   return (
     <main className={`w-full ${p.variant === "gallery" ? "pb-[30px]" : ""}`}>
+      <BodyBackground color="#FFFEFC" />
       <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-0 min-[1200px]:gap-[50px]">
         <Grid className="relative z-20">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] min-[1200px]:pt-[clamp(90px,9.5vh,135px)] flex justify-between">

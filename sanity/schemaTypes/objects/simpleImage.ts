@@ -14,7 +14,6 @@ export const simpleImage = defineType({
     defineField({
       name: 'videoUrl',
       title: 'URL de vídeo (opcional)',
-      description: 'Si se rellena, se mostrará este vídeo en bucle en vez de la imagen (ej: enlace de Cloudflare R2).',
       type: 'url',
     }),
     defineField({

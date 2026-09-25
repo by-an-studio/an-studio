@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FadeImage } from "./FadeImage";
 import { WorkFilters } from "./WorkFilters";
 import { urlFor } from "../../sanity/lib/image";
@@ -29,6 +29,10 @@ export function WorkGrid({
   const pathname = usePathname();
   const [selected, setSelected] = useState<string | null>(initialCategory);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelected(initialCategory);
+  }, [initialCategory]);
   const cursorLabelRef = useRef<HTMLSpanElement>(null);
 
   function handleCursorMove(e: React.MouseEvent) {

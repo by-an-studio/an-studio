@@ -7,7 +7,6 @@ export const shopProduct = defineType({
     defineField({
       name: 'categoryLabel',
       title: 'Categoría (ej: "Social Media")',
-      description: 'Se muestra como "For [Categoría]"',
       type: 'localeString',
     }),
     defineField({
@@ -24,8 +23,6 @@ export const shopProduct = defineType({
     defineField({
       name: 'comingSoon',
       title: '¿Producto en "Coming Soon"?',
-      description:
-        'Si está activo: se muestra el texto "Coming Soon!" y el botón de lista de espera (con el texto de "Texto del botón de lista de espera"), que permite dejar el email. Si está desactivado: se muestra el botón de compra (con el texto de "Texto del botón de compra") enlazando a Gumroad.',
       type: 'boolean',
       initialValue: true,
     }),
@@ -53,7 +50,6 @@ export const shopProduct = defineType({
     defineField({
       name: 'gumroadUrl',
       title: 'Enlace de Gumroad',
-      description: 'Se usa cuando "Coming Soon" está desactivado, como destino del botón de compra.',
       type: 'url',
     }),
     defineField({

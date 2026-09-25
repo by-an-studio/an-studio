@@ -1,3 +1,4 @@
+import { BodyBackground } from "../../../_components/BodyBackground";
 import { pick as pickSeo } from "../../../../i18n/locale";
 import { urlFor } from "../../../../sanity/lib/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
@@ -55,6 +56,7 @@ export default async function PrivacyPolicy({ params }: { params: Promise<{ loca
 
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px]">
+      <BodyBackground color="#FFFEFC" />
       <Grid className="items-start">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 min-[1200px]:pt-[50vh] min-[1200px]:-translate-y-10 mb-16 min-[1200px]:mb-0">
           {data?.pageTitle && (

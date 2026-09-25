@@ -68,7 +68,7 @@ export function ShopWaitlistForm({
 
   if (!open) {
     return (
-      <button type="button" onClick={() => setOpen(true)} className={`${className} cursor-pointer`}>
+      <button type="button" onClick={() => setOpen(true)} className={`${className} cursor-pointer transition-opacity duration-200 hover:opacity-40`}>
         <BuyNowArrow />
         <span className="italic">{buttonLabel}</span>
       </button>

@@ -1,3 +1,4 @@
+import { BodyBackground } from "../../../_components/BodyBackground";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { pick, pickPortableText, toLocale, buildAlternates } from "../../../../i18n/locale";
 import { urlFor } from "../../../../sanity/lib/image";
@@ -83,6 +84,7 @@ export default async function Work({
 
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+      <BodyBackground color="#FFFEFC" />
       <div className="min-[1200px]:hidden px-5 mb-0 text-center">
         <span className="block text-[14px]">I</span>
         <span className="block text-[25px]">{pageTitle}</span>

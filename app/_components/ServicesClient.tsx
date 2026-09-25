@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { BodyBackground } from "./BodyBackground";
+import { useEffect, useState } from "react";
 import { FadeImage } from "./FadeImage";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Grid } from "./Grid";
@@ -59,6 +60,11 @@ export function ServicesClient({
 
   const initialIndex = initialService ? services.findIndex((s) => s.number === initialService) : -1;
   const [selected, setSelected] = useState(initialIndex !== -1 ? initialIndex : 0);
+
+  useEffect(() => {
+    const idx = initialService ? services.findIndex((s) => s.number === initialService) : -1;
+    setSelected(idx !== -1 ? idx : 0);
+  }, [initialService, services]);
   const active = services[selected];
 
 
@@ -69,6 +75,7 @@ export function ServicesClient({
 
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+      <BodyBackground color="#FFFEFC" />
       <div className="min-[1200px]:hidden px-5 mb-4 text-center">
         <span className="block text-[14px]">II</span>
         <span className="block text-[25px]">{data?.headerLabel?.replace(/:\s*$/, "")}</span>

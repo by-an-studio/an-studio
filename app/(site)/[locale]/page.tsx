@@ -79,7 +79,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         )}
 
-        <ZoomWrapper className="relative flex flex-col items-center justify-center">
+        <ZoomWrapper className="relative flex flex-col items-center justify-center md:-translate-y-6">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
             <HeroVisual images={heroImages} />
           </div>

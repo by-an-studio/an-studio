@@ -24,7 +24,6 @@ export const workPage = defineType({
     defineField({
       name: 'categoryBrandIdentity',
       title: 'Categoría 01 — texto mostrado para "Brand Identity"',
-      description: 'El valor interno "Brand Identity" no cambia (es el que coincide con el campo Categoría de cada proyecto). Este campo es solo el texto que se muestra.',
       type: 'localeString',
     }),
     defineField({

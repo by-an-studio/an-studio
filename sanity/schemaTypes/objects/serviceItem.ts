@@ -40,13 +40,11 @@ export const serviceItem = defineType({
     defineField({
       name: 'featuredImageIndex',
       title: 'Numeral de la imagen (ej: 09)',
-      description: 'El "Img. XX" que se muestra junto al proyecto destacado.',
       type: 'string',
     }),
     defineField({
       name: 'featuredTags',
       title: 'Tags mostrados junto al proyecto destacado',
-      description: 'Ej: "Brand Identity", "Product Design" — no tienen que coincidir con los tags reales del proyecto.',
       type: 'array',
       of: [{ type: 'localeString' }],
     }),
