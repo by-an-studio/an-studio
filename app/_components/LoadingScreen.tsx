@@ -18,7 +18,8 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 
 export function LoadingScreen() {
   const t = useTranslations("loadingScreen");
-  const lines = t.raw("taglineLines") as Word[][];
+  const title = t.raw("title") as Word[];
+  const subtitle = t.raw("subtitle") as Word[];
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -88,22 +89,29 @@ export function LoadingScreen() {
         <Image src="/logo/an-studio-horse.svg" alt="" width={110} height={93} priority />
       </div>
 
-      <p className="text-[15px] md:text-[15px] leading-snug text-white">
-        {lines.map((line, lineIndex) => (
-          <span key={lineIndex} className="block">
-            {line.map((word, i) => (
-              <span key={i}>
-                <span
-                  className="loading-word"
-                  style={{ animationDelay: `${400 + (lineIndex * line.length + i) * 70}ms` }}
-                >
-                  <span className={word.italic ? "italic" : undefined}>{word.text}</span>
-                </span>{" "}
-              </span>
-            ))}
-          </span>
-        ))}
-      </p>
+      <div className="text-[15px] leading-snug text-white">
+        <p className="whitespace-nowrap md:max-w-[420px] md:whitespace-normal">
+          {title.map((word, i) => (
+            <span key={i}>
+              <span className="loading-word" style={{ animationDelay: `${400 + i * 70}ms` }}>
+                <span className={word.italic ? "italic" : undefined}>{word.text}</span>
+              </span>{" "}
+            </span>
+          ))}
+        </p>
+        <p className="px-6 md:px-0 md:whitespace-nowrap">
+          {subtitle.map((word, i) => (
+            <span key={i}>
+              <span
+                className="loading-word"
+                style={{ animationDelay: `${400 + (title.length + i) * 70}ms` }}
+              >
+                <span className={word.italic ? "italic" : undefined}>{word.text}</span>
+              </span>{" "}
+            </span>
+          ))}
+        </p>
+      </div>
     </div>
   );
 }

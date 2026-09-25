@@ -70,9 +70,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     : null;
 
   return (
-      <main className="relative w-full flex flex-col items-center">
+      <main className="relative w-full flex flex-col items-center h-[100svh] overflow-hidden md:h-auto md:overflow-visible">
       {/* Bloque 1 home */}
-      <section className="h-[100svh] w-full flex flex-col items-center justify-center gap-4 md:gap-10 px-5 overflow-hidden">
+      <section className="flex-1 min-h-0 md:flex-none md:h-[100svh] w-full flex flex-col items-center justify-center pt-10 md:pt-0 gap-4 md:gap-10 px-5 overflow-hidden">
         {data?.studioLabel && (
           <div className="text-center text-[clamp(12px,0.9375vw,18px)] md:text-[clamp(9px,0.9375vw,15px)] md:fixed md:top-6 md:inset-x-0 md:z-10 md:pointer-events-none">
             {data.studioLabel}
@@ -85,7 +85,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
 
           {(data?.heroGroup1.line1 || data?.heroGroup1.line2 || data?.heroGroup1.line3) && (
-            <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.12] md:leading-[1.05]">
+            <div className="relative z-10 text-center text-[18px] md:text-[57px] px-2 md:px-0 md:whitespace-nowrap leading-[1.22] md:leading-[1.05]">
               <p>
                 {data.heroGroup1.line1 && <span className="md:block">{data.heroGroup1.line1} </span>}
                 {data.heroGroup1.line2 && <span className="md:block">{data.heroGroup1.line2} </span>}
@@ -94,10 +94,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           )}
 
-          <div className="h-[390px] md:h-[280px]" />
+          <div className="h-[300px] md:h-[280px]" />
 
           {(data?.heroGroup2.line1 || data?.heroGroup2.line2 || data?.heroGroup2.line3) && (
-            <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.12] md:leading-[1.05]">
+            <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.22] md:leading-[1.05]">
               <p>
                 {data.heroGroup2.line1 && <span className="md:block">{data.heroGroup2.line1} </span>}
                 {data.heroGroup2.line2 && <span className="md:block">{data.heroGroup2.line2} </span>}
@@ -109,19 +109,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Bloque 2 home */}
-      <section className="w-full min-h-[18svh] md:min-h-0 mt-10 md:mt-0 md:py-[30px] md:fixed md:bottom-0 md:inset-x-0 z-20 px-5 flex flex-col justify-start md:justify-center">
+      <section className="w-full shrink-0 md:mt-0 py-4 md:py-[30px] md:fixed md:bottom-0 md:inset-x-0 z-20 px-5 flex flex-col justify-end md:justify-center">
         <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-5 text-center text-[15px] md:text-[13px]">
-          <div className="flex flex-col gap-14 md:gap-2 md:contents">
+          <div className="flex flex-col gap-7 md:gap-2 md:contents">
             {data?.availableLabel && (
-              <div className="order-2 md:order-none md:flex-1 text-[15px] md:text-[clamp(10px,0.8333vw,13px)] md:text-left">{data.availableLabel}</div>
+              <div className="order-2 md:order-none md:flex-1 text-[clamp(7px,calc((100vw-40px)*0.0298),16px)] md:text-[clamp(10px,0.8333vw,13px)] md:text-left">{data.availableLabel}</div>
             )}
             {data?.description && (
               <div className="order-1 md:order-none md:flex-[2] w-full whitespace-nowrap md:whitespace-normal md:max-w-none md:mx-0 text-[clamp(7px,calc((100vw-40px)*0.0298),16px)] md:text-[clamp(11px,0.9375vw,15px)]">{data.description}</div>
             )}
           </div>
           {data?.newsletterButtonLabel && (
-            <div className="md:flex-1 flex justify-center md:justify-end">
-              <div className="md:rotate-0 md:origin-center">
+            <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 md:static md:translate-y-0 md:flex-1 justify-center md:justify-end">
+              <div className="-rotate-90 origin-right md:rotate-0 md:origin-center">
                 <div className="md:rotate-0">
                   <HomeNewsletterForm
                     buttonLabel={data.newsletterButtonLabel}

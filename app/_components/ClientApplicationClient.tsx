@@ -194,7 +194,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       <Grid className="items-start min-[1200px]:grid-rows-[100svh_auto]">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-6 min-[1200px]:row-start-1 min-[1200px]:self-stretch mb-4 min-[1200px]:mb-0 flex flex-col min-[1200px]:justify-center text-center min-[1200px]:text-left">
           <span className="block min-[1200px]:hidden text-[14px]">IV</span>
-          {data?.heroTitle && <p className="text-[32px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] mb-4 min-[1200px]:mb-0">{data.heroTitle}</p>}
+          {data?.heroTitle && <p className="text-[25px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] mb-4 min-[1200px]:mb-0">{data.heroTitle}</p>}
           {data?.heroTagline && (
             <p className="italic text-[17px] min-[1200px]:text-[clamp(15px,1.25vw,21px)]">{data.heroTagline}</p>
           )}

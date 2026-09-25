@@ -134,7 +134,7 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
         <div className="min-[1200px]:hidden px-5 flex flex-col gap-12">
           <div className="text-center">
             <span className="block text-[14px]">VI</span>
-            {data?.title && <p className="text-[32px]">{data.title}</p>}
+            {data?.title && <p className="text-[25px]">{data.title}</p>}
             {data?.tagline && (
               <p className="italic text-[18px] leading-tight mt-4 px-10">{data.tagline}</p>
             )}
@@ -142,42 +142,42 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
           {products.length > 0 && (
             <div className="px-5 flex flex-col gap-12">
               {products.map((product, i) => (
-                <div key={i} className="border border-black/60 p-5 flex flex-col gap-8">
+                <div key={i} className="border border-black/60 p-3 pb-6 flex flex-col gap-8">
                   <ProductImage image={product.image} />
                   <div className="text-center flex flex-col gap-8">
                     <div className="leading-tight">
                       {product.categoryLabel && (
-                        <p className="not-italic text-[16px] leading-tight mb-0">
+                        <p className="not-italic text-[12px] leading-tight mb-0">
                           For <em className="italic">{product.categoryLabel}</em>
                         </p>
                       )}
                       {product.name && (
-                        <p className="text-[28px] leading-tight underline decoration-[1.5px] underline-offset-4">
+                        <p className="text-[23px] leading-tight underline decoration-[1.5px] underline-offset-4">
                           {product.name}
                         </p>
                       )}
-                      {product.subtitle && <p className="mt-2 text-[16px] leading-tight">{product.subtitle}</p>}
+                      {product.subtitle && <p className="mt-2 text-[12px] leading-tight">{product.subtitle}</p>}
                     </div>
                     {(product.format || product.price) && (
                       <div className="flex justify-center gap-8">
                         {product.format && (
                           <div>
-                            <p className="text-[16px]">FORMAT:</p>
-                            <p className="text-[16px]">{product.format}</p>
+                            <p className="text-[12px]">FORMAT:</p>
+                            <p className="text-[10px]">{product.format}</p>
                           </div>
                         )}
                         {product.price && (
                           <div>
-                            <p className="text-[16px]">PRICE:</p>
-                            <p className="italic text-[16px]">{product.price}</p>
+                            <p className="text-[12px]">PRICE:</p>
+                            <p className="italic text-[10px]">{product.price}</p>
                           </div>
                         )}
                       </div>
                     )}
                     {product.description && (
-                      <p className="text-[14px] leading-snug">{product.description}</p>
+                      <p className="text-[12px] leading-snug">{product.description}</p>
                     )}
-                    <ProductCta product={product} className="self-center flex items-center gap-2 text-[16px]" />
+                    <ProductCta product={product} className="self-center flex items-center gap-2 text-[12px]" />
                   </div>
                 </div>
               ))}

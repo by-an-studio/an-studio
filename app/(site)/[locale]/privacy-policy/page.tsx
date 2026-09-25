@@ -60,7 +60,7 @@ export default async function PrivacyPolicy({ params }: { params: Promise<{ loca
       <Grid className="items-start">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 min-[1200px]:pt-[50vh] min-[1200px]:-translate-y-10 mb-16 min-[1200px]:mb-0">
           {data?.pageTitle && (
-            <p className="text-[32px] min-[1200px]:text-[clamp(21px,1.875vw,33px)]">{data.pageTitle}</p>
+            <p className="text-[25px] min-[1200px]:text-[clamp(21px,1.875vw,33px)]">{data.pageTitle}</p>
           )}
           {data?.lastUpdated && (
             <p className="italic text-[20px] min-[1200px]:text-[clamp(15px,1.25vw,21px)]">{data.lastUpdated}</p>

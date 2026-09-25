@@ -114,7 +114,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 mb-8 min-[1200px]:mb-0 text-center min-[1200px]:text-left">
               <span className="block min-[1200px]:hidden text-[14px]">III</span>
               {data?.ownerSectionLabel && (
-                <p className="text-[32px] min-[1200px]:text-[36px]">{data.ownerSectionLabel}</p>
+                <p className="text-[25px] min-[1200px]:text-[36px]">{data.ownerSectionLabel}</p>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-8 min-[1200px]:col-span-10 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full min-[1200px]:flex min-[1200px]:justify-end">
@@ -155,7 +155,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
               <ul className="space-y-1">
                 {data?.awards?.map((item: string, i: number) => (
                   <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[16px] leading-tight w-full">
-                    <span className="text-[7px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
+                    <span className="text-[10px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
                     <span className="flex-1 min-[1200px]:flex-1 text-center min-[1200px]:text-left">{item}</span>
                   </li>
                 ))}
@@ -172,7 +172,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
               <ul className="space-y-1">
                 {data?.exhibitions?.map((item: string, i: number) => (
                   <li key={i} className="flex flex-col items-center min-[1200px]:flex-row min-[1200px]:items-baseline justify-center min-[1200px]:justify-start gap-0 min-[1200px]:gap-3 text-[13px] min-[1200px]:text-[16px] leading-tight w-full">
-                    <span className="text-[7px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
+                    <span className="text-[10px] min-[1200px]:text-[8px] shrink-0 min-[1200px]:-translate-y-[1px]">{i + 1}</span>
                     <span className="flex-1 min-[1200px]:flex-1 text-center min-[1200px]:text-left">{item}</span>
                   </li>
                 ))}
@@ -189,9 +189,9 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-12 mt-2 min-[1200px]:mt-0">
               <div className="overflow-x-auto min-[1200px]:overflow-visible [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <div className="grid grid-cols-3 gap-x-0 text-[8px] min-[1200px]:text-[11px] min-w-0 min-[1200px]:min-w-0">
+                <div className="grid grid-cols-3 gap-x-0 text-[9px] min-[1200px]:text-[11px] min-w-0 min-[1200px]:min-w-0">
                   {columns.map((col: any, i: number) => (
-                    <p key={i} className="text-[9px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap">
+                    <p key={i} className="text-[12px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap translate-y-1 min-[1200px]:translate-y-0">
                       {col.title}
                     </p>
                   ))}

@@ -92,95 +92,76 @@
     }
   },
   "loadingScreen": {
-    "taglineLines": [
-      [
-        {
-          "text": "\"Diseñando",
-          "italic": false
-        },
-        {
-          "text": "Marcas",
-          "italic": false
-        },
-        {
-          "text": "Con",
-          "italic": false
-        },
-        {
-          "text": "Presencia",
-          "italic": false
-        },
-        {
-          "text": "Duradera\"",
-          "italic": false
-        },
-        {
-          "text": "Identidad",
-          "italic": false
-        },
-        {
-          "text": "de",
-          "italic": false
-        },
-        {
-          "text": "Marca,",
-          "italic": false
-        },
-        {
-          "text": "Packaging",
-          "italic": false
-        }
-      ],
-      [
-        {
-          "text": "y",
-          "italic": false
-        },
-        {
-          "text": "Diseño",
-          "italic": false
-        },
-        {
-          "text": "Web",
-          "italic": false
-        },
-        {
-          "text": "Para",
-          "italic": false
-        },
-        {
-          "text": "Marcas",
-          "italic": false
-        },
-        {
-          "text": "de",
-          "italic": false
-        },
-        {
-          "text": "Belleza,",
-          "italic": true
-        },
-        {
-          "text": "Moda",
-          "italic": true
-        },
-        {
-          "text": "y",
-          "italic": false
-        },
-        {
-          "text": "Estilo",
-          "italic": true
-        },
-        {
-          "text": "de",
-          "italic": false
-        },
-        {
-          "text": "Vida",
-          "italic": true
-        }
-      ]
+    "title": [
+      {
+        "text": "Diseñando"
+      },
+      {
+        "text": "Marcas"
+      },
+      {
+        "text": "Con"
+      },
+      {
+        "text": "Presencia"
+      },
+      {
+        "text": "Duradera"
+      }
+    ],
+    "subtitle": [
+      {
+        "text": "Identidad"
+      },
+      {
+        "text": "de"
+      },
+      {
+        "text": "Marca,"
+      },
+      {
+        "text": "Packaging"
+      },
+      {
+        "text": "y"
+      },
+      {
+        "text": "Diseño"
+      },
+      {
+        "text": "Digital"
+      },
+      {
+        "text": "Para"
+      },
+      {
+        "text": "Marcas"
+      },
+      {
+        "text": "de"
+      },
+      {
+        "text": "Belleza,",
+        "italic": true
+      },
+      {
+        "text": "Moda",
+        "italic": true
+      },
+      {
+        "text": "y"
+      },
+      {
+        "text": "Estilo",
+        "italic": true
+      },
+      {
+        "text": "de"
+      },
+      {
+        "text": "Vida",
+        "italic": true
+      }
     ]
   }
 }

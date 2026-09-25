@@ -36,6 +36,7 @@ body {
 
 html {
   text-underline-offset: 1.5px;
+  background: var(--background);
 }
 
 @keyframes page-fade {

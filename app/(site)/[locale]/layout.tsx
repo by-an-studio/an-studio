@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { routing } from "../../../i18n/routing";
 import "../globals.css";
 import { Header } from "../../_components/Header";
+import { ThemeColorMeta } from "../../_components/ThemeColorMeta";
 import { NavLeft } from "../../_components/NavLeft";
 import { ConditionalFooter } from "../../_components/ConditionalFooter";
 import { DisableScrollRestoration } from "../../_components/DisableScrollRestoration";
@@ -32,6 +32,12 @@ export const metadata: Metadata = {
   title: "An Studio",
   description: "Independent Design Studio",
   robots: { index: false, follow: false },
+};
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
+  themeColor: "#FFFDF7",
 };
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -113,17 +119,33 @@ export default async function RootLayout({
     : null;
   return (
     <html lang={locale} className={`${williamSubhead.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        {/* Ambas cosas van embebidas directamente en <head> como HTML plano
+            (nada de next/script ni del CSS compilado por Tailwind), para
+            que se ejecuten/apliquen de forma síncrona ANTES de que el
+            navegador llegue a parsear/pintar el <body> — así la pantalla de
+            carga queda oculta desde el primer pintado en recargas dentro de
+            la misma sesión, sin ningún flash de color. */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `html.ls-hide #an-studio-loading-screen{display:none!important}`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try {
+              if (sessionStorage.getItem("an-studio-loading-shown") === "1") {
+                document.documentElement.classList.add("ls-hide");
+              }
+            } catch (e) {}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Script id="loading-screen-flag" strategy="beforeInteractive">
-          {`try {
-            if (sessionStorage.getItem("an-studio-loading-shown") === "1") {
-              document.documentElement.classList.add("ls-hide");
-            }
-          } catch (e) {}`}
-        </Script>
         <NextIntlClientProvider messages={messages}>
           <DisableScrollRestoration />
           <MobileNavProvider>
+            <ThemeColorMeta />
             <LoadingScreen />
             <Header />
             <div className="relative flex-1 flex flex-col">

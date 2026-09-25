@@ -28,7 +28,7 @@ export function HeroImageCycle({
   }, [total]);
 
   return (
-    <div className="relative w-full aspect-[367/459] p-[10px]" style={{ backgroundColor: "#F2F0EC" }}>
+    <div className="relative w-full aspect-[367/459] p-[5px] md:p-[10px]" style={{ backgroundColor: "#F2F0EC" }}>
       <div className="relative w-full h-full overflow-hidden">
         {images.map((src, i) => (
           <Image

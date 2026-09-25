@@ -92,79 +92,63 @@
     }
   },
   "loadingScreen": {
-    "taglineLines": [
-      [
-        {
-          "text": "\"Designing",
-          "italic": false
-        },
-        {
-          "text": "Brands",
-          "italic": false
-        },
-        {
-          "text": "With",
-          "italic": false
-        },
-        {
-          "text": "Lasting",
-          "italic": false
-        },
-        {
-          "text": "Presence\"",
-          "italic": false
-        },
-        {
-          "text": "Brand",
-          "italic": false
-        },
-        {
-          "text": "Identity,",
-          "italic": false
-        },
-        {
-          "text": "Packaging",
-          "italic": false
-        }
-      ],
-      [
-        {
-          "text": "&",
-          "italic": false
-        },
-        {
-          "text": "Web",
-          "italic": false
-        },
-        {
-          "text": "Design",
-          "italic": false
-        },
-        {
-          "text": "For",
-          "italic": false
-        },
-        {
-          "text": "Beauty,",
-          "italic": true
-        },
-        {
-          "text": "Fashion",
-          "italic": true
-        },
-        {
-          "text": "&",
-          "italic": false
-        },
-        {
-          "text": "Lifestyle",
-          "italic": true
-        },
-        {
-          "text": "Brands",
-          "italic": false
-        }
-      ]
+    "title": [
+      {
+        "text": "Designing"
+      },
+      {
+        "text": "Brands"
+      },
+      {
+        "text": "With"
+      },
+      {
+        "text": "Lasting"
+      },
+      {
+        "text": "Presence"
+      }
+    ],
+    "subtitle": [
+      {
+        "text": "Brand"
+      },
+      {
+        "text": "Identity,"
+      },
+      {
+        "text": "Packaging"
+      },
+      {
+        "text": "&"
+      },
+      {
+        "text": "Digital"
+      },
+      {
+        "text": "Design"
+      },
+      {
+        "text": "For"
+      },
+      {
+        "text": "Beauty,",
+        "italic": true
+      },
+      {
+        "text": "Fashion",
+        "italic": true
+      },
+      {
+        "text": "&"
+      },
+      {
+        "text": "Lifestyle",
+        "italic": true
+      },
+      {
+        "text": "Brands"
+      }
     ]
   }
 }

@@ -230,10 +230,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         {p.variant === "gallery" && (
           <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
             <div className="text-center">
-              <p className="text-[28px] leading-tight">({p.projectNumber}.)</p>
-              <p className="text-[28px] leading-tight">{p.title}</p>
+              <p className="text-[25px] leading-tight">({p.projectNumber}.)</p>
+              <p className="text-[25px] leading-tight">{p.title}</p>
               {p.subtitleLine && (
-                <p className="text-[28px] leading-tight">{p.subtitleLine}</p>
+                <p className="text-[25px] leading-tight">{p.subtitleLine}</p>
               )}
               {hasRichText(p.collaboration) && (
                 <p className="italic text-[13px] mt-4">
@@ -295,10 +295,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         {p.variant === "simple" && (
           <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
             <div className="text-center">
-              <p className="text-[28px] leading-tight">({p.projectNumber}.)</p>
-              <p className="text-[28px] leading-tight">{p.title}</p>
+              <p className="text-[25px] leading-tight">({p.projectNumber}.)</p>
+              <p className="text-[25px] leading-tight">{p.title}</p>
               {p.subtitleLine && (
-                <p className="text-[28px] leading-tight">{p.subtitleLine}</p>
+                <p className="text-[25px] leading-tight">{p.subtitleLine}</p>
               )}
               {hasRichText(p.collaboration) && (
                 <p className="italic text-[13px] mt-4">
