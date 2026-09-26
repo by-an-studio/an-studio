@@ -147,7 +147,7 @@ export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: s
     }
   }
   return (
-    <footer className="w-full pt-20 pb-[30px] bg-[#FFFDF7]" style={bgColor ? { backgroundColor: bgColor } : undefined}>
+    <footer className="w-full pt-[30px] pb-[30px] bg-[#FFFDF7]" style={bgColor ? { backgroundColor: bgColor } : undefined}>
       {/* Responsive: composición agrupada por filas específicas */}
       <div className="min-[1200px]:hidden flex flex-col gap-10 px-5">
         <div className="flex flex-row justify-center gap-[clamp(64px,16vw,220px)]">
