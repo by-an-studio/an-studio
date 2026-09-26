@@ -208,19 +208,19 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   return (
     <main className={`w-full ${p.variant === "gallery" ? "pb-[30px]" : ""}`}>
       <BodyBackground color="#FFFEFC" />
-      <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-0 min-[1200px]:gap-[50px]">
+      <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-0 min-[1200px]:gap-[clamp(60px,8vh,150px)]">
         <Grid className="relative z-20">
-          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] min-[1200px]:pt-[clamp(90px,9.5vh,180px)] flex justify-between">
+          <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-21 pt-[150px] min-[1200px]:pt-[clamp(110px,11.5vh,165px)] flex justify-between">
             <Link
               href={prevSlug ? `/work/${prevSlug}` : "/work"}
-              className="flex items-center gap-3 text-[14px] min-[1200px]:text-[11px] uppercase"
+              className="flex items-center gap-3 text-[14px] min-[1200px]:text-[12px] uppercase"
             >
               <BackNextArrow flipped />
               <span>Back</span>
             </Link>
             <Link
               href={nextSlug ? `/work/${nextSlug}` : "/work"}
-              className="flex items-center gap-3 text-[14px] min-[1200px]:text-[11px] uppercase"
+              className="flex items-center gap-3 text-[14px] min-[1200px]:text-[12px] uppercase"
             >
               <span>Next</span>
               <BackNextArrow />
@@ -342,7 +342,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             <RichText value={p.bottomParagraph} className="text-[14px] leading-tight text-center" />
           </div>
         )}
-        <Grid className="hidden min-[1200px]:grid pb-[30px] min-[1200px]:flex-1 min-[1200px]:min-h-0 min-[1200px]:max-h-[820px] min-[1200px]:my-auto items-start min-[1200px]:items-center">
+        <Grid className="hidden min-[1200px]:grid pb-[30px] min-[1200px]:flex-1 min-[1200px]:min-h-0 items-start min-[1200px]:items-center">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:4/15] min-[1400px]:[grid-column:4/14] min-[1600px]:[grid-column:4/13] min-[1800px]:[grid-column:4/12] min-[1200px]:self-stretch mb-8 min-[1200px]:mb-0 flex flex-col">
             <div>
               <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">({p.projectNumber}.)</p>

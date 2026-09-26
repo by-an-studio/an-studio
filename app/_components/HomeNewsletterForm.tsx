@@ -24,6 +24,7 @@ export function HomeNewsletterForm({
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyWarning, setShowEmptyWarning] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,11 +59,13 @@ export function HomeNewsletterForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, company, turnstileToken }),
       });
-      if (!res.ok) throw new Error("failed");
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || "failed");
       setStatus("sent");
       setEmail("");
-    } catch {
+    } catch (err) {
       setStatus("error");
+      setErrorMessage(err instanceof Error && err.message !== "failed" ? err.message : "Something went wrong. Please try again.");
     }
   }
 
@@ -132,6 +135,13 @@ export function HomeNewsletterForm({
             }`}
           >
             Please enter your email
+          </span>
+          <span
+            className={`absolute left-0 top-full mt-1 text-[8px] whitespace-nowrap transition-opacity duration-200 ${
+              status === "error" ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            {errorMessage}
           </span>
         </div>
       </form>
