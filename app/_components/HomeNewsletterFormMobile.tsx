@@ -5,8 +5,8 @@ import { Turnstile } from "./Turnstile";
 
 function SendArrow() {
   return (
-    <svg width="25" height="7" viewBox="0 0 25 7" fill="none">
-      <path d="M1 3.5H24M24 3.5L20 0.7M24 3.5L20 6.3" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="20" height="8" viewBox="0 0 16 10" fill="none">
+      <path d="M1 5H15M15 5L10 1M15 5L10 9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -58,7 +58,7 @@ export function HomeNewsletterFormMobile({
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="pointer-events-auto -rotate-90 text-[12px] leading-none cursor-pointer whitespace-nowrap bg-[#EFECE6] px-6 pt-2 pb-2 flex items-center justify-center"
+            className="pointer-events-auto -rotate-90 text-[12px] leading-none cursor-pointer whitespace-nowrap bg-[#EFECE6] px-6 pt-2 pb-2 flex items-center justify-center translate-x-[2px]"
           >
             {buttonLabel}
           </button>
@@ -92,19 +92,23 @@ export function HomeNewsletterFormMobile({
               className="absolute w-0 h-0 opacity-0 -z-10"
             />
             <div className="relative flex-1">
-              <input
-                ref={inputRef}
-                type="email"
-                placeholder={status === "sent" ? "Thank you!" : (emailPlaceholder ?? "Email Address")}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (showEmptyWarning) setShowEmptyWarning(false);
-                }}
-                disabled={status === "sent"}
-                suppressHydrationWarning
-                className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] placeholder:italic focus:outline-none"
-              />
+              <div className="overflow-hidden">
+                <div className="w-[114.2857%] origin-left scale-[0.875]">
+                  <input
+                    ref={inputRef}
+                    type="email"
+                    placeholder={status === "sent" ? "Thank you!" : (emailPlaceholder ?? "Email Address")}
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (showEmptyWarning) setShowEmptyWarning(false);
+                    }}
+                    disabled={status === "sent"}
+                    suppressHydrationWarning
+                    className="w-full bg-transparent border-b border-foreground/30 pb-2 text-[16px] placeholder:italic focus:outline-none"
+                  />
+                </div>
+              </div>
               <span
                 className={`absolute left-0 top-full mt-2 w-full text-[11px] transition-opacity duration-200 ${
                   showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
