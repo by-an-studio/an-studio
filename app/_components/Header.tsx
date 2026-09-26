@@ -97,7 +97,7 @@ export function Header() {
           </Link>
         </div>
 
-        <Link href="/" className="justify-self-center min-[1200px]:justify-self-auto">
+        <Link href="/" className="justify-self-center min-[1200px]:justify-self-auto no-hover-dim">
           <img
             src="/logo/an-studio.svg"
             alt="An Studio"
