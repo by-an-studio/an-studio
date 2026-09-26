@@ -24,11 +24,14 @@ export function LoadingScreen() {
   const isHome = pathname === "/";
 
   // El servidor no puede saber si ya se mostró esta sesión (no tiene acceso
-  // a sessionStorage), así que SIEMPRE arranca visible tanto en servidor
-  // como en el primer render de cliente: son idénticos, sin mismatch de
-  // hidratación. Es el efecto de abajo quien decide, ya en el navegador y
-  // antes del primer pintado, si hay que ocultarla al instante.
-  const [visible, setVisible] = useState(true);
+  // a sessionStorage), pero SÍ sabe en qué ruta está (pathname es idéntico
+  // en servidor y en el primer render de cliente), así que arrancamos
+  // visible solo si la ruta es Home — evita que la pantalla de carga
+  // aparezca un instante (flash) en cualquier otra página antes de que el
+  // efecto de abajo la oculte. Es ese efecto quien decide, ya en el
+  // navegador, si además hay que ocultarla por haberse mostrado ya esta
+  // sesión.
+  const [visible, setVisible] = useState(isHome);
   const [exiting, setExiting] = useState(false);
   const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const removeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

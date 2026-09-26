@@ -32,7 +32,8 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc)
   "slug": slug.current,
   categories,
   projectNumber,
-  mainImage
+  mainImage,
+  soon
 }`;
 
 const WORK_PAGE_QUERY = `*[_type == "workPage"][0]{

@@ -67,72 +67,74 @@ export function HomeNewsletterForm({
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="md:ml-auto" suppressHydrationWarning>
-      <input
-        type="text"
-        name="company"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-        autoComplete="off"
-        tabIndex={-1}
-        aria-hidden="true"
-        suppressHydrationWarning
-        className="absolute w-0 h-0 opacity-0 -z-10"
-      />
-      <div className="relative">
-        <div className="absolute right-0 top-full mt-2">
-          <Turnstile onToken={setTurnstileToken} />
-        </div>
-        <div
-          className={`relative overflow-hidden bg-[#EFECE6] py-1 flex items-center transition-[width,padding,height] duration-300 ease-out ${
-            open ? "h-[34px] md:h-[27px] w-[330px] px-3 justify-start" : "h-[28px] md:h-[27px] w-[190px] px-[40px] justify-center"
-          }`}
-        >
-          {open ? (
-            <>
-              <div className="flex-1 h-[24px] md:h-auto overflow-hidden flex items-center">
-                <div className="shrink-0 w-[114.2857%] h-[27px] md:w-full md:h-auto origin-left scale-[0.875] md:scale-100">
-                  <input
-                    ref={inputRef}
-                    type="email"
-                    placeholder={status === "sent" ? (comingSoonLabel ?? "Coming soon!") : (emailPlaceholder ?? "Email Address")}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (showEmptyWarning) setShowEmptyWarning(false);
-                    }}
-                    suppressHydrationWarning
-                    className="bg-transparent text-[16px] md:text-[14px] w-full h-full box-border focus:outline-none"
-                  />
+    <>
+      <form ref={formRef} onSubmit={handleSubmit} className="hidden min-[1200px]:block md:ml-auto" suppressHydrationWarning>
+        <input
+          type="text"
+          name="company"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          autoComplete="off"
+          tabIndex={-1}
+          aria-hidden="true"
+          suppressHydrationWarning
+          className="absolute w-0 h-0 opacity-0 -z-10"
+        />
+        <div className="relative">
+          <div className="absolute right-0 top-full mt-2">
+            <Turnstile onToken={setTurnstileToken} />
+          </div>
+          <div
+            className={`relative overflow-hidden bg-[#EFECE6] py-1 flex items-center transition-[width,padding,height] duration-300 ease-out ${
+              open ? "h-[27px] w-[330px] px-3 justify-start" : "h-[27px] w-[190px] px-[40px] justify-center"
+            }`}
+          >
+            {open ? (
+              <>
+                <div className="flex-1 h-auto overflow-hidden flex items-center">
+                  <div className="shrink-0 w-full h-auto">
+                    <input
+                      ref={inputRef}
+                      type="email"
+                      placeholder={status === "sent" ? (comingSoonLabel ?? "Coming soon!") : (emailPlaceholder ?? "Email Address")}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (showEmptyWarning) setShowEmptyWarning(false);
+                      }}
+                      suppressHydrationWarning
+                      className="bg-transparent text-[14px] w-full h-full box-border focus:outline-none"
+                    />
+                  </div>
                 </div>
-              </div>
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  aria-label="Send"
+                  className="shrink-0 ml-3 p-3 -m-3 cursor-pointer disabled:opacity-50"
+                >
+                  <SendArrow />
+                </button>
+              </>
+            ) : (
               <button
-                type="submit"
-                disabled={status === "submitting"}
-                aria-label="Send"
-                className="shrink-0 ml-3 p-3 -m-3 cursor-pointer disabled:opacity-50"
+                type="button"
+                onClick={() => setOpen(true)}
+                className="absolute inset-0 w-full h-full flex items-center justify-center whitespace-nowrap text-[14px] cursor-pointer"
               >
-                <SendArrow />
+                {buttonLabel}
               </button>
-            </>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="absolute inset-0 w-full h-full flex items-center justify-center whitespace-nowrap text-[12px] md:text-[14px] cursor-pointer"
-            >
-              {buttonLabel}
-            </button>
-          )}
+            )}
+          </div>
+          <span
+            className={`absolute left-0 top-full mt-1 text-[8px] whitespace-nowrap transition-opacity duration-200 ${
+              showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          >
+            Please enter your email
+          </span>
         </div>
-        <span
-          className={`absolute left-0 top-full mt-1 text-[11px] md:text-[8px] whitespace-nowrap transition-opacity duration-200 ${
-            showEmptyWarning ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          Please enter your email
-        </span>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }

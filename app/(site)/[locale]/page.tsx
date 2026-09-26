@@ -3,6 +3,7 @@ import { urlFor } from "../../../sanity/lib/image";
 import { sanityFetch } from "../../../sanity/lib/live";
 import { HeroVisual } from "../../_components/HeroVisual";
 import { HomeNewsletterForm } from "../../_components/HomeNewsletterForm";
+import { HomeNewsletterFormMobile } from "../../_components/HomeNewsletterFormMobile";
 import { ZoomWrapper } from "../../_components/ZoomWrapper";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -72,14 +73,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
       <main className="relative w-full flex flex-col items-center h-[100svh] overflow-hidden md:h-auto md:overflow-visible">
       {/* Bloque 1 home */}
-      <section className="flex-1 min-h-0 md:flex-none md:h-[100svh] w-full flex flex-col items-center justify-center pt-10 md:pt-0 gap-4 md:gap-10 px-5 overflow-hidden">
+      <section className="relative flex-1 min-h-0 md:flex-none md:h-[100svh] w-full flex flex-col items-center justify-center pt-10 md:pt-0 gap-4 md:gap-10 px-5 overflow-hidden">
+        {data?.newsletterButtonLabel && (
+          <HomeNewsletterFormMobile
+            buttonLabel={data.newsletterButtonLabel}
+            emailPlaceholder={data.emailPlaceholder}
+          />
+        )}
         {data?.studioLabel && (
-          <div className="text-center text-[clamp(12px,0.9375vw,18px)] md:text-[clamp(9px,0.9375vw,15px)] md:fixed md:top-6 md:inset-x-0 md:z-10 md:pointer-events-none">
+          <div className="text-center text-[clamp(12px,0.9375vw,18px)] translate-y-3 md:translate-y-0 md:text-[clamp(9px,0.9375vw,15px)] md:fixed md:top-6 md:inset-x-0 md:z-10 md:pointer-events-none">
             {data.studioLabel}
           </div>
         )}
 
-        <ZoomWrapper className="relative flex flex-col items-center justify-center md:-translate-y-6">
+        <ZoomWrapper className="relative flex flex-col items-center justify-center translate-y-6 md:-translate-y-6">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
             <HeroVisual images={heroImages} />
           </div>
@@ -94,7 +101,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           )}
 
-          <div className="h-[300px] md:h-[280px]" />
+          <div className="h-[275px] md:h-[310px]" />
 
           {(data?.heroGroup2.line1 || data?.heroGroup2.line2 || data?.heroGroup2.line3) && (
             <div className="relative z-10 text-center text-[18px] md:text-[57px] md:whitespace-nowrap leading-[1.22] md:leading-[1.05]">
@@ -120,16 +127,12 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             )}
           </div>
           {data?.newsletterButtonLabel && (
-            <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 md:static md:translate-y-0 md:flex-1 justify-center md:justify-end">
-              <div className="-rotate-90 origin-right md:rotate-0 md:origin-center">
-                <div className="md:rotate-0">
-                  <HomeNewsletterForm
-                    buttonLabel={data.newsletterButtonLabel}
-                    emailPlaceholder={data.emailPlaceholder}
-                    comingSoonLabel={data.comingSoonLabel}
-                  />
-                </div>
-              </div>
+            <div className="hidden md:flex md:flex-1 md:justify-end">
+              <HomeNewsletterForm
+                buttonLabel={data.newsletterButtonLabel}
+                emailPlaceholder={data.emailPlaceholder}
+                comingSoonLabel={data.comingSoonLabel}
+              />
             </div>
           )}
         </div>

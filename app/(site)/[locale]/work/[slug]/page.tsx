@@ -10,7 +10,7 @@ import { GalleryCarousel } from "../../../../_components/GalleryCarousel";
 import { sanityFetch } from "../../../../../sanity/lib/live";
 import { urlFor } from "../../../../../sanity/lib/image";
 import { pick, toLocale, pickPortableText, buildAlternates, type Loc } from "../../../../../i18n/locale";
-const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]{
+const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug && soon != true][0]{
   title,
   projectNumber,
   categories,
@@ -41,7 +41,7 @@ const PROJECT_BY_SLUG_QUERY = `*[_type == "project" && slug.current == $slug][0]
   simpleCaptionText,
   simpleImages
 }`;
-const ALL_PROJECT_SLUGS_QUERY = `*[_type == "project"] | order(order asc, _createdAt asc){
+const ALL_PROJECT_SLUGS_QUERY = `*[_type == "project" && soon != true] | order(order asc, _createdAt asc){
   "slug": slug.current
 }`;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
@@ -252,7 +252,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             {p.projectTags && p.projectTags.length > 0 && (
               <div className="text-center">
-                <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
+                <p className="underline decoration-1 mb-4 text-[15px]">(Categories)</p>
                 <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
                   {p.projectTags.map((t, i) => (
                     <span key={i}>{t}</span>
@@ -308,12 +308,19 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               )}
             </div>
             <RichText value={p.simpleCaptionText} className="text-[14px] leading-tight text-center px-6" />
-            {p.simpleLayout === "double" ? (
+            {p.simpleLayout === "double" && (
               <div className="flex flex-col gap-5">
                 <ProjectImg item={p.simpleImages?.[0]} className="aspect-[4/5]" sizes="90vw" />
                 <ProjectImg item={p.simpleImages?.[1]} className="aspect-[4/5]" sizes="90vw" />
               </div>
-            ) : (
+            )}
+            {p.simpleLayout === "gallery" && (
+              <GalleryCarousel images={p.simpleImages ?? []} title={p.title} />
+            )}
+            {p.simpleLayout === "singleWide" && (
+              <ProjectImg item={p.simpleImages?.[0]} className="aspect-[9/16]" sizes="90vw" />
+            )}
+            {p.simpleLayout !== "double" && p.simpleLayout !== "gallery" && p.simpleLayout !== "singleWide" && (
               <ProjectImg item={p.simpleImages?.[0]} className="aspect-[4/5]" sizes="90vw" />
             )}
             <div className="text-center">
@@ -324,7 +331,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             </div>
             {p.projectTags && p.projectTags.length > 0 && (
               <div className="text-center">
-                <p className="underline decoration-1 mb-4 text-[18px]">(Categories)</p>
+                <p className="underline decoration-1 mb-4 text-[15px]">(Categories)</p>
                 <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
                   {p.projectTags.map((t, i) => (
                     <span key={i}>{t}</span>

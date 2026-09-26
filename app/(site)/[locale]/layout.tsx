@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   title: "An Studio",
   description: "Independent Design Studio",
   robots: { index: false, follow: false },
+  manifest: "/site.webmanifest",
 };
 export const viewport = {
   width: "device-width",

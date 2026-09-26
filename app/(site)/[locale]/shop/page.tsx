@@ -246,7 +246,7 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
                         {product.description && (
                           <p className="text-[14px] min-[1200px]:text-[12px] leading-snug">{product.description}</p>
                         )}
-                        <ProductCta product={product} />
+                        <ProductCta product={product} className="flex items-center gap-2 text-[16px] min-[1200px]:text-[12px]" />
                       </div>
                     </div>
                   </div>

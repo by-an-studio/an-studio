@@ -189,9 +189,12 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-12 mt-2 min-[1200px]:mt-0">
               <div className="overflow-x-auto min-[1200px]:overflow-visible [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <div className="grid grid-cols-3 gap-x-0 text-[9px] min-[1200px]:text-[11px] min-w-0 min-[1200px]:min-w-0">
+                <div className="grid grid-cols-3 min-[1200px]:grid-cols-[auto_auto_auto] min-[1200px]:justify-between gap-x-0 text-[9px] min-[1200px]:text-[11px] min-w-0 min-[1200px]:min-w-0">
                   {columns.map((col: any, i: number) => (
-                    <p key={i} className="text-[12px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap translate-y-1 min-[1200px]:translate-y-0">
+                    <p
+                      key={i}
+                      className="text-[12px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap translate-y-1 min-[1200px]:translate-y-0"
+                    >
                       {col.title}
                     </p>
                   ))}
@@ -199,10 +202,14 @@ export default async function About({ params }: { params: Promise<{ locale: stri
                   {clientRows.map((row, i) => (
                     <Fragment key={i}>
                       {row.map((cell: string, j: number) => (
-                        <p key={`${i}-${j}`} className="border-b border-black py-1 text-center min-[1200px]:text-left whitespace-nowrap">
+                        <p
+                          key={`${i}-${j}`}
+                          className="py-1 text-center min-[1200px]:text-left whitespace-nowrap"
+                        >
                           {cell}
                         </p>
                       ))}
+                      <div className="col-span-3 border-b border-black" />
                     </Fragment>
                   ))}
                 </div>

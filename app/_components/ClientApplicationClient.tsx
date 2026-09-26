@@ -199,7 +199,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <p className="italic text-[17px] min-[1200px]:text-[clamp(15px,1.25vw,21px)]">{data.heroTagline}</p>
           )}
         </div>
-        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-0 min-[1200px]:mb-0 flex justify-center min-[1200px]:flex-col min-[1200px]:items-center min-[1200px]:justify-center gap-[10px] min-[1200px]:gap-4 min-[1200px]:h-[100svh] min-[1200px]:py-5">
+        <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-11 min-[1200px]:col-span-4 min-[1200px]:row-start-1 mb-0 min-[1200px]:mb-0 flex justify-center min-[1200px]:flex-col min-[1200px]:items-center min-[1200px]:justify-center gap-[10px] min-[1200px]:gap-2 min-[1200px]:h-[100svh] min-[1200px]:py-5">
           {heroImages.map((img, i) => (
             <SanityImg
               key={i}

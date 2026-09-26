@@ -27,7 +27,7 @@ export function GalleryCarousel({ images, title }: { images: SimpleImage[]; titl
     <div className="flex flex-col-reverse gap-5 min-[1200px]:grid min-[1200px]:grid-cols-9">
       <div className="relative min-[1200px]:col-span-1">
         {current && (
-          <div className="min-[1200px]:absolute min-[1200px]:right-6 min-[1200px]:bottom-0 min-[1200px]:w-max flex gap-2 text-[12px] min-[1200px]:text-[10px]">
+          <div className="hidden min-[1200px]:flex min-[1200px]:absolute min-[1200px]:right-6 min-[1200px]:bottom-0 min-[1200px]:w-max gap-2 text-[10px]">
             <span>
               {current.mediaType ?? "Img"}. {String(index + 1).padStart(2, "0")}
             </span>
@@ -45,18 +45,21 @@ export function GalleryCarousel({ images, title }: { images: SimpleImage[]; titl
           type="button"
           aria-label="Previous"
           onClick={goPrev}
-          className="hidden min-[1200px]:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 cursor-pointer"
+          className="hidden min-[1200px]:flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 cursor-pointer transition-opacity duration-200 hover:opacity-40"
         >
           <GalleryArrow flipped />
         </button>
       </div>
-      <div className="min-[1200px]:col-span-7">
-        <div className="flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:overflow-visible">
+      <div className="min-[1200px]:col-span-7 flex items-center gap-2">
+        <button type="button" aria-label="Previous" onClick={goPrev} className="min-[1200px]:hidden shrink-0 flex items-center justify-center w-6 h-6 cursor-pointer">
+          <GalleryArrow flipped />
+        </button>
+        <div className="flex-1 min-w-0 flex overflow-x-auto gap-5 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[1200px]:overflow-visible">
           {(current?.image || current?.videoUrl) &&
             (() => {
               if (current.videoUrl) {
                 return (
-                  <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] overflow-hidden">
+                  <div key={index} className="shrink-0 w-full relative aspect-[4/5] overflow-hidden">
                     <FadeVideo
                       src={current.videoUrl}
                       autoPlay
@@ -72,27 +75,30 @@ export function GalleryCarousel({ images, title }: { images: SimpleImage[]; titl
               const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
               const src = isGif ? rawUrl : urlFor(current.image).width(2000).url();
               return (
-                <div className="shrink-0 w-[85vw] min-[1200px]:w-full relative aspect-[4/5] overflow-hidden">
+                <div className="shrink-0 w-full relative aspect-[4/5] overflow-hidden">
                   <FadeImage
                     src={src}
                     alt=""
                     fill
                     unoptimized={isGif}
                     quality={90}
-                    sizes="(min-width: 1200px) 28vw, 95vw"
+                    sizes="(min-width: 1200px) 28vw, 85vw"
                     className="object-cover"
                   />
                 </div>
               );
             })()}
         </div>
+        <button type="button" aria-label="Next" onClick={goNext} className="min-[1200px]:hidden shrink-0 flex items-center justify-center w-6 h-6 cursor-pointer">
+          <GalleryArrow />
+        </button>
       </div>
       <div className="relative min-[1200px]:col-span-1">
         <button
           type="button"
           aria-label="Next"
           onClick={goNext}
-          className="hidden min-[1200px]:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 cursor-pointer"
+          className="hidden min-[1200px]:flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 cursor-pointer transition-opacity duration-200 hover:opacity-40"
         >
           <GalleryArrow />
         </button>

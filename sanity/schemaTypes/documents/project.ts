@@ -66,6 +66,13 @@ export const project = defineType({
       group: 'general',
     }),
     defineField({
+      name: 'soon',
+      title: 'Marcar como "SOON" (oculta el enlace y la página del proyecto)',
+      type: 'boolean',
+      initialValue: false,
+      group: 'general',
+    }),
+    defineField({
       name: 'imageTag1',
       title: 'Tag 1 de imágenes (debajo de cada foto, ej: "Brand Identity")',
       type: 'localeString',

@@ -89,6 +89,10 @@
     "privacyPolicy": {
       "title": "Privacy Policy — An Studio",
       "description": "How An Studio collects, uses and protects your personal information."
+    },
+    "journal": {
+      "title": "Journal — An Studio",
+      "description": "The An Studio journal. Coming soon."
     }
   },
   "loadingScreen": {
@@ -150,5 +154,10 @@
         "text": "Brands"
       }
     ]
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist.",
+    "workLink": "Go to Work"
   }
 }
