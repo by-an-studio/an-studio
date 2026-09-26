@@ -19,6 +19,21 @@ body {
   font-family: var(--font-william);
 }
 
+/* Hover por defecto para cualquier enlace de texto: misma opacidad que ya
+   usábamos en los enlaces del footer. Se excluyen los enlaces marcados con
+   "group" (tarjetas de proyecto, etc.) porque esos ya gestionan su propio
+   efecto de hover en elementos internos, y cualquier hover:opacity-* que se
+   defina explícitamente en un enlace concreto sigue ganando (esta regla vive
+   en @layer base, por debajo de las utilidades de Tailwind). */
+@layer base {
+  a:not(.group) {
+    transition: opacity 200ms ease;
+  }
+  a:not(.group):hover {
+    opacity: 0.4;
+  }
+}
+
 /* Evita el flash de la pantalla de carga en recargas dentro de la misma
    sesión: un script inline (beforeInteractive) añade esta clase al <html>
    antes de pintar nada si sessionStorage ya marca que se mostró. */

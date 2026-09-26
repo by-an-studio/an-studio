@@ -67,7 +67,6 @@ export function Turnstile({ onToken }: { onToken: (token: string) => void }) {
       if (!el) return;
       widgetIdRef.current = window.turnstile.render(el, {
         sitekey: siteKey,
-        size: "invisible",
         appearance: "interaction-only",
         callback: (token) => onToken(token),
         "expired-callback": () => onToken(""),
