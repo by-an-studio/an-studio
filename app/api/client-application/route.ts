@@ -75,7 +75,7 @@ Project brief: ${projectBrief}
 Project type: ${projectType}
 Job position: ${jobPosition}
 Website: ${website || "-"}
-Website (2): ${website2 || "-"}
+Brand stage: ${website2 || "-"}
 Budget: ${budget}
 Investment range confirmation: ${budgetReady}
 Commit: ${commit}`,
