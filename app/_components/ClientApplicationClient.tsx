@@ -187,7 +187,14 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       }
       setStatus("sent");
     } catch (err) {
-      setErrorMessage(err instanceof Error && err.message !== "failed" ? err.message : t("errorGeneric"));
+      const message = err instanceof Error ? err.message : "";
+      if (message === "Failed captcha verification") {
+        setErrorMessage(t("errorCaptcha"));
+      } else if (message && message !== "failed") {
+        setErrorMessage(message);
+      } else {
+        setErrorMessage(t("errorGeneric"));
+      }
       setStatus("error");
     }
   }

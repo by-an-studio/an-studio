@@ -46,14 +46,14 @@ const ABOUT_QUERY = `*[_type == "about"][0]{
 }`;
 
 
-function SanityImg({ image, className }: { image?: any; className?: string }) {
+function SanityImg({ image, className, priority }: { image?: any; className?: string; priority?: boolean }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
   const src = isGif ? rawUrl : urlFor(image).width(2200).url();
   return (
     <div className={`relative overflow-hidden ${className ?? ""}`}>
-      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" priority={priority} />
     </div>
   );
 }
@@ -118,7 +118,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-8 min-[1200px]:col-span-10 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full min-[1200px]:flex min-[1200px]:justify-end">
-              <SanityImg image={data?.ownerImage} className="aspect-[4/5] min-[1200px]:max-h-full min-[1200px]:max-w-full min-[1200px]:w-auto min-[1200px]:h-auto" />
+              <SanityImg image={data?.ownerImage} className="aspect-[4/5] min-[1200px]:max-h-full min-[1200px]:max-w-full min-[1200px]:w-auto min-[1200px]:h-auto" priority />
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-18 min-[1200px]:col-span-7 min-[1200px]:ml-[1vw] px-5 min-[1200px]:px-0 text-center min-[1200px]:text-left">
               {data?.ownerNameLabel && <p className="hidden min-[1200px]:block underline decoration-1 mb-6">{data.ownerNameLabel}</p>}

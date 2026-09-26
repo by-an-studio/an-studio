@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Grid } from "./Grid";
 import { Turnstile } from "./Turnstile";
@@ -226,7 +225,7 @@ export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: s
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-6 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[14px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left mt-16 min-[1200px]:mt-0">Independent Design Studio</div>
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-4 min-[1200px]:row-start-1 text-[16px] min-[1200px]:text-[14px] leading-tight min-[1200px]:leading-normal text-center min-[1200px]:text-left -mt-5 min-[1200px]:mt-0">An Studio 2026®</div>
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-21 min-[1200px]:col-span-4 min-[1200px]:row-start-1 flex justify-center min-[1200px]:justify-end mt-10 min-[1200px]:mt-0 w-full">
-          <Image
+          <img
             src="/logo/an-studio.svg"
             alt="An Studio"
             width={150}

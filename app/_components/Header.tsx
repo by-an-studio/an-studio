@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import { LiveDateTime } from "./LiveDateTime";
@@ -99,12 +98,12 @@ export function Header() {
         </div>
 
         <Link href="/" className="justify-self-center min-[1200px]:justify-self-auto">
-          <Image
+          <img
             src="/logo/an-studio.svg"
             alt="An Studio"
             width={120}
             height={23}
-            priority
+            style={{ width: "120px", height: "23px" }}
           />
         </Link>
 

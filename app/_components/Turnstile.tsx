@@ -69,8 +69,21 @@ export function Turnstile({ onToken }: { onToken: (token: string) => void }) {
         sitekey: siteKey,
         appearance: "interaction-only",
         callback: (token) => onToken(token),
-        "expired-callback": () => onToken(""),
-        "error-callback": () => onToken(""),
+        "expired-callback": () => {
+          onToken("");
+          if (widgetIdRef.current && window.turnstile) {
+            window.turnstile.reset(widgetIdRef.current);
+          }
+        },
+        // Reintenta automáticamente una vez ante un fallo puntual (p. ej. el
+        // "bot behavior detected" genérico que a veces salta sin motivo real)
+        // en vez de dejar el token vacío sin más y bloquear el envío.
+        "error-callback": () => {
+          onToken("");
+          if (widgetIdRef.current && window.turnstile) {
+            window.turnstile.reset(widgetIdRef.current);
+          }
+        },
       });
     });
 

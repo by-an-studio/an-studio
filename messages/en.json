@@ -59,6 +59,7 @@
     "successMessage": "Thank you! Your application has been sent — we’ll be in touch soon.",
     "errorCommit": "Please confirm \"Yes\" on the commitment question above before submitting.",
     "errorRequired": "Please fill in all required fields before submitting.",
+    "errorCaptcha": "We couldn't verify you're human. Please reload the page and try again.",
     "errorGeneric": "Something went wrong, please try again."
   },
   "seo": {
