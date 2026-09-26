@@ -18,9 +18,18 @@ export function ThemeColorMeta() {
       pathname.startsWith("/privacy-policy");
     const color = isShop ? "#FFFDE8" : isFFFEFCPage ? "#FFFEFC" : "#FFFDF7";
 
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", color);
+    // iOS Safari con frecuencia ignora los cambios de content en una
+    // <meta name="theme-color"> ya existente durante una navegación SPA
+    // (sin recarga completa). Recrear la etiqueta (eliminar + insertar una
+    // nueva) fuerza a WebKit a detectar el cambio de color del notch.
+    const oldMeta = document.querySelector('meta[name="theme-color"]');
+    const newMeta = document.createElement("meta");
+    newMeta.setAttribute("name", "theme-color");
+    newMeta.setAttribute("content", color);
+    if (oldMeta) {
+      oldMeta.replaceWith(newMeta);
+    } else {
+      document.head.appendChild(newMeta);
     }
   }, [pathname]);
 
