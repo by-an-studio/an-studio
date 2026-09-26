@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { sanityFetch } from "../sanity/lib/live";
 import { routing } from "../i18n/routing";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com";
 
 const STATIC_PATHS = ["", "/work", "/services", "/about", "/client-application", "/shop", "/privacy-policy"];
 

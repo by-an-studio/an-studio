@@ -6,7 +6,7 @@ import { createPreviewSecret } from "@sanity/preview-url-secret/create-secret";
 import { apiVersion } from "../env";
 import { getPreviewPath, withLocale } from "./previewUrl";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com";
 
 function buildPreviewAction(locale: "en" | "es", label: string): DocumentActionComponent {
   const PreviewAction = (props: DocumentActionProps) => {

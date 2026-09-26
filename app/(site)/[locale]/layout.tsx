@@ -26,12 +26,10 @@ const williamSubhead = localFont({
   ],
   variable: "--font-william",
 });
-// TODO: cuando publiquéis con el dominio definitivo, quitar el bloque "robots" de abajo
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com"),
   title: "An Studio",
   description: "Independent Design Studio",
-  robots: { index: false, follow: false },
   manifest: "/site.webmanifest",
 };
 export const viewport = {

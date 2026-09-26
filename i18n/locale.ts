@@ -43,7 +43,7 @@ export function pickLinkItem(locale: Locale, item?: LinkItem): { label: string; 
 }
 
 export function buildAlternates(locale: Locale, pathname: string) {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://an-studio-six.vercel.app";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com";
   const path = pathname === "/" ? "" : pathname;
   return {
     canonical: `${base}/${locale}${path}`,
