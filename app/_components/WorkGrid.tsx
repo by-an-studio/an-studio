@@ -57,7 +57,7 @@ export function WorkGrid({
       </div>
       <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-9 min-[1200px]:col-span-16 min-[1200px]:h-full">
         <div className="grid grid-cols-2 md:max-[1199px]:grid-cols-4 min-[1200px]:grid-cols-5 min-[1200px]:grid-rows-3 gap-x-5 gap-y-16 min-[1200px]:h-full">
-          {projects.map((p) => {
+          {projects.map((p, index) => {
             const isVisible = !selected || p.categories?.includes(selected);
             const content = (
               <>
@@ -69,7 +69,7 @@ export function WorkGrid({
                     const src = isGif ? rawUrl : urlFor(p.mainImage).width(1400).url();
                     return (
                       <div className={`absolute inset-x-0 top-5 bottom-5 transition-opacity duration-300 min-[1200px]:opacity-40 min-[1200px]:group-hover:opacity-100 ${p.soon ? "opacity-40" : "opacity-100"}`}>
-                        <FadeImage src={src} alt={p.title} fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 22vw, (min-width: 768px) 33vw, 65vw" className="object-contain" />
+                        <FadeImage src={src} alt={p.title} fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 22vw, (min-width: 768px) 33vw, 65vw" className="object-contain" priority={index < 5} />
                       </div>
                     );
                   })()}

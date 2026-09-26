@@ -21,7 +21,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Failed captcha verification" }, { status: 400 });
     }
 
-    const { allowed } = await checkRateLimit(`client-application:${ip}`, 3, 30 * 60 * 1000);
+    const { allowed } = await checkRateLimit(`client-application:${ip}`, 4, 30 * 60 * 1000);
     if (!allowed) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       !jobPosition ||
       !budget ||
       !budgetReady ||
-      commit !== "Yes"
+      commit !== "yes"
     ) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }

@@ -10,4 +10,6 @@ export const { sanityFetch, SanityLive } = defineLive({
   // Next.js draft mode is enabled (see app/api/draft-mode/*), so an editor
   // can preview an unpublished document without publishing it first.
   serverToken: process.env.SANITY_API_WRITE_TOKEN,
+  // No standalone (non-Studio) live preview needed; silence the warning.
+  browserToken: false,
 });

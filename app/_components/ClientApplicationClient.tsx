@@ -21,14 +21,14 @@ type ClientApplicationData = {
   servicesTitle?: string;
   servicesList?: string[];
 };
-function SanityImg({ image, className }: { image?: any; className?: string }) {
+function SanityImg({ image, className, priority }: { image?: any; className?: string; priority?: boolean }) {
   if (!image) return null;
   const rawUrl = urlFor(image).url();
   const isGif = rawUrl.split("?")[0].toLowerCase().endsWith(".gif");
   const src = isGif ? rawUrl : urlFor(image).width(1800).url();
   return (
     <div className={`relative overflow-hidden ${className ?? ""}`}>
-      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" />
+      <FadeImage src={src} alt="" fill unoptimized={isGif} quality={90} sizes="(min-width: 1200px) 65vw, 100vw" className="object-cover" priority={priority} />
     </div>
   );
 }
@@ -98,7 +98,7 @@ function PillGroup({
             key={option.value}
             type="button"
             onClick={() => onSelect(option.value)}
-            className={`px-4 py-1 text-[12px] min-[1200px]:text-[12px] bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
+            className={`px-[14px] py-1 text-[12px] min-[1200px]:text-[11px] bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
               isSelected ? "italic" : "opacity-40"
             }`}
           >
@@ -181,10 +181,13 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, projectType, budgetReady, commit, company, turnstileToken }),
       });
-      if (!res.ok) throw new Error("failed");
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(body?.error || "failed");
+      }
       setStatus("sent");
-    } catch {
-      setErrorMessage(t("errorGeneric"));
+    } catch (err) {
+      setErrorMessage(err instanceof Error && err.message !== "failed" ? err.message : t("errorGeneric"));
       setStatus("error");
     }
   }
@@ -204,6 +207,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <SanityImg
               key={i}
               image={img}
+              priority={i === 0 || i === 1}
               className={`aspect-[3/4] shrink-0 w-1/2 min-[1200px]:flex-1 min-[1200px]:min-h-0 min-[1200px]:w-auto ${
                 i === 1 ? "" : "hidden min-[1200px]:block"
               }`}
@@ -218,7 +222,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <div className="hidden min-[1200px]:grid grid-cols-2 gap-5 min-[1200px]:grid-cols-11">
               {featuredImages.map((item, i) => (
                 <div key={i} className="min-[1200px]:col-span-3">
-                  <SanityImg image={item.image} className="aspect-[4/5] mb-4" />
+                  <SanityImg image={item.image} priority={i === 0} className="aspect-[4/5] mb-4" />
                   <div className="flex gap-2 text-[12px] min-[1200px]:text-[10px]">
                     {item.imageIndex && <span>Img. {item.imageIndex}</span>}
                     <div>
@@ -336,7 +340,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[12px] cursor-pointer disabled:opacity-50 disabled:cursor-default"
+                  className="w-full bg-[#2B2B2B] text-background py-1 text-[14px] min-[1200px]:text-[11px] cursor-pointer disabled:opacity-50 disabled:cursor-default"
                 >
                   {status === "submitting" ? t("sending") : t("submitButton")}
                 </button>

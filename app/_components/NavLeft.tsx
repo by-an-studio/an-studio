@@ -65,7 +65,7 @@ export function NavLeft() {
                 <Link
                   key={href}
                   href={href}
-                  className={`whitespace-nowrap transition-colors duration-200 ${isActive ? "text-foreground" : "text-muted hover:text-[#808080]!"}`}
+                  className={`whitespace-nowrap transition-colors duration-200 no-hover-dim ${isActive ? "text-foreground" : "text-muted hover:text-[#808080]!"}`}
                 >
                   <span className="block text-[clamp(8px,0.5208vw,8px)]">{roman}</span>
                   <span className={`block text-[clamp(10px,0.9375vw,15px)] ${isActive ? "italic" : ""}`}>

@@ -103,8 +103,7 @@ export function Header() {
             src="/logo/an-studio.svg"
             alt="An Studio"
             width={120}
-            height={21}
-            style={{ width: "120px", height: "20.57px" }}
+            height={23}
             priority
           />
         </Link>

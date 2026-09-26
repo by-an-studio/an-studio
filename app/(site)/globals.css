@@ -26,10 +26,10 @@ body {
    defina explícitamente en un enlace concreto sigue ganando (esta regla vive
    en @layer base, por debajo de las utilidades de Tailwind). */
 @layer base {
-  a:not(.group) {
+  a:not(.group):not(.no-hover-dim) {
     transition: opacity 200ms ease;
   }
-  a:not(.group):hover {
+  a:not(.group):not(.no-hover-dim):hover {
     opacity: 0.4;
   }
 }
