@@ -51,12 +51,21 @@ function SubItemLink({ item }: { item: PlainSubItem }) {
 }
 
 function FooterColumn({ col }: { col: FooterColumnData }) {
+  const titleContent = (
+    <>
+      <span className="inline-block min-w-[20px] min-[1200px]:min-w-[14px] text-[11px] min-[1200px]:text-[8px]">{col.roman}</span>
+      <span>{col.label}</span>
+    </>
+  );
   return (
     <div className="md:shrink-0">
-      <Link href={col.href} className={`flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 ${col.href === "#" ? "" : "hover:opacity-40"}`}>
-        <span className="inline-block min-w-[20px] min-[1200px]:min-w-[14px] text-[11px] min-[1200px]:text-[8px]">{col.roman}</span>
-        <span>{col.label}</span>
-      </Link>
+      {col.href === "#" ? (
+        <div className="flex items-baseline gap-2 text-[16px] md:text-[16px]">{titleContent}</div>
+      ) : (
+        <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 hover:opacity-40">
+          {titleContent}
+        </Link>
+      )}
       {col.subItems.length > 0 && (
         <ul className="mt-[2px] md:mt-2 space-y-1 ml-[28px] min-[1200px]:ml-[22px]">
           {col.subItems.map((item, i) => (
@@ -74,12 +83,21 @@ function FooterColumn({ col }: { col: FooterColumnData }) {
 // título (en vez de al lado, como en escritorio), y agrupado en filas
 // concretas en vez del grid uniforme de 2 columnas.
 function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hideSubItems?: boolean }) {
+  const titleContent = (
+    <>
+      <span className="text-[11px] leading-tight">{col.roman}</span>
+      <span className="text-[19px] leading-tight">{col.label}</span>
+    </>
+  );
   return (
     <div className="flex flex-col items-center text-center leading-tight">
-      <Link href={col.href} className={`flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 ${col.href === "#" ? "" : "hover:opacity-40"}`}>
-        <span className="text-[11px] leading-tight">{col.roman}</span>
-        <span className="text-[19px] leading-tight">{col.label}</span>
-      </Link>
+      {col.href === "#" ? (
+        <div className="flex flex-col items-center gap-1 leading-tight">{titleContent}</div>
+      ) : (
+        <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 hover:opacity-40">
+          {titleContent}
+        </Link>
+      )}
       {!hideSubItems && col.subItems.length > 0 && (
         <ul className="mt-2 space-y-1 leading-tight">
           {col.subItems.map((item, i) => (
@@ -108,7 +126,7 @@ export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: s
     {
       roman: "VII",
       label: data?.contactLabel ?? "Contact",
-      href: "#",
+      href: "/client-application",
       subItems: data?.contactItems ?? [],
     },
     {
