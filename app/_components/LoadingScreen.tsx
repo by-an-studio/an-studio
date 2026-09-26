@@ -93,7 +93,7 @@ export function LoadingScreen() {
       </div>
 
       <div className="text-[15px] leading-snug text-white">
-        <p className="whitespace-nowrap md:max-w-[420px] md:whitespace-normal">
+        <p className="mx-auto whitespace-nowrap md:max-w-[420px] md:whitespace-normal">
           {title.map((word, i) => (
             <span key={i}>
               <span className="loading-word" style={{ animationDelay: `${400 + i * 70}ms` }}>
@@ -102,7 +102,7 @@ export function LoadingScreen() {
             </span>
           ))}
         </p>
-        <p className="px-6 md:px-0 md:whitespace-nowrap">
+        <p className="mx-auto px-6 md:px-0 md:max-w-[640px] md:whitespace-normal">
           {subtitle.map((word, i) => (
             <span key={i}>
               <span

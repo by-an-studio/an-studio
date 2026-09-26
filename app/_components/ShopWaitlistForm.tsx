@@ -68,7 +68,7 @@ export function ShopWaitlistForm({
 
   if (!open) {
     return (
-      <button type="button" onClick={() => setOpen(true)} className={`${className} h-[16px] md:h-auto cursor-pointer transition-opacity duration-200 hover:opacity-40`}>
+      <button type="button" onClick={() => setOpen(true)} className={`${className} h-[16px] min-[1200px]:h-auto cursor-pointer transition-opacity duration-200 hover:opacity-40`}>
         <BuyNowArrow />
         <span className="italic">{buttonLabel}</span>
       </button>
@@ -76,7 +76,7 @@ export function ShopWaitlistForm({
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className={`${className} h-[16px] md:h-auto relative w-full max-w-[280px]`} suppressHydrationWarning>
+    <form ref={formRef} onSubmit={handleSubmit} className={`${className} h-[16px] min-[1200px]:h-auto relative w-full max-w-[280px]`} suppressHydrationWarning>
       <input
         type="text"
         name="company"
@@ -91,8 +91,8 @@ export function ShopWaitlistForm({
       <div className="absolute right-0 top-full mt-2">
         <Turnstile onToken={setTurnstileToken} />
       </div>
-      <div className="flex-1 min-w-0 h-[12px] md:h-auto overflow-hidden flex items-center">
-        <div className="shrink-0 w-[133.3333%] h-[16px] md:w-full md:h-auto origin-left scale-75 md:scale-100">
+      <div className="flex-1 min-w-0 h-[12px] min-[1200px]:h-auto overflow-hidden flex items-center">
+        <div className="shrink-0 w-[133.3333%] h-[16px] min-[1200px]:w-full min-[1200px]:h-auto origin-left scale-75 min-[1200px]:scale-100">
           <input
             ref={inputRef}
             type="email"
@@ -104,7 +104,7 @@ export function ShopWaitlistForm({
             }}
             disabled={status === "sent"}
             suppressHydrationWarning
-            className="not-italic placeholder:not-italic w-full h-full box-border bg-transparent focus:outline-none text-[16px] md:text-inherit"
+            className="not-italic placeholder:not-italic w-full h-full box-border bg-transparent focus:outline-none text-[16px] min-[1200px]:text-[12px]"
           />
         </div>
       </div>
