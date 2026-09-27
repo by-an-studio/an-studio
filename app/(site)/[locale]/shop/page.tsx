@@ -129,12 +129,13 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
   }>;
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 flex flex-col justify-between min-h-[100svh]">
+      {data?.title && <h1 className="sr-only">{data.title}</h1>}
       <BodyBackground color="#FFFDE8" />
       <div className="relative min-[1200px]:mt-0">
         <div className="min-[1200px]:hidden px-5 flex flex-col gap-12">
           <div className="text-center">
             <span className="block text-[14px]">VI</span>
-            {data?.title && <p className="text-[25px]">{data.title}</p>}
+            {data?.title && <p aria-hidden="true" className="text-[25px]">{data.title}</p>}
             {data?.tagline && (
               <p className="italic text-[18px] leading-tight mt-4 px-10">{data.tagline}</p>
             )}
@@ -152,9 +153,9 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
                         </p>
                       )}
                       {product.name && (
-                        <p className="text-[23px] leading-tight underline decoration-[1.5px] underline-offset-4">
+                        <h2 className="text-[23px] leading-tight underline decoration-[1.5px] underline-offset-4">
                           {product.name}
-                        </p>
+                        </h2>
                       )}
                       {product.subtitle && <p className="mt-2 text-[12px] leading-tight">{product.subtitle}</p>}
                     </div>
@@ -188,7 +189,7 @@ export default async function Shop({ params }: { params: Promise<{ locale: strin
           <Grid className="min-[1200px]:pt-[150px] min-[1200px]:min-h-[100svh] pb-[30px]">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 min-[1200px]:self-start min-[1200px]:h-[calc(100svh-150px)] min-[1200px]:flex min-[1200px]:flex-col min-[1200px]:justify-center min-[1200px]:-mt-16">
               {data?.title && (
-                <p className="text-[32px] min-[1200px]:text-[33px] min-[1200px]:col-span-6">{data.title}</p>
+                <p aria-hidden="true" className="text-[32px] min-[1200px]:text-[33px] min-[1200px]:col-span-6">{data.title}</p>
               )}
               {data?.tagline && (
                 <p className="italic text-[24px] min-[1200px]:text-[21px] leading-tight min-[1200px]:col-span-4">{data.tagline}</p>

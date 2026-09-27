@@ -21,6 +21,7 @@ export default async function Journal() {
   return (
     <main className="w-full pt-0 pb-0 min-[1200px]:pb-[30px] flex items-center justify-center min-h-[100svh]">
       <BodyBackground color="#FFFDF7" />
+      <h1 className="sr-only">Journal</h1>
       <p className="text-[25px] min-[1200px]:text-[clamp(21px,1.875vw,33px)]">Coming soon!</p>
     </main>
   );

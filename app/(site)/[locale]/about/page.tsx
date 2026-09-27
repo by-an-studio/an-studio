@@ -114,7 +114,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-3 mb-8 min-[1200px]:mb-0 text-center min-[1200px]:text-left">
               <span className="block min-[1200px]:hidden text-[14px]">III</span>
               {data?.ownerSectionLabel && (
-                <p className="text-[25px] min-[1200px]:text-[36px]">{data.ownerSectionLabel}</p>
+                <h1 className="text-[25px] min-[1200px]:text-[36px]">{data.ownerSectionLabel}</h1>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-8 min-[1200px]:col-span-10 mb-8 min-[1200px]:mb-0 min-[1200px]:h-full min-[1200px]:flex min-[1200px]:justify-end">
@@ -148,7 +148,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
           <Grid className="items-baseline">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 text-center min-[1200px]:text-left">
               {data?.awardsTitle && (
-                <p className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">{data.awardsTitle}</p>
+                <h2 className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">{data.awardsTitle}</h2>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0 text-center min-[1200px]:text-left">
@@ -165,7 +165,7 @@ export default async function About({ params }: { params: Promise<{ locale: stri
           <Grid className="mt-16 min-[1200px]:mt-0 items-baseline">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 text-center min-[1200px]:text-left">
               {data?.exhibitionsTitle && (
-                <p className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">{data.exhibitionsTitle}</p>
+                <h2 className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">{data.exhibitionsTitle}</h2>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-11 mt-2 min-[1200px]:mt-0 text-center min-[1200px]:text-left">
@@ -182,35 +182,43 @@ export default async function About({ params }: { params: Promise<{ locale: stri
           <Grid className="mt-16 min-[1200px]:mt-0 items-start">
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-4 text-center min-[1200px]:text-left">
               {data?.clientsTitle && (
-                <p className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">
+                <h2 className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-none">
                   {data.clientsTitle}
-                </p>
+                </h2>
               )}
             </div>
             <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-13 min-[1200px]:col-span-12 mt-2 min-[1200px]:mt-0">
               <div className="overflow-x-auto min-[1200px]:overflow-visible [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 <div className="grid grid-cols-3 min-[1200px]:grid-cols-[auto_auto_auto] min-[1200px]:justify-between gap-x-0 text-[9px] min-[1200px]:text-[11px] min-w-0 min-[1200px]:min-w-0">
-                  {columns.map((col: any, i: number) => (
-                    <p
-                      key={i}
-                      className="text-[12px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap translate-y-1 min-[1200px]:translate-y-0"
-                    >
-                      {col.title}
-                    </p>
-                  ))}
-                  <div className="col-span-3 border-t border-black mt-4" />
-                  {clientRows.map((row, i) => (
-                    <Fragment key={i}>
-                      {row.map((cell: string, j: number) => (
-                        <p
-                          key={`${i}-${j}`}
-                          className="py-1 text-center min-[1200px]:text-left whitespace-nowrap"
-                        >
-                          {cell}
-                        </p>
-                      ))}
-                      <div className="col-span-3 border-b border-black" />
+                  {/* Orden en el HTML por columnas (H3 de la categoría seguido de sus H4)
+                      para que cada cliente quede bajo su categoría. Cada elemento se coloca
+                      en su celda con gridRow/gridColumn, así el aspecto es idéntico al de
+                      antes (que se pintaba fila a fila). Filas: 1 = títulos, 2 = línea
+                      superior, luego por cada cliente k: fila 3+2k celdas y 4+2k su línea. */}
+                  {columns.map((col: any, j: number) => (
+                    <Fragment key={j}>
+                      <h3
+                        style={{ gridColumn: j + 1, gridRow: 1 }}
+                        className="text-[12px] min-[1200px]:text-[15px] text-center min-[1200px]:text-left whitespace-nowrap translate-y-1 min-[1200px]:translate-y-0"
+                      >
+                        {col.title}
+                      </h3>
+                      {(col.clients ?? []).map((client: string, k: number) =>
+                        client ? (
+                          <h4
+                            key={k}
+                            style={{ gridColumn: j + 1, gridRow: 3 + 2 * k }}
+                            className="py-1 text-center min-[1200px]:text-left whitespace-nowrap"
+                          >
+                            {client}
+                          </h4>
+                        ) : null
+                      )}
                     </Fragment>
+                  ))}
+                  <div style={{ gridColumn: "1 / -1", gridRow: 2 }} className="border-t border-black mt-4" />
+                  {clientRows.map((_, k) => (
+                    <div key={k} style={{ gridColumn: "1 / -1", gridRow: 4 + 2 * k }} className="border-b border-black" />
                   ))}
                 </div>
               </div>

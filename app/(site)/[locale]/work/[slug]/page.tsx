@@ -207,6 +207,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   };
   return (
     <main className={`w-full ${p.variant === "gallery" ? "pb-[30px]" : ""}`}>
+      {/* Un solo H1 por página: el título visible está duplicado (móvil/escritorio) y se marca aria-hidden */}
+      <h1 className="sr-only">{p.subtitleLine ? `${p.title} — ${p.subtitleLine}` : p.title}</h1>
       <BodyBackground color="#FFFEFC" />
       <div className="relative min-[1200px]:min-h-[100svh] flex flex-col gap-0 min-[1200px]:gap-[clamp(60px,8vh,150px)]">
         <Grid className="relative z-20">
@@ -230,11 +232,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         {p.variant === "gallery" && (
           <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
             <div className="text-center">
-              <p className="text-[25px] leading-tight">({p.projectNumber}.)</p>
-              <p className="text-[25px] leading-tight">{p.title}</p>
-              {p.subtitleLine && (
-                <p className="text-[25px] leading-tight">{p.subtitleLine}</p>
-              )}
+              <div aria-hidden="true">
+                <span className="block text-[25px] leading-tight">({p.projectNumber}.)</span>
+                <span className="block text-[25px] leading-tight">{p.title}</span>
+                {p.subtitleLine && (
+                  <span className="block text-[25px] leading-tight">{p.subtitleLine}</span>
+                )}
+              </div>
               {hasRichText(p.collaboration) && (
                 <p className="italic text-[13px] mt-4">
                   In Collaboration with{" "}
@@ -246,16 +250,16 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             <ProjectImg item={p.image2} className="aspect-[4/5]" sizes="90vw" />
             <div className="text-center">
               {hasRichText(p.aboutParagraph) && (
-                <p className="underline decoration-1 mb-4 text-[15px]">(About)</p>
+                <h2 className="underline decoration-1 mb-4 text-[15px]">(About)</h2>
               )}
               <RichText value={p.aboutParagraph} className="text-[14px] leading-tight" />
             </div>
             {p.projectTags && p.projectTags.length > 0 && (
               <div className="text-center">
-                <p className="underline decoration-1 mb-4 text-[15px]">(Categories)</p>
+                <h2 className="underline decoration-1 mb-4 text-[15px]">(Categories)</h2>
                 <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
                   {p.projectTags.map((t, i) => (
-                    <span key={i}>{t}</span>
+                    <h3 key={i}>{t}</h3>
                   ))}
                 </div>
               </div>
@@ -295,11 +299,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         {p.variant === "simple" && (
           <div className="min-[1200px]:hidden -mt-6 px-5 flex flex-col gap-12">
             <div className="text-center">
-              <p className="text-[25px] leading-tight">({p.projectNumber}.)</p>
-              <p className="text-[25px] leading-tight">{p.title}</p>
-              {p.subtitleLine && (
-                <p className="text-[25px] leading-tight">{p.subtitleLine}</p>
-              )}
+              <div aria-hidden="true">
+                <span className="block text-[25px] leading-tight">({p.projectNumber}.)</span>
+                <span className="block text-[25px] leading-tight">{p.title}</span>
+                {p.subtitleLine && (
+                  <span className="block text-[25px] leading-tight">{p.subtitleLine}</span>
+                )}
+              </div>
               {hasRichText(p.collaboration) && (
                 <p className="italic text-[13px] mt-4">
                   In Collaboration with{" "}
@@ -325,16 +331,16 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
             )}
             <div className="text-center">
               {hasRichText(p.aboutParagraph) && (
-                <p className="underline decoration-1 mb-4 text-[15px]">(About)</p>
+                <h2 className="underline decoration-1 mb-4 text-[15px]">(About)</h2>
               )}
               <RichText value={p.aboutParagraph} className="text-[14px] leading-tight" />
             </div>
             {p.projectTags && p.projectTags.length > 0 && (
               <div className="text-center">
-                <p className="underline decoration-1 mb-4 text-[15px]">(Categories)</p>
+                <h2 className="underline decoration-1 mb-4 text-[15px]">(Categories)</h2>
                 <div className="flex flex-wrap justify-center gap-2 text-[clamp(8px,2.6vw,12px)] uppercase">
                   {p.projectTags.map((t, i) => (
-                    <span key={i}>{t}</span>
+                    <h3 key={i}>{t}</h3>
                   ))}
                 </div>
               </div>
@@ -345,11 +351,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
         <Grid className="hidden min-[1200px]:grid pb-[30px] min-[1200px]:flex-1 min-[1200px]:min-h-0 items-start min-[1200px]:items-center">
           <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:[grid-column:4/15] min-[1400px]:[grid-column:4/14] min-[1600px]:[grid-column:4/13] min-[1800px]:[grid-column:4/12] min-[1200px]:self-stretch mb-8 min-[1200px]:mb-0 flex flex-col">
             <div>
-              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">({p.projectNumber}.)</p>
-              <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">{p.title}</p>
-              {p.subtitleLine && (
-                <p className="underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight mb-8">{p.subtitleLine}</p>
-              )}
+              <div aria-hidden="true">
+                <span className="block underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">({p.projectNumber}.)</span>
+                <span className="block underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight">{p.title}</span>
+                {p.subtitleLine && (
+                  <span className="block underline decoration-2 underline-offset-4 text-[28px] min-[1200px]:text-[37px] leading-tight mb-8">{p.subtitleLine}</span>
+                )}
+              </div>
               {hasRichText(p.collaboration) && (
                 <p className="italic text-[15px] min-[1200px]:text-[16px] mb-8">
                   In Collaboration with{" "}

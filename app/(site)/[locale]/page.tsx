@@ -74,6 +74,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <main className="relative w-full flex flex-col items-center h-[100svh] overflow-hidden md:h-auto md:overflow-visible">
       {/* Bloque 1 home */}
       <section className="relative flex-1 min-h-0 md:flex-none md:h-[100svh] w-full flex flex-col items-center justify-center pt-10 md:pt-0 gap-4 md:gap-10 px-5 overflow-hidden">
+        {/* La home no tiene título visible (el logo es una imagen): H1 solo para Google y lectores de pantalla */}
+        <h1 className="sr-only">An Studio — Independent Design Studio</h1>
         {data?.newsletterButtonLabel && (
           <HomeNewsletterFormMobile
             buttonLabel={data.newsletterButtonLabel}

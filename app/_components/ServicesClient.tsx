@@ -75,14 +75,15 @@ export function ServicesClient({
 
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
+      {data?.headerLabel && <h1 className="sr-only">{data.headerLabel.replace(/:\s*$/, "")}</h1>}
       <BodyBackground color="#FFFEFC" />
       <div className="min-[1200px]:hidden px-5 mb-4 text-center">
         <span className="block text-[14px]">II</span>
-        <span className="block text-[25px]">{data?.headerLabel?.replace(/:\s*$/, "")}</span>
+        <p aria-hidden="true" className="block text-[25px]">{data?.headerLabel?.replace(/:\s*$/, "")}</p>
       </div>
       <Grid className="pt-0 min-[1200px]:pt-5 min-h-0">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-8">
-          {data?.headerLabel && <p className="hidden min-[1200px]:block underline decoration-1">{data.headerLabel}</p>}
+          {data?.headerLabel && <p aria-hidden="true" className="hidden min-[1200px]:block underline decoration-1">{data.headerLabel}</p>}
           {data?.headerTagline && <p className="italic text-[17px] min-[1200px]:text-[17px] text-center min-[1200px]:text-left">{data.headerTagline}</p>}
         </div>
       </Grid>
@@ -93,6 +94,7 @@ export function ServicesClient({
               const isSelected = selected === i;
               return (
                 <li key={s.number ?? i} className="flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4">
+                  <h2>
                   <button
                     type="button"
                     onClick={() => handleSelect(s.number, i)}
@@ -105,6 +107,7 @@ export function ServicesClient({
                       {s.label}
                     </span>
                   </button>
+                  </h2>
                 </li>
               );
             })}
@@ -150,13 +153,13 @@ export function ServicesClient({
       </Grid>
       <div className="min-[1200px]:hidden flex justify-center gap-8 mt-16 px-5">
         <div className="text-center">
-          {data?.otherServicesTitle && <p className="text-[13px] underline decoration-1 mb-2">{data.otherServicesTitle}</p>}
+          {data?.otherServicesTitle && <h2 className="text-[13px] underline decoration-1 mb-2">{data.otherServicesTitle}</h2>}
           <ul className="text-[10px]">
             {data?.otherServices?.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
         <div className="text-center">
-          {data?.industryTitle && <p className="text-[13px] underline decoration-1 mb-2">{data.industryTitle}</p>}
+          {data?.industryTitle && <h2 className="text-[13px] underline decoration-1 mb-2">{data.industryTitle}</h2>}
           <ul className="text-[10px]">
             {data?.industry?.map((item) => <li key={item}>{item}</li>)}
           </ul>
@@ -176,7 +179,7 @@ export function ServicesClient({
           </ul>
         </div>
         <div className="min-[1200px]:col-start-16 min-[1200px]:col-span-6">
-          {data?.contactTitle && <p className="text-[16px] underline decoration-1 mb-2">{data.contactTitle}</p>}
+          {data?.contactTitle && <h2 className="text-[16px] underline decoration-1 mb-2">{data.contactTitle}</h2>}
           <ul className="text-[12px]">
             {data?.contactLines?.map((item) => <li key={item}>{item}</li>)}
           </ul>

@@ -86,9 +86,10 @@ export default async function Work({
   return (
     <main className="w-full pt-[150px] min-[1200px]:pt-0 pb-[30px] flex flex-col justify-between min-h-[100svh]">
       <BodyBackground color="#FFFEFC" />
-      <div className="min-[1200px]:hidden px-5 mb-0 text-center">
-        <span className="block text-[14px]">I</span>
-        <span className="block text-[25px]">{pageTitle}</span>
+      <div className="px-5 mb-0 text-center">
+        <span className="block text-[14px] min-[1200px]:hidden">I</span>
+        {/* Visible en móvil; en escritorio queda solo para Google y lectores de pantalla */}
+        <h1 className="block text-[25px] min-[1200px]:sr-only">{pageTitle}</h1>
       </div>
       {(noteLabel || noteText) && (
         <Grid className="hidden min-[1200px]:grid pt-5 min-h-[70px] min-[1200px]:min-h-0">

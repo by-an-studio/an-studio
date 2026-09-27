@@ -221,7 +221,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       <Grid className="items-start min-[1200px]:grid-rows-[100svh_auto]">
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-6 min-[1200px]:row-start-1 min-[1200px]:self-stretch mb-4 min-[1200px]:mb-0 flex flex-col min-[1200px]:justify-center text-center min-[1200px]:text-left">
           <span className="block min-[1200px]:hidden text-[14px]">IV</span>
-          {data?.heroTitle && <p className="text-[25px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] mb-4 min-[1200px]:mb-0">{data.heroTitle}</p>}
+          {data?.heroTitle && <h1 className="text-[25px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] mb-4 min-[1200px]:mb-0">{data.heroTitle}</h1>}
           {data?.heroTagline && (
             <p className="italic text-[17px] min-[1200px]:text-[clamp(15px,1.25vw,21px)]">{data.heroTagline}</p>
           )}
@@ -241,7 +241,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
         <div className="col-span-8 md:max-[1199px]:col-span-24 min-[1200px]:col-start-4 min-[1200px]:col-span-11 min-[1200px]:row-start-2 mt-4 min-[1200px]:mt-24 min-[1200px]:self-stretch min-[1200px]:min-h-[80svh] flex flex-col">
           <div className="min-[1200px]:flex-1 min-[1200px]:min-h-0">
             {data?.headline && (
-              <p className="text-[18px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-tight mb-8 text-center min-[1200px]:text-left">{data.headline}</p>
+              <h2 className="text-[18px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] leading-tight mb-8 text-center min-[1200px]:text-left">{data.headline}</h2>
             )}
             <div className="hidden min-[1200px]:grid grid-cols-2 gap-5 min-[1200px]:grid-cols-11">
               {featuredImages.map((item, i) => (
@@ -262,13 +262,15 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           </div>
           <div className="grid grid-cols-1 gap-5 min-[1200px]:grid-cols-11 mt-16 min-[1200px]:mt-auto min-[1200px]:pt-8 items-start text-center min-[1200px]:text-left">
             {data?.servicesTitle && (
-              <p className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] min-[1200px]:col-span-4">
+              <h2 className="text-[24px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] min-[1200px]:col-span-4">
                 {data.servicesTitle}
-              </p>
+              </h2>
             )}
-            <ul className="text-[13px] min-[1200px]:text-[15px] mt-2 min-[1200px]:mt-0 min-[1200px]:col-start-5 min-[1200px]:col-span-7">
+            <ul className="text-[13px] min-[1200px]:text-[15px] mt-2 min-[1200px]:mt-[13px] min-[1200px]:col-start-5 min-[1200px]:col-span-7">
               {data?.servicesList?.map((service) => (
-                <li key={service}>{service}</li>
+                <li key={service}>
+                  <h3>{service}</h3>
+                </li>
               ))}
             </ul>
           </div>
@@ -289,14 +291,14 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             className="absolute w-0 h-0 opacity-0 -z-10"
           />
           <div>
-            <p className="text-[18px] min-[1200px]:text-[16px] mb-8">{t("sections.name")}</p>
+            <h2 className="text-[18px] min-[1200px]:text-[16px] mb-8">{t("sections.name")}</h2>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
               <Field label={t("fields.firstName")} required requiredLabel={t("fields.required")} name="firstName" value={formData.firstName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
               <Field label={t("fields.lastName")} required requiredLabel={t("fields.required")} name="lastName" value={formData.lastName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             </div>
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.contact")}</p>
+            <h2 className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.contact")}</h2>
             <div className="grid grid-cols-1 gap-8 min-[1200px]:grid-cols-2">
               <Field label={t("fields.email")} required requiredLabel={t("fields.required")} name="email" value={formData.email} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
               <Field label={t("fields.phone")} required requiredLabel={t("fields.required")} name="phone" value={formData.phone} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
@@ -304,7 +306,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
             <Field label={t("fields.country")} required requiredLabel={t("fields.required")} name="country" value={formData.country} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
           </div>
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.aboutProject")}</p>
+            <h2 className="text-[18px] min-[1200px]:text-[16px] -mb-4">{t("sections.aboutProject")}</h2>
             <Field label={t("fields.companyName")} required requiredLabel={t("fields.required")} name="companyName" value={formData.companyName} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             <Field label={t("fields.projectBrief")} required requiredLabel={t("fields.required")} name="projectBrief" value={formData.projectBrief} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} />
             <div>
@@ -335,7 +337,7 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
           </div>
           <Field label={t("fields.brandStage")} name="website2" value={formData.website2} placeholder={t("fields.answerPlaceholder")} onChange={handleChange} requiredLabel={t("fields.required")} />
           <div className="flex flex-col gap-8">
-            <p className="text-[18px] min-[1200px]:text-[16px]">{t("sections.workingWithUs")}</p>
+            <h2 className="text-[18px] min-[1200px]:text-[16px]">{t("sections.workingWithUs")}</h2>
             <div>
               <p className="text-[14px] min-[1200px]:text-[13px] leading-snug mb-4">
                 {t("budgetReadyText")}

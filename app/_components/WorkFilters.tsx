@@ -22,6 +22,7 @@ export function WorkFilters({
           const isDimmed = selected !== null && !isSelected;
           return (
             <li key={c.value} className="flex flex-col items-center text-center min-[1200px]:flex-row min-[1200px]:items-baseline min-[1200px]:text-left gap-1 min-[1200px]:gap-4">
+              <h2>
               <button
                 type="button"
                 onClick={() => onSelect(isSelected ? null : c.value)}
@@ -30,6 +31,7 @@ export function WorkFilters({
                 <span className="underline decoration-[0.5px] min-[1200px]:decoration-[1.5px] text-[12px] min-[1200px]:text-[21px]">({String(i + 1).padStart(2, "0")}.)</span>
                 <span className={`text-[17px] min-[1200px]:text-[clamp(21px,1.875vw,33px)] ${isSelected ? "italic" : ""}`}>{c.label}</span>
               </button>
+              </h2>
             </li>
           );
         })}
