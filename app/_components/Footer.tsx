@@ -24,7 +24,7 @@ export type FooterData = {
 };
 
 type PlainSubItem = { label: string; href?: string };
-type FooterColumnData = { roman: string; label: string; href: string; subItems: PlainSubItem[] };
+type FooterColumnData = { roman: string; label: string; href: string; subItems: PlainSubItem[]; titleLinkable?: boolean };
 
 function SubItemLink({ item }: { item: PlainSubItem }) {
   if (!item.href) {
@@ -59,7 +59,7 @@ function FooterColumn({ col }: { col: FooterColumnData }) {
   );
   return (
     <div className="md:shrink-0">
-      {col.href === "#" || col.href === "/about" || col.href === "/client-application" ? (
+      {col.href === "#" || col.titleLinkable === false ? (
         <div className="flex items-baseline gap-2 text-[16px] md:text-[16px]">{titleContent}</div>
       ) : (
         <Link href={col.href} className="flex items-baseline gap-2 text-[16px] md:text-[16px] transition-opacity duration-200 hover:opacity-40">
@@ -91,7 +91,7 @@ function FooterColumnMobile({ col, hideSubItems }: { col: FooterColumnData; hide
   );
   return (
     <div className="flex flex-col items-center text-center leading-tight">
-      {col.href === "#" || col.href === "/about" || col.href === "/client-application" ? (
+      {col.href === "#" || col.titleLinkable === false ? (
         <div className="flex flex-col items-center gap-1 leading-tight">{titleContent}</div>
       ) : (
         <Link href={col.href} className="flex flex-col items-center gap-1 leading-tight transition-opacity duration-200 hover:opacity-40">
@@ -128,6 +128,7 @@ export function Footer({ data, bgColor }: { data: FooterData | null; bgColor?: s
       label: data?.contactLabel ?? "Contact",
       href: "/client-application",
       subItems: data?.contactItems ?? [],
+      titleLinkable: false,
     },
     {
       roman: "VIII",
