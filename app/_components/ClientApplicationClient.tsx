@@ -99,10 +99,17 @@ function PillGroup({
             type="button"
             onClick={() => onSelect(option.value)}
             className={`px-[14px] py-1 text-[12px] min-[1200px]:text-[11px] bg-[#EFECE6] text-center cursor-pointer ${widthClass} ${
-              isSelected ? "italic" : "opacity-40"
+              isSelected ? "" : "opacity-40"
             }`}
           >
-            {option.label}
+            {/* Las copias invisibles (normal + itálica) reservan siempre el
+                ancho de la versión más ancha, así el botón no cambia de
+                tamaño al pasar a itálica cuando se selecciona. */}
+            <span className="inline-grid justify-items-center">
+              <span aria-hidden className="invisible [grid-area:1/1]">{option.label}</span>
+              <span aria-hidden className="invisible italic [grid-area:1/1]">{option.label}</span>
+              <span className={`[grid-area:1/1] ${isSelected ? "italic" : ""}`}>{option.label}</span>
+            </span>
           </button>
         );
       })}
