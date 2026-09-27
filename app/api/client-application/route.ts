@@ -35,12 +35,15 @@ export async function POST(request: Request) {
       companyName,
       projectBrief,
       projectType,
+      projectTypeLabel,
       jobPosition,
       website,
       website2,
       budget,
       budgetReady,
+      budgetReadyLabel,
       commit,
+      commitLabel,
     } = data;
 
     if (
@@ -72,13 +75,13 @@ Phone: ${phone}
 Country: ${country}
 Company name: ${companyName}
 Project brief: ${projectBrief}
-Project type: ${projectType}
+Project type: ${projectTypeLabel || projectType}
 Job position: ${jobPosition}
 Website: ${website || "-"}
 Brand stage: ${website2 || "-"}
 Budget: ${budget}
-Investment range confirmation: ${budgetReady}
-Commit: ${commit}`,
+Investment range confirmation: ${budgetReadyLabel || budgetReady}
+Commit: ${commitLabel || commit}`,
     });
 
     return NextResponse.json({ ok: true });

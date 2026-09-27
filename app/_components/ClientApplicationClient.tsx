@@ -179,7 +179,17 @@ export function ClientApplicationClient({ data }: { data: ClientApplicationData 
       const res = await fetch("/api/client-application", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, projectType, budgetReady, commit, company, turnstileToken }),
+        body: JSON.stringify({
+          ...formData,
+          projectType,
+          projectTypeLabel: projectTypes.find((o) => o.value === projectType)?.label ?? projectType,
+          budgetReady,
+          budgetReadyLabel: budgetOptions.find((o) => o.value === budgetReady)?.label ?? budgetReady,
+          commit,
+          commitLabel: commitOptions.find((o) => o.value === commit)?.label ?? commit,
+          company,
+          turnstileToken,
+        }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => null);
