@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: buildAlternates(locale, "/journal"),
-    openGraph: { title, description },
+    openGraph: { title, description, siteName: "An Studio" },
   };
 }
 

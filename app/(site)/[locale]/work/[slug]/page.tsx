@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title,
     description,
     alternates: buildAlternates(locale, `/work/${slug}`),
-    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+    openGraph: { title, description, siteName: "An Studio", images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
   };
 }
 

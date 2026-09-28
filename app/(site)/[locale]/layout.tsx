@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   title: "An Studio",
   description: "Independent Design Studio",
   manifest: "/site.webmanifest",
+  // Le indica a Google (y a redes sociales) cuál es el nombre "oficial" del
+  // sitio, para que no muestre el dominio en crudo junto al título en los
+  // resultados de búsqueda.
+  openGraph: {
+    siteName: "An Studio",
+  },
 };
 export const viewport = {
   width: "device-width",

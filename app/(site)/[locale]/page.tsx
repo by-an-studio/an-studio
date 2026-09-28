@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title,
     description,
     alternates: buildAlternates(locale, "/"),
-    openGraph: { title, description, images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
+    openGraph: { title, description, siteName: "An Studio", images: ogImageUrl ? [{ url: ogImageUrl }] : undefined },
   };
 }
 
@@ -70,8 +70,23 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       }
     : null;
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "An Studio",
+    alternateName: "byanstudio.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com",
+  };
+
   return (
       <main className="relative w-full flex flex-col items-center h-[100svh] overflow-hidden md:h-auto md:overflow-visible">
+      {/* Le indica a Google cuál es el nombre oficial del sitio (evita que
+          muestre el dominio en crudo junto al título en los resultados de
+          búsqueda). Debe ir en la home. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* Bloque 1 home */}
       <section className="relative flex-1 min-h-0 md:flex-none md:h-[100svh] w-full flex flex-col items-center justify-center pt-10 md:pt-0 gap-4 md:gap-10 px-5 overflow-hidden">
         {/* La home no tiene título visible (el logo es una imagen): H1 solo para Google y lectores de pantalla */}
