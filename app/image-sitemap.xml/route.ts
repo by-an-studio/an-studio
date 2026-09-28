@@ -1,8 +1,12 @@
-import { sanityFetch } from "../../sanity/lib/live";
+import { client } from "../../sanity/lib/client";
 import { urlFor } from "../../sanity/lib/image";
 import { routing } from "../../i18n/routing";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.byanstudio.com";
+
+// Revalidamos cada hora: evita golpear Sanity en cada petición del bot de
+// Google y hace que la respuesta sea rápida y estable.
+export const revalidate = 3600;
 
 type ImageWithTags = { image?: any; videoUrl?: string };
 
@@ -59,7 +63,7 @@ function escapeXml(value: string): string {
 type PageImages = { path: string; images: string[] };
 
 export async function GET() {
-  const { data } = await sanityFetch({ query: QUERY });
+  const data = await client.fetch(QUERY);
 
   const home = (data as any)?.home;
   const about = (data as any)?.about;
