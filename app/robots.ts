@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       // El panel de Sanity y las rutas de API no deben aparecer en Google
       disallow: ["/studio", "/api/"],
     },
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: [`${BASE_URL}/sitemap.xml`, `${BASE_URL}/image-sitemap.xml`],
   };
 }
