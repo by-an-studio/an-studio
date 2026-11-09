@@ -54,13 +54,11 @@ export function Header() {
       rgba(${rgb},0.04) 91.9%,
       rgba(${rgb},0) 100%)`;
   const gradientStyleDesktop = { backgroundImage: smoothFadeDesktop(headerBgRgb) };
-  const gradientStyleMobile = { backgroundImage: smoothFadeMobile(headerBgRgb) };
-  // El degradado del header (h-20) se mantiene siempre igual, abra o no el
-  // menú. Solo la franja del notch/safe-area (que en el estado normal es un
-  // color plano, sin degradado) cambia a un color plano sólido igual al del
-  // menú responsive cuando este está abierto, para que no desentone.
+  // Con el menú responsive abierto, tanto la franja del notch/safe-area
+  // (color plano) como el degradado del header (h-20) pasan a usar el color
+  // de fondo del menú, para que no desentone con él.
   const mobileTopBarStyle = open ? { backgroundColor: "rgb(244,241,232)" } : { backgroundColor: `rgb(${headerBgRgb})` };
-  const mobileGradientStyle = gradientStyleMobile;
+  const mobileGradientStyle = { backgroundImage: smoothFadeMobile(open ? "244,241,232" : headerBgRgb) };
 
   useEffect(() => {
     function handleScroll() {
